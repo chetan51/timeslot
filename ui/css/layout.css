@@ -114,7 +114,7 @@
     font-size: 1.2em;
 }
 
-.agenda > .body > .separator {
+.agenda > .body > .chunk > .time {
     display: block;
     color: #555;
     font-size: .9em;
@@ -122,34 +122,34 @@
     margin-bottom: 5px;
 }
 
-.agenda > .body > .separator > .data {
+.agenda > .body > .chunk > .data {
     display: none;
 }
 
-.agenda > .body > .item {
+.agenda > .body > .chunk > .body > .item {
     min-height: 40px;
     margin-bottom: 10px;
 }
 
-.agenda > .body > .item > .data {
+.agenda > .body > .chunk > .body > .item > .data {
     display: none;
 }
 
-.agenda > .body > .item > .info {
+.agenda > .body > .chunk > .body > .item > .info {
     float: left;
     width: 60px;
     margin: 0;
     text-align: right;
 }
 
-.agenda > .body > .item > .info div {
+.agenda > .body > .chunk > .body > .item > .info div {
 }
 
-.agenda > .body > .item > .info > .duration {
+.agenda > .body > .chunk > .body > .item > .info > .duration {
     font-size: .9em;
 }
 
-.agenda > .body > .item > .name {
+.agenda > .body > .chunk > .body > .item > .name {
     min-height: 100%;
     vertical-align: top;
     margin-left: 75px;
@@ -159,7 +159,7 @@
     font-size: 1.2em;
 }
 
-.agenda > .body > .item > .controls {
+.agenda > .body > .chunk > .body > .item > .controls {
     display: none;
     float: right;
     width: 20px;

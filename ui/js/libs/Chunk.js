@@ -1,12 +1,12 @@
 /*
- * Class Separator
+ * Class Chunk
  * 
  * Constructor options:
  *     ID
  *     time
  */
 
-var Separator = Class.extend(
+var Chunk = Class.extend(
 {
 	init: function(options, element)
 	{
@@ -31,6 +31,9 @@ var Separator = Class.extend(
 		if (!this.options.time) {
 			this.options.time = time;
 		}
+		
+		// Initialize all children items
+		this.element.find(".body > .item").item();
 	},
 
 	_display: function()
@@ -48,4 +51,4 @@ var Separator = Class.extend(
 	}
 });
 
-$.plugin('separator', Separator);
+$.plugin('chunk', Chunk);

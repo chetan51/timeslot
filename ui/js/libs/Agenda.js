@@ -32,9 +32,8 @@ var Agenda = Class.extend(
 			this.options.date = date;
 		}
 		
-		// Initialize all children separators and items
-		this.element.find(".body > .separator").separator();
-		this.element.find(".body > .item").item();
+		// Initialize all children chunks
+		this.element.find(".body > .chunk").chunk();
 	},
 
 	_display: function()
