@@ -63,6 +63,8 @@ var Item = Class.extend(
 	refresh: function()
 	{
 		this.element.find("> .info > .duration").html(durationToText(this.options.duration));
+		var height = 60 + (this.options.duration / 15) * 5;
+		this.element.css("height", height + "px");
 		if (this.options.time) {
 			this.element.find("> .info > .time").html(timeToText(this.options.time));
 		}
