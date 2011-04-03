@@ -123,10 +123,12 @@ var Item = Class.extend(
 	{
 		this.options.fixed = this.element.find("> .info > .fixed > .control > input").is(":checked");
 		this.refresh();
-		this._wasHoveredIn();
+		
 		if (this.options.wasEditedCallback) {
 			this.options.wasEditedCallback(this);
 		}
+		
+		this._wasHoveredIn();
 	},
 
 	_nameWasEdited: function()
