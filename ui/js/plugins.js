@@ -50,7 +50,7 @@ function timeToText(time)
         curr_min = "0" + curr_min;
     }
     
-    return curr_hour + ":" + curr_min + a_p;
+    return curr_hour + ":" + curr_min + " " + a_p;
 }
 
 function durationToText(duration) // in minutes
@@ -67,4 +67,24 @@ function durationToText(duration) // in minutes
         duration -= minutes;
     }
     return "(" + text_elements.join(', ') + ")";
+}
+
+function durationFromText(durationText)
+{
+    durationText = durationText.substring(1, durationText.length - 1); // remove parentheses
+    var text_elements = durationText.split(', ');
+    
+    var minutes = 0;
+    for (t in text_elements) {
+        var text_element = text_elements[t];
+        var element_components = text_element.split(' ');
+        if (element_components[1] == 'h') {
+            minutes += parseInt(element_components[0]) * 60;
+        }
+        else if (element_components[1] == 'm') {
+            minutes += parseInt(element_components[0]);
+        }
+    }
+    
+    return minutes;
 }

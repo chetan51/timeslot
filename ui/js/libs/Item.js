@@ -3,6 +3,7 @@
  * 
  * Constructor options:
  *     ID
+ *     parentChunk
  *     duration (optional)
  *     name     (optional)
  */
@@ -32,8 +33,23 @@ var Item = Class.extend(
 		
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
-		this.element.find(".info > .duration").click($.proxy(this._durationWasClicked, this));
-		this.element.children(".name").click($.proxy(this._nameWasClicked, this));
+		this.element.find(".info > .duration").editable({
+			type: 'select',
+			options: {
+				15:'(15 m)',
+				30:'(30 m)',
+				45:'(45 m)',
+				60:'(1 h)',
+				75:'(1 h, 15 m)',
+				90:'(1 h, 30 m)',
+				105:'(1 h, 45 m)',
+				120:'(2 h)'
+			},
+			onSubmit: $.proxy(this._durationWasEdited, this)
+		});
+		this.element.find("> .name").editable({
+			onSubmit: $.proxy(this._nameWasEdited, this)
+		});
 	},
 
 	refresh: function()
@@ -55,14 +71,15 @@ var Item = Class.extend(
 		this.element.children(".controls").hide();
 	},
 	
-	_durationWasClicked: function()
+	_durationWasEdited: function(content)
 	{
-		alert("duration was clicked");
+		this.options.duration = durationFromText(content.current);
+		this.refresh();
+		this.options.parentChunk.refresh();
 	},
 
-	_nameWasClicked: function()
+	_nameWasEdited: function()
 	{
-		alert("name was clicked");
 	},
 
 	setTime: function(time)

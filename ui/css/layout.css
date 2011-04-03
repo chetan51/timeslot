@@ -119,10 +119,14 @@
 
 .agenda > .body > .chunk > .time {
     display: block;
-    color: #555;
-    font-size: .9em;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
+    color: #555;
+    font-size: .9em;
+}
+
+.agenda > .body > .chunk > .time > input {
+    width: 70px;   
 }
 
 .agenda > .body > .chunk > .data {
@@ -152,8 +156,13 @@
     font-size: .9em;
 }
 
+.agenda > .body > .chunk > .body > .item > .info > .duration > input,select {
+    font-size: .9em;
+    width: 70px;
+}
+
 .agenda > .body > .chunk > .body > .item > .name {
-    min-height: 100%;
+    height: 100%;
     vertical-align: top;
     margin-left: 85px;
     margin-right: 35px;
