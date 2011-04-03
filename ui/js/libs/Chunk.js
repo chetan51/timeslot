@@ -66,7 +66,7 @@ var Chunk = Class.extend(
 				next_item.options.fixed) {
 				if (next_time > next_item.options.time) {
 					// Move this item to after the next item and refresh again
-					next_item.element.swap(item.element);
+					item.element.insertAfter(next_item.element);
 					refresh_again = true;
 				}
 			}
