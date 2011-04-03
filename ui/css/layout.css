@@ -1,0 +1,206 @@
+/* --------------------------------------------------------------
+
+   layout.css
+   * Sets up site-specific layout styles
+
+-------------------------------------------------------------- */
+
+/* Divs
+-------------------------------------------------------------- */
+
+#site {
+    margin: 0 auto;
+    width: 750px;
+}
+
+#header {
+    padding: 0;
+    margin: .5em;
+    padding-bottom: 0.2em;
+	position: relative;
+	height: 2em;
+    border-bottom: 1px solid #aaa;
+}
+
+#footer {
+    margin: .5em;
+    padding-top: .5em;
+    text-align: center;
+    border-top: 1px solid #aaa;
+}
+
+#sitename {
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	text-align: left;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+    margin-bottom: 0;
+}
+
+#sitename h3 {
+    margin: 0;
+}
+
+#sitename a {
+    color: #000;
+}
+
+#sitenav {
+    text-align: right;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin-bottom: 7px;
+}
+
+#sitenav ul {
+    margin: 0;
+    list-style-type: none;
+}
+
+#sitenav li {
+    display: inline;
+    margin-left: .2em;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+}
+
+#sitenav a {
+    padding: 0.2em;
+}
+
+#sitenav .selected a {
+	color: black;
+	font-weight: bold;
+}
+
+#splash{
+	text-align: center;
+}
+
+#splash h1{
+	color: #333;
+    font-family: 'Crimson Text', serif;
+    font-size: 3em;
+}
+
+#content {
+    margin: .5em;
+    margin-top: 1em;
+}
+
+#footer p{
+    font-style:italic;
+    font-size: 1em;
+}
+
+
+/*
+ * (Start) Agenda
+ */
+
+.agenda {
+    display: block;
+}
+
+.agenda > .body {
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.agenda > .body > .seperator {
+    color: #555;
+    font-size: .9em;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.agenda > .body > .event {
+    min-height: 40px;
+    margin-bottom: 10px;
+}
+
+.agenda > .body > .event div {
+    display: inline-block;
+}
+
+.agenda > .body > .event > .info {
+    width: 80px;
+    margin-right: 15px;
+    text-align: right;
+}
+
+.agenda > .body > .event > .info div {
+    display: block;   
+}
+
+.agenda > .body > .event > .info > .duration {
+    font-size: .9em;
+}
+
+.agenda > .body > .event > .body {
+    width: auto;
+    height: 100%;
+    vertical-align: top;
+    border-left: 1px solid #000;
+    padding-left: 10px;
+    font-size: 1.2em;
+}
+
+.agenda > .body > .event > .controls {
+    width: 20px;
+    float: right;
+}
+
+.agenda > .body > .event > .controls div {
+    display: block;
+}
+
+/*
+ * (End) Agenda
+ */
+
+
+
+#follow-me {
+    margin-top: 25px;
+}
+
+#share-the-love{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+#share-the-love div{
+    display: inline;
+}
+
+#share-the-love-text {
+    float: left;
+}
+
+#share-the-love-text p{
+    display: inline;
+}
+
+#share-buttons {
+    float: right;
+}
+
+#disqus_thread{
+    margin-top: 25px;
+}
+
+
+.clear {
+    clear: both;
+}
+
+hr {
+    border: 0;
+    color: #aaa;
+    background-color: #aaa;
+    height: 1px;
+}
