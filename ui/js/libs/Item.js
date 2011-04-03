@@ -3,9 +3,9 @@
  * 
  * Constructor options:
  *     ID
- *     parentChunk
  *     duration (optional)
  *     name     (optional)
+ *     wasEditedCallback (optional)
  */
 
 var Item = Class.extend(
@@ -39,7 +39,7 @@ var Item = Class.extend(
 		
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
-		this.element.find(".info > .duration").editable({
+		this.element.find("> .info > .duration").editable({
 			type: 'select',
 			options: {
 				15:'(15 m)',
@@ -75,12 +75,12 @@ var Item = Class.extend(
 		else {
 			this.element.find("> .info > .fixed").hide();
 		}
-		this.element.children(".name").html(this.options.name);
+		this.element.find("> .name").html(this.options.name);
 	},
 	
 	_wasHoveredIn: function()
 	{
-		this.element.children(".controls").show();
+		this.element.find("> .controls").show();
 		if (!this.options.fixed) {
 			this.element.find("> .info > .fixed").show();
 		}
@@ -91,7 +91,7 @@ var Item = Class.extend(
 	
 	_wasHoveredOut: function()
 	{
-		this.element.children(".controls").hide();
+		this.element.find("> .controls").hide();
 		if (!this.options.fixed) {
 			this.element.find("> .info > .fixed").hide();
 		}
@@ -109,15 +109,19 @@ var Item = Class.extend(
 	{
 		this.options.duration = durationFromText(content.current);
 		this.refresh();
-		this.options.parentChunk.refresh();
+		if (this.options.wasEditedCallback) {
+			this.options.wasEditedCallback(this);
+		}
 	},
 	
 	_fixedWasEdited: function()
 	{
 		this.options.fixed = this.element.find("> .info > .fixed > .control > input").is(":checked");
 		this.refresh();
-		this.options.parentChunk.refresh();
 		this._wasHoveredIn();
+		if (this.options.wasEditedCallback) {
+			this.options.wasEditedCallback(this);
+		}
 	},
 
 	_nameWasEdited: function()

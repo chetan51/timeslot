@@ -29,8 +29,8 @@ var Chunk = Class.extend(
 		}
 		
 		// Initialize all children items
-		this.element.find(".body > .item").item({
-			parentChunk: this
+		this.element.find("> .body > .item").item({
+			wasEditedCallback: $.proxy(this._itemWasEdited, this)
 		});
 	},
 
@@ -51,7 +51,7 @@ var Chunk = Class.extend(
 		var refresh_again = false;
 		
 		var current_time = this.options.time;
-		this.element.find(".body > .item").each(function() {
+		this.element.find("> .body > .item").each(function() {
 			var item = $(this).data('item');
 			var next_item = $(this).next().data('item');
 			
@@ -97,6 +97,11 @@ var Chunk = Class.extend(
 	_timeWasEdited: function()
 	{
 		this.options.time = timeFromText(this.element.find("> .header > .time").text());
+		this.refresh();
+	},
+
+	_itemWasEdited: function(item)
+	{
 		this.refresh();
 	}
 });

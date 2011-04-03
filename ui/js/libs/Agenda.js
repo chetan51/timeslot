@@ -24,12 +24,12 @@ var Agenda = Class.extend(
 	_load: function()
 	{
 		// Initialize all children chunks
-		this.element.find(".body > .chunk").chunk();
+		this.element.find("> .body > .chunk").chunk();
 	},
 
 	_display: function()
 	{
-		this.element.find(".header > .date").html(this.options.date);
+		this.element.find("> .header > .date").html(this.options.date);
 	}
 });
 
