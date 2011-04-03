@@ -38,42 +38,55 @@
 
 		<div id="content">
 			<div class="agenda">
+				<div class="data">
+					<div class="ID">0</div>
+				</div>
+
 				<div class="header">
-					<h1>April 2, 2010</h1>
+					<h1 class="date">April 2, 2010</h1>
 				</div>
 
 				<div class="body">
-					<div class="seperator">
+					<div class="separator">
+						<div class="data">
+							<div class="ID">0</div>
+						</div>
+
 						<div class="time">7:00am</div>					
 					</div>
 
-					<div class="event" style="height: 40px;">
+					<div class="item" style="min-height: 40px;">
+						<div class="data">
+							<div class="id">0</div>
+						</div>
 						<div class="info">
 							<div class="time">7:00am</div>
 							<div class="duration">(1 h)</div>
 						</div>
-						<div class="body">
-							Running
-						</div>
 						<div class="controls">
 							<div class="delete">x</div>
 							<div class="add">+</div>
 						</div>
+						<div class="name">
+							Running
+						</div>
+						<div class="clear"></div>
 					</div>
 
 
-					<div class="event" style="height: 60px;">
+					<div class="item" style="min-height: 60px;">
 						<div class="info">
 							<div class="time">8:00am</div>
 							<div class="duration">(2 h)</div>
 						</div>
-						<div class="body">
-							Breakfast
-						</div>
 						<div class="controls">
 							<div class="delete">x</div>
 							<div class="add">+</div>
 						</div>
+						<div class="name">
+							Breakfast
+						</div>
+						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
@@ -86,6 +99,10 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.5.1.min.js"%3E%3C/script%3E'))</script>
+	<script src="js/libs/jquery.plugin.js"></script>
+	<script src="js/libs/Agenda.js"></script>
+	<script src="js/libs/Separator.js"></script>
+	<script src="js/libs/Item.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/script.js"></script>
 	<script>

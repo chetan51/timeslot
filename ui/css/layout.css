@@ -102,59 +102,68 @@
 
 .agenda {
     display: block;
+    width: 100%;
+    margin: auto;
+}
+
+.agenda > .data {
+   display: none;
 }
 
 .agenda > .body {
-    width: 100%;
     font-size: 1.2em;
 }
 
-.agenda > .body > .seperator {
+.agenda > .body > .separator {
+    display: block;
     color: #555;
     font-size: .9em;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
 }
 
-.agenda > .body > .event {
+.agenda > .body > .separator > .data {
+    display: none;
+}
+
+.agenda > .body > .item {
     min-height: 40px;
     margin-bottom: 10px;
 }
 
-.agenda > .body > .event div {
-    display: inline-block;
+.agenda > .body > .item > .data {
+    display: none;
 }
 
-.agenda > .body > .event > .info {
-    width: 80px;
-    margin-right: 15px;
+.agenda > .body > .item > .info {
+    float: left;
+    width: 60px;
+    margin: 0;
     text-align: right;
 }
 
-.agenda > .body > .event > .info div {
-    display: block;   
+.agenda > .body > .item > .info div {
 }
 
-.agenda > .body > .event > .info > .duration {
+.agenda > .body > .item > .info > .duration {
     font-size: .9em;
 }
 
-.agenda > .body > .event > .body {
-    width: auto;
-    height: 100%;
+.agenda > .body > .item > .name {
+    min-height: 100%;
     vertical-align: top;
-    border-left: 1px solid #000;
+    margin-left: 75px;
+    margin-right: 35px;
     padding-left: 10px;
+    border-left: 1px solid #000;
     font-size: 1.2em;
 }
 
-.agenda > .body > .event > .controls {
-    width: 20px;
+.agenda > .body > .item > .controls {
+    display: none;
     float: right;
-}
-
-.agenda > .body > .event > .controls div {
-    display: block;
+    width: 20px;
+    margin: 0;
 }
 
 /*
