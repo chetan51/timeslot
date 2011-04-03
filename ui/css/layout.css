@@ -167,7 +167,7 @@
     text-align: right;
 }
 
-.agenda > .body > .chunk > .body > .item > .info > .time input {
+.agenda > .body > .chunk > .body > .item > .info > .time > input {
     width: 70px;
 }
 
@@ -209,7 +209,7 @@
 }
 
 .agenda > .body > .chunk > .body > .item > .name > input {
-    width: 100%;
+    width: 95%;
 }
 
 .agenda > .body > .chunk > .body > .item > .controls {
