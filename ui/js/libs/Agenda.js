@@ -23,22 +23,12 @@ var Agenda = Class.extend(
     
 	_load: function()
 	{
-		var ID = this.element.find(".data > .ID").html();
-		if (!this.options.ID) {
-			this.options.ID = ID;
-		}
-		var date = this.element.find(".header > .date").html();
-		if (!this.options.date) {
-			this.options.date = date;
-		}
-		
 		// Initialize all children chunks
 		this.element.find(".body > .chunk").chunk();
 	},
 
 	_display: function()
 	{
-		this.element.find(".data > .ID").html(this.options.ID);
 		this.element.find(".header > .date").html(this.options.date);
 	}
 });

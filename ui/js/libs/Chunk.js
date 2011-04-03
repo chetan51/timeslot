@@ -23,13 +23,9 @@ var Chunk = Class.extend(
     
 	_load: function()
 	{
-		var ID = this.element.find(".data > .ID").html();
-		if (!this.options.ID) {
-			this.options.ID = ID;
-		}
-		var time = this.element.children(".time").html();
-		if (!this.options.time) {
-			this.options.time = time;
+		// Convert time option to Date object
+		if (this.options.time) {
+			this.options.time = timeFromText(this.options.time);
 		}
 		
 		// Initialize all children items
@@ -38,8 +34,15 @@ var Chunk = Class.extend(
 
 	_display: function()
 	{
-		this.element.find(".data > .ID").html(this.options.ID);
-		this.element.children(".time").html(this.options.time);
+		this.element.children(".time").html(timeToText(this.options.time));
+		
+		var current_time = this.options.time;
+		this.element.find(".body > .item").each(function() {
+			var item = $(this).data('item');
+			item.setTime(current_time);
+			item.refresh();
+			current_time = new Date(current_time.getTime() + item.options.duration * 60 * 1000);
+		});
 		
 		// Add event handlers
 		this.element.children(".time").click($.proxy(this._timeWasClicked, this));

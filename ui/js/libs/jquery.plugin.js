@@ -66,16 +66,26 @@
 /*
  * Javascript Plugin Bridge
  * By Scott Gonzalez
+ * Modified by Chetan Surpur
  */
 $.plugin = function(name, object) {
 	$.fn[name] = function(options) {
 		var args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function() {
+			// Load preset data
+			var instance_options = $.extend({}, options);
+			$(this).find(".preset-data > div").each(function() {
+				//alert($(this).attr('class'));
+				if (!instance_options[$(this).attr('class')]) {
+					instance_options[$(this).attr('class')] = $(this).html();
+				}
+			});
+			
 			var instance = $.data(this, name);
 			if (instance) {
-				instance[options].apply(instance, args);
+				instance[instance_options].apply(instance, args);
 			} else {
-				instance = $.data(this, name, new object(options, this));
+				instance = $.data(this, name, new object(instance_options, this));
 			}
 		});
 	};

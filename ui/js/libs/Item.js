@@ -24,30 +24,25 @@ var Item = Class.extend(
     
 	_load: function()
 	{
-		var ID = this.element.find(".data > .ID").html();
-		if (!this.options.ID) {
-			this.options.ID = ID;
-		}
-		var duration = this.element.find(".info > .duration").html();
-		if (!this.options.duration) {
-			this.options.duration = duration;
-		}
-		var name = this.element.children(".name").html();
-		if (!this.options.name) {
-			this.options.name = name;
-		}
 	},
 
 	_display: function()
 	{
-		this.element.find(".data > .ID").html(this.options.ID);
-		this.element.find(".info > .duration").html(this.options.duration);
-		this.element.children(".name").html(this.options.name);
+		this.refresh();
 		
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
 		this.element.find(".info > .duration").click($.proxy(this._durationWasClicked, this));
 		this.element.children(".name").click($.proxy(this._nameWasClicked, this));
+	},
+
+	refresh: function()
+	{
+		this.element.find(".info > .duration").html(durationToText(this.options.duration));
+		if (this.options.time) {
+			this.element.find(".info > .time").html(timeToText(this.options.time));
+		}
+		this.element.children(".name").html(this.options.name);
 	},
 	
 	_wasHoveredIn: function()
@@ -68,6 +63,11 @@ var Item = Class.extend(
 	_nameWasClicked: function()
 	{
 		alert("name was clicked");
+	},
+
+	setTime: function(time)
+	{
+		this.options.time = time;
 	}
 });
 

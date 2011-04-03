@@ -95,6 +95,9 @@
     font-size: 1em;
 }
 
+.preset-data {
+	display: none;
+}
 
 /*
  * (Start) Agenda
@@ -137,7 +140,7 @@
 
 .agenda > .body > .chunk > .body > .item > .info {
     float: left;
-    width: 60px;
+    width: 70px;
     margin: 0;
     text-align: right;
 }
@@ -152,7 +155,7 @@
 .agenda > .body > .chunk > .body > .item > .name {
     min-height: 100%;
     vertical-align: top;
-    margin-left: 75px;
+    margin-left: 85px;
     margin-right: 35px;
     padding-left: 10px;
     border-left: 1px solid #000;
