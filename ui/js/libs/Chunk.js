@@ -16,11 +16,6 @@ var Chunk = Class.extend(
 		this._display();
 	},
 	 
-	ID: function()
-	{
-		return this.options.ID;
-	},
-    
 	_load: function()
 	{
 		// Convert time option to Date object

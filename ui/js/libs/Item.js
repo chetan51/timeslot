@@ -18,11 +18,6 @@ var Item = Class.extend(
 		this._display();
 	},
 	 
-	ID: function()
-	{
-		return this.options.ID;
-	},
-    
 	_load: function()
 	{
 		// Convert fixed option to boolean

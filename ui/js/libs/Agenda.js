@@ -16,11 +16,6 @@ var Agenda = Class.extend(
 		this._display();
 	},
 	 
-	ID: function()
-	{
-		return this.options.ID;
-	},
-    
 	_load: function()
 	{
 		// Initialize all children chunks
