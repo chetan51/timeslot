@@ -25,6 +25,12 @@ var Item = Class.extend(
     
 	_load: function()
 	{
+		// Convert fixed option to boolean
+		this.options.fixed = this.options.fixed == "true" ? true : false;
+		// Convert time option to Date object
+		if (this.options.time) {
+			this.options.time = timeFromText(this.options.time);
+		}
 	},
 
 	_display: function()
@@ -48,6 +54,7 @@ var Item = Class.extend(
 			onEdit: $.proxy(this._durationWasClicked, this),
 			onSubmit: $.proxy(this._durationWasEdited, this)
 		});
+		this.element.find("> .info > .fixed > .control > input").change($.proxy(this._fixedWasEdited, this));
 		this.element.find("> .name").editable({
 			onSubmit: $.proxy(this._nameWasEdited, this)
 		});
@@ -55,9 +62,16 @@ var Item = Class.extend(
 
 	refresh: function()
 	{
-		this.element.find(".info > .duration").html(durationToText(this.options.duration));
+		this.element.find("> .info > .duration").html(durationToText(this.options.duration));
 		if (this.options.time) {
-			this.element.find(".info > .time").html(timeToText(this.options.time));
+			this.element.find("> .info > .time").html(timeToText(this.options.time));
+		}
+		if (this.options.fixed) {
+			this.element.find("> .info > .fixed > .control").hide();
+			this.element.find("> .info > .fixed").show();
+		}
+		else {
+			this.element.find("> .info > .fixed").hide();
 		}
 		this.element.children(".name").html(this.options.name);
 	},
@@ -65,11 +79,23 @@ var Item = Class.extend(
 	_wasHoveredIn: function()
 	{
 		this.element.children(".controls").show();
+		if (!this.options.fixed) {
+			this.element.find("> .info > .fixed").show();
+		}
+		else {
+			this.element.find("> .info > .fixed > .control").show();
+		}
 	},
 	
 	_wasHoveredOut: function()
 	{
 		this.element.children(".controls").hide();
+		if (!this.options.fixed) {
+			this.element.find("> .info > .fixed").hide();
+		}
+		else {
+			this.element.find("> .info > .fixed > .control").hide();
+		}
 	},
 	
 	_durationWasClicked: function()
@@ -82,6 +108,14 @@ var Item = Class.extend(
 		this.options.duration = durationFromText(content.current);
 		this.refresh();
 		this.options.parentChunk.refresh();
+	},
+	
+	_fixedWasEdited: function()
+	{
+		this.options.fixed = this.element.find("> .info > .fixed > .control > input").is(":checked");
+		this.refresh();
+		this.options.parentChunk.refresh();
+		this._wasHoveredIn();
 	},
 
 	_nameWasEdited: function()

@@ -48,14 +48,40 @@ var Chunk = Class.extend(
 	refresh: function()
 	{
 		this.element.find("> .header > .time").html(timeToText(this.options.time));
+		var refresh_again = false;
 		
 		var current_time = this.options.time;
 		this.element.find(".body > .item").each(function() {
 			var item = $(this).data('item');
-			item.setTime(current_time);
-			item.refresh();
-			current_time = new Date(current_time.getTime() + item.options.duration * 60 * 1000);
+			var next_item = $(this).next().data('item');
+			
+			if (item.options.fixed) {
+				current_time = item.options.time;
+			}
+
+			var next_time = new Date(current_time.getTime() + item.options.duration * 60 * 1000);
+			
+			if (!item.options.fixed &&
+				next_item &&
+				next_item.options.fixed) {
+				if (next_time > next_item.options.time) {
+					// Move this item to after the next item and refresh again
+					next_item.element.swap(item.element);
+					refresh_again = true;
+				}
+			}
+			
+			if (!item.options.fixed) {
+				item.setTime(current_time);
+				item.refresh();
+			}
+			
+			current_time = next_time;
 		});
+		
+		if (refresh_again) {
+			this.refresh();
+		}
 	},
 	
 	_headerWasHoveredIn: function()

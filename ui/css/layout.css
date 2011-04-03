@@ -148,7 +148,7 @@
 }
 
 .agenda > .body > .chunk > .body > .item {
-    min-height: 40px;
+    min-height: 50px;
     margin-bottom: 10px;
 }
 
@@ -163,13 +163,30 @@
     text-align: right;
 }
 
-.agenda > .body > .chunk > .body > .item > .info > .duration {
+.agenda > .body > .chunk > .body > .item > .info > .duration, .fixed {
     font-size: .9em;
+}
+
+.agenda > .body > .chunk > .body > .item > .info > .duration {
+    margin-bottom: 5px;
 }
 
 .agenda > .body > .chunk > .body > .item > .info > .duration > select {
     font-size: .9em;
     width: 70px;
+}
+
+.agenda > .body > .chunk > .body > .item > .info > .fixed {
+    display: none;
+    font-style: italic;
+}
+
+.agenda > .body > .chunk > .body > .item > .info > .fixed div {
+    display: inline;
+}
+
+.agenda > .body > .chunk > .body > .item > .info > .fixed > .control > input {
+    top: 0;
 }
 
 .agenda > .body > .chunk > .body > .item > .name {
