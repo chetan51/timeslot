@@ -39,14 +39,15 @@ var Chunk = Class.extend(
 		this.refresh();
 		
 		// Add event handlers
-		this.element.children(".time").editable({
+		this.element.find("> .header").hover($.proxy(this._headerWasHoveredIn, this), $.proxy(this._headerWasHoveredOut, this));
+		this.element.find("> .header > .time").editable({
 			onSubmit: $.proxy(this._timeWasEdited, this)
 		});
 	},
 	
 	refresh: function()
 	{
-		this.element.find("> .time").html(timeToText(this.options.time));
+		this.element.find("> .header > .time").html(timeToText(this.options.time));
 		
 		var current_time = this.options.time;
 		this.element.find(".body > .item").each(function() {
@@ -57,9 +58,19 @@ var Chunk = Class.extend(
 		});
 	},
 	
+	_headerWasHoveredIn: function()
+	{
+		this.element.find("> .header > .controls").show();
+	},
+	
+	_headerWasHoveredOut: function()
+	{
+		this.element.find("> .header > .controls").hide();
+	},
+	
 	_timeWasEdited: function()
 	{
-		this.options.time = timeFromText(this.element.find("> .time").text());
+		this.options.time = timeFromText(this.element.find("> .header > .time").text());
 		this.refresh();
 	}
 });

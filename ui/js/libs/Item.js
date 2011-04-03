@@ -45,6 +45,7 @@ var Item = Class.extend(
 				105:'(1 h, 45 m)',
 				120:'(2 h)'
 			},
+			onEdit: $.proxy(this._durationWasClicked, this),
 			onSubmit: $.proxy(this._durationWasEdited, this)
 		});
 		this.element.find("> .name").editable({
@@ -69,6 +70,11 @@ var Item = Class.extend(
 	_wasHoveredOut: function()
 	{
 		this.element.children(".controls").hide();
+	},
+	
+	_durationWasClicked: function()
+	{
+		// this.element.find("> .info > .duration > select").attr('size',6);
 	},
 	
 	_durationWasEdited: function(content)

@@ -117,16 +117,30 @@
     font-size: 1.2em;
 }
 
-.agenda > .body > .chunk > .time {
+.agenda > .body > .chunk {
+   position: relative;
+}
+
+.agenda > .body > .chunk > .header {
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
+}
+
+.agenda > .body > .chunk > .header > .time {
     color: #555;
     font-size: .9em;
 }
 
-.agenda > .body > .chunk > .time > input {
+.agenda > .body > .chunk > .header > .time > input {
     width: 70px;   
+}
+
+.agenda > .body > .chunk > .header > .controls {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
 }
 
 .agenda > .body > .chunk > .data {
@@ -149,14 +163,11 @@
     text-align: right;
 }
 
-.agenda > .body > .chunk > .body > .item > .info div {
-}
-
 .agenda > .body > .chunk > .body > .item > .info > .duration {
     font-size: .9em;
 }
 
-.agenda > .body > .chunk > .body > .item > .info > .duration > input,select {
+.agenda > .body > .chunk > .body > .item > .info > .duration > select {
     font-size: .9em;
     width: 70px;
 }
@@ -169,6 +180,10 @@
     padding-left: 10px;
     border-left: 1px solid #000;
     font-size: 1.2em;
+}
+
+.agenda > .body > .chunk > .body > .item > .name > input {
+    width: 100%;
 }
 
 .agenda > .body > .chunk > .body > .item > .controls {
