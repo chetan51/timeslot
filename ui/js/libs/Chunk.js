@@ -25,10 +25,17 @@ var Chunk = Class.extend(
 		}
 		
 		// Initialize all children items
-		this.element.find("> .body > .item").item({
+		$.each(this.element.find("> .body > .item"), $.proxy(function(i, item) {
+			this._initItem($(item));
+		}, this));
+	},
+
+	_initItem: function(item_div, options) {
+		var options = $.extend({
 			wasEditedCallback: $.proxy(this._itemWasEdited, this),
 			addWasClickedCallback: $.proxy(this._itemAddWasClicked, this)
-		});
+		}, options);
+		item_div.item(options);
 	},
 
 	_display: function()
@@ -101,7 +108,7 @@ var Chunk = Class.extend(
 	addItem: function(after_div)
 	{
 		var item_div = this.options.molds.item.clone();
-		item_div.item({
+		this._initItem(item_div, {
 			time: timeToText(this.options.time),
 			duration: 60
 		});
