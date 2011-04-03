@@ -4,6 +4,7 @@
  * Constructor options:
  *     ID
  *     time
+ *     molds
  */
 
 var Chunk = Class.extend(
@@ -25,7 +26,8 @@ var Chunk = Class.extend(
 		
 		// Initialize all children items
 		this.element.find("> .body > .item").item({
-			wasEditedCallback: $.proxy(this._itemWasEdited, this)
+			wasEditedCallback: $.proxy(this._itemWasEdited, this),
+			addWasClickedCallback: $.proxy(this._itemAddWasClicked, this)
 		});
 	},
 
@@ -38,6 +40,7 @@ var Chunk = Class.extend(
 		this.element.find("> .header > .time").editable({
 			onSubmit: $.proxy(this._timeWasEdited, this)
 		});
+		this.element.find("> .header > .controls > .add").click($.proxy(this._addWasClicked, this));
 	},
 	
 	refresh: function()
@@ -94,7 +97,39 @@ var Chunk = Class.extend(
 		this.options.time = timeFromText(this.element.find("> .header > .time").text());
 		this.refresh();
 	},
+	
+	addItem: function(after_div)
+	{
+		var item_div = this.options.molds.item.clone();
+		item_div.item({
+			time: timeToText(this.options.time),
+			duration: 60
+		});
+		
+		if (after_div) {
+			item_div.insertAfter(after_div);
+		}
+		else {
+			this.element.find("> .body").prepend(item_div);
+		}
+		
+		var item = item_div.data('item');
+		item.refresh();
+		item.edit();
+		
+		this.refresh();
+	},
+	
+	_addWasClicked: function()
+	{
+		this.addItem();
+	},
 
+	_itemAddWasClicked: function(item)
+	{
+		this.addItem(item.element);
+	},
+	
 	_itemWasEdited: function(item)
 	{
 		this.refresh();

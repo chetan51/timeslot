@@ -1,3 +1,7 @@
 $(function(){
-	$("#content > .agenda").agenda();
+	$("#content > .agenda").agenda({
+		molds: {
+			item: $("#molds > .item")
+		}
+	});
 });

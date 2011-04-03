@@ -4,6 +4,7 @@
  * Constructor options:
  *     ID
  *     date
+ *     molds
  */
 
 var Agenda = Class.extend(
@@ -19,7 +20,9 @@ var Agenda = Class.extend(
 	_load: function()
 	{
 		// Initialize all children chunks
-		this.element.find("> .body > .chunk").chunk();
+		this.element.find("> .body > .chunk").chunk({
+			molds: this.options.molds
+		});
 	},
 
 	_display: function()

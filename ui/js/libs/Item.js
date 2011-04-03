@@ -5,7 +5,8 @@
  *     ID
  *     duration (optional)
  *     name     (optional)
- *     wasEditedCallback (optional)
+ *     wasEditedCallback     (optional)
+ *     addWasClickedCallback (optional)
  */
 
 var Item = Class.extend(
@@ -53,6 +54,7 @@ var Item = Class.extend(
 		this.element.find("> .name").editable({
 			onSubmit: $.proxy(this._nameWasEdited, this)
 		});
+		this.element.find("> .controls > .add").click($.proxy(this._addWasClicked, this));
 	},
 
 	refresh: function()
@@ -123,9 +125,21 @@ var Item = Class.extend(
 	{
 	},
 
+	_addWasClicked: function()
+	{
+		if (this.options.addWasClickedCallback) {
+			this.options.addWasClickedCallback(this);
+		}
+	},
+
 	setTime: function(time)
 	{
 		this.options.time = time;
+	},
+
+	edit: function()
+	{
+		this.element.find("> .name").click();
 	}
 });
 
