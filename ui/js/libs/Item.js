@@ -73,6 +73,13 @@ var Item = Class.extend(
 			this.element.find("> .info > .fixed").hide();
 		}
 		this.element.find("> .name").html(this.options.name);
+		
+		this.element.find("> .info > .time").editable({
+			onSubmit: $.proxy(this._timeWasEdited, this)
+		});
+		if (!this.options.fixed) {
+			this.element.find("> .info > .time").editable('destroy');
+		}
 	},
 	
 	_wasHoveredIn: function()
@@ -81,9 +88,7 @@ var Item = Class.extend(
 		if (!this.options.fixed) {
 			this.element.find("> .info > .fixed").show();
 		}
-		else {
-			this.element.find("> .info > .fixed > .control").show();
-		}
+		this.element.find("> .info > .fixed > .control").show();
 	},
 	
 	_wasHoveredOut: function()
@@ -92,9 +97,12 @@ var Item = Class.extend(
 		if (!this.options.fixed) {
 			this.element.find("> .info > .fixed").hide();
 		}
-		else {
-			this.element.find("> .info > .fixed > .control").hide();
-		}
+		this.element.find("> .info > .fixed > .control").hide();
+	},
+	
+	_timeWasEdited: function()
+	{
+		this.options.time = timeFromText(this.element.find("> .info > .time").text());
 	},
 	
 	_durationWasClicked: function()

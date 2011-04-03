@@ -167,6 +167,10 @@
     text-align: right;
 }
 
+.agenda > .body > .chunk > .body > .item > .info > .time input {
+    width: 70px;
+}
+
 .agenda > .body > .chunk > .body > .item > .info > .duration, .fixed {
     font-size: .9em;
 }
