@@ -1,3 +1,6 @@
+# Django
+static-collected
+
 *.py[co]
 
 # Packages
