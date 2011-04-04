@@ -5,3 +5,7 @@
 }
 
 body { font-size: 80%; }
+
+#container {
+	width: 320px;
+}
