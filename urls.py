@@ -5,6 +5,9 @@ from django.conf.urls.defaults import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^agendas/$', 'agendas.views.index'),
+    (r'^agendas/(?P<poll_id>\d+)/$', 'agendas.views.detail'),
+    
     # Examples:
     # url(r'^$', 'timeslot.views.home', name='home'),
     # url(r'^timeslot/', include('timeslot.foo.urls')),
