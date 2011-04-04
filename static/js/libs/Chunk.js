@@ -36,6 +36,7 @@ var Chunk = Class.extend(
 		var options = $.extend({
 			wasEditedCallback: $.proxy(this._itemWasEdited, this),
 			addWasClickedCallback: $.proxy(this._itemAddWasClicked, this),
+			deleteWasClickedCallback: $.proxy(this._itemDeleteWasClicked, this),
 			addChunkWasClickedCallback: $.proxy(this._itemAddChunkWasClicked, this)
 		}, options);
 		item_div.item(options);
@@ -53,68 +54,66 @@ var Chunk = Class.extend(
 		this.element.find("> .header > .controls > .add").click($.proxy(this._addWasClicked, this));
 	},
 	
-	refresh: function()
+	_sortFixed: function()
 	{
-		this.element.find("> .header > .time").html(timeToText(this.options.time));
-		var refresh_again = false;
-		
-		var current_time = this.options.time;
+		var start_time = this.options.time;
 		var prev_chunk = this.options.prev_chunk;
 		var next_chunk = this.options.next_chunk;
+		var prev_fixed = null;
 		this.element.find("> .body > .item").each(function() {
 			var item = $(this).data('item');
-			var next_item = $(this).next().data('item');
 			
 			if (item.options.fixed) {
 				if (prev_chunk &&
-					item.options.time < current_time) {
+					item.options.time < start_time) {
 					prev_chunk.appendItemDiv(item.element);
 					prev_chunk.refresh();
-					
-					refresh_again = true;
 				}
 				else if (next_chunk &&
-					item.options.time > next_chunk.options.time) {
+					item.options.time >= next_chunk.options.time) {
 					next_chunk.prependItemDiv(item.element);
 					next_chunk.refresh();
-					
-					refresh_again = true;
+				}
+				
+				if (prev_fixed &&
+					item.options.time < prev_fixed.options.time) {
+					item.element.insertBefore(prev_fixed.element);
 				}
 				else {
-					current_time = item.options.time;
+					prev_fixed = item;
 				}
-			}
-
-			var next_time = new Date(current_time.getTime() + item.options.duration * 60 * 1000);
-			
-			if (!item.options.fixed &&
-				next_item &&
-				next_item.options.fixed) {
-				if (next_time > next_item.options.time) {
-					// Move this item to after the next item and refresh again
-					item.element.insertAfter(next_item.element);
-					refresh_again = true;
-				}
-			}
-			
-			if (!item.options.fixed) {
-				item.setTime(current_time);
-				item.refresh();
-			}
-			
-			current_time = next_time;
-			
-			if (next_chunk &&
-				current_time > next_chunk.options.time) {
-				// Push next chunk forward
-				next_chunk.options.time = current_time;
-				next_chunk.refresh();
 			}
 		});
+	},
+	
+	_sortUnfixed: function()
+	{
+		var start_time = this.options.time;
+		this.element.find("> .body > .item").each(function() {
+			var item = $(this).data('item');
+			var prev_item = $(this).prev().data('item');
+			var next_item = $(this).next().data('item');
+			
+			if (!item.options.fixed) {
+				if (!prev_item) {
+					item.options.time = start_time;
+					item.refresh();
+				}
+				else if (prev_item &&
+					prev_item.options.fixed) {
+					var current_time = prev_item.options.time + (prev_item.options.duration * 60 * 1000);
+					alert("WIP");
+				}
+			}
+		});
+	},
+	
+	refresh: function()
+	{
+		this.element.find("> .header > .time").html(timeToText(this.options.time));
 		
-		if (refresh_again) {
-			this.refresh();
-		}
+		this._sortFixed();
+		this._sortUnfixed();
 	},
 	
 	prependItemDiv: function(item_div, options)
@@ -187,6 +186,8 @@ var Chunk = Class.extend(
 			next_item = after_item.element.next().data('item');
 		}
 		
+		chunk.refresh();
+		
 		chunk.element.insertAfter(this.element);
 	},
 	
@@ -198,6 +199,11 @@ var Chunk = Class.extend(
 	_itemAddWasClicked: function(item)
 	{
 		this.addItem(item);
+	},
+	
+	_itemDeleteWasClicked: function(item)
+	{
+		this.refresh();
 	},
 	
 	_itemAddChunkWasClicked: function(item)

@@ -7,6 +7,7 @@
  *     name     (optional)
  *     wasEditedCallback          (optional)
  *     addWasClickedCallback      (optional)
+ *     deleteWasClickedCallback   (optional)
  *     addChunkWasClickedCallback (optional)
  */
 
@@ -51,11 +52,15 @@ var Item = Class.extend(
 			onEdit: $.proxy(this._durationWasClicked, this),
 			onSubmit: $.proxy(this._durationWasEdited, this)
 		});
+		this.element.find("> .info > .time").editable({
+			onSubmit: $.proxy(this._timeWasEdited, this)
+		});
 		this.element.find("> .info > .fixed > .control > input").change($.proxy(this._fixedWasEdited, this));
 		this.element.find("> .name").editable({
 			onSubmit: $.proxy(this._nameWasEdited, this)
 		});
 		this.element.find("> .controls > .add").click($.proxy(this._addWasClicked, this));
+		this.element.find("> .controls > .delete").click($.proxy(this._deleteWasClicked, this));
 		this.element.find("> .add-chunk").click($.proxy(this._addChunkWasClicked, this));
 	},
 
@@ -75,13 +80,6 @@ var Item = Class.extend(
 			this.element.find("> .info > .fixed").hide();
 		}
 		this.element.find("> .name").html(this.options.name);
-		
-		this.element.find("> .info > .time").editable({
-			onSubmit: $.proxy(this._timeWasEdited, this)
-		});
-		if (!this.options.fixed) {
-			this.element.find("> .info > .time").editable('destroy');
-		}
 	},
 	
 	_wasHoveredIn: function()
@@ -151,16 +149,20 @@ var Item = Class.extend(
 		}
 	},
 	
+	_deleteWasClicked: function()
+	{
+		this.element.remove();
+		
+		if (this.options.deleteWasClickedCallback) {
+			this.options.deleteWasClickedCallback(this);
+		}
+	},
+	
 	_addChunkWasClicked: function()
 	{
 		if (this.options.addChunkWasClickedCallback) {
 			this.options.addChunkWasClickedCallback(this);
 		}
-	},
-
-	setTime: function(time)
-	{
-		this.options.time = time;
 	},
 
 	edit: function()
