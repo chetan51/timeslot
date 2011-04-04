@@ -121,7 +121,7 @@ var Chunk = Class.extend(
 					found_timeslot = true;
 				}
 				else if (next_item.options.fixed &&
-					end_time < next_item.options.time) {
+					end_time <= next_item.options.time) {
 					found_timeslot = true;
 				}
 				
