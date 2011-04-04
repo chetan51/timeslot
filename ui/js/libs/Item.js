@@ -5,8 +5,9 @@
  *     ID
  *     duration (optional)
  *     name     (optional)
- *     wasEditedCallback     (optional)
- *     addWasClickedCallback (optional)
+ *     wasEditedCallback          (optional)
+ *     addWasClickedCallback      (optional)
+ *     addChunkWasClickedCallback (optional)
  */
 
 var Item = Class.extend(
@@ -55,6 +56,7 @@ var Item = Class.extend(
 			onSubmit: $.proxy(this._nameWasEdited, this)
 		});
 		this.element.find("> .controls > .add").click($.proxy(this._addWasClicked, this));
+		this.element.find("> .add-chunk").click($.proxy(this._addChunkWasClicked, this));
 	},
 
 	refresh: function()
@@ -89,6 +91,7 @@ var Item = Class.extend(
 			this.element.find("> .info > .fixed").show();
 		}
 		this.element.find("> .info > .fixed > .control").show();
+		this.element.find("> .add-chunk").show();
 	},
 	
 	_wasHoveredOut: function()
@@ -98,11 +101,16 @@ var Item = Class.extend(
 			this.element.find("> .info > .fixed").hide();
 		}
 		this.element.find("> .info > .fixed > .control").hide();
+		this.element.find("> .add-chunk").hide();
 	},
 	
 	_timeWasEdited: function()
 	{
 		this.options.time = timeFromText(this.element.find("> .info > .time").text());
+		
+		if (this.options.wasEditedCallback) {
+			this.options.wasEditedCallback(this);
+		}
 	},
 	
 	_durationWasClicked: function()
@@ -114,6 +122,7 @@ var Item = Class.extend(
 	{
 		this.options.duration = durationFromText(content.current);
 		this.refresh();
+		
 		if (this.options.wasEditedCallback) {
 			this.options.wasEditedCallback(this);
 		}
@@ -139,6 +148,13 @@ var Item = Class.extend(
 	{
 		if (this.options.addWasClickedCallback) {
 			this.options.addWasClickedCallback(this);
+		}
+	},
+	
+	_addChunkWasClicked: function()
+	{
+		if (this.options.addChunkWasClickedCallback) {
+			this.options.addChunkWasClickedCallback(this);
 		}
 	},
 

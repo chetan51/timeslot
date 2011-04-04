@@ -20,8 +20,16 @@ var Agenda = Class.extend(
 	_load: function()
 	{
 		// Initialize all children chunks
-		this.element.find("> .body > .chunk").chunk({
-			molds: this.options.molds
+		var molds = this.options.molds;
+		var prev_chunk = null;
+		this.element.find("> .body > .chunk").each(function() {
+			$(this).chunk({
+				molds: molds,
+				prev_chunk: prev_chunk,
+				next_chunk: $(this).next().data('chunk')
+			});
+			
+			prev_chunk = $(this).data('chunk');
 		});
 	},
 

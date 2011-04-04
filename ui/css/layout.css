@@ -152,8 +152,10 @@
 }
 
 .agenda > .body > .chunk > .body > .item {
+    position: relative;
     min-height: 60px;
     margin-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .agenda > .body > .chunk > .body > .item > .data {
@@ -217,6 +219,16 @@
     float: right;
     width: 20px;
     margin: 0;
+}
+
+.agenda > .body > .chunk > .body > .item > .add-chunk {
+    display: none;
+    position: absolute;   
+    width: 100%;
+    border-bottom: 1px dotted #666;
+    bottom: 0;
+    text-align: center;
+    font-size: .8em;
 }
 
 /*

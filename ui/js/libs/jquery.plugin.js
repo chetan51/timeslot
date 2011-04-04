@@ -72,19 +72,19 @@ $.plugin = function(name, object) {
 	$.fn[name] = function(options) {
 		var args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function() {
-			// Load preset data
-			var instance_options = $.extend({}, options);
-			$(this).find(".preset-data > div").each(function() {
-				//alert($(this).attr('class'));
-				if (!instance_options[$(this).attr('class')]) {
-					instance_options[$(this).attr('class')] = $(this).html();
-				}
-			});
-			
 			var instance = $.data(this, name);
+			var instance_options = $.extend({}, options);
 			if (instance) {
-				instance[instance_options].apply(instance, args);
+				// Overwrite any old options with new specified ones, keeping the non-specified ones intact
+				instance.options = $.extend(instance.options, instance_options);
 			} else {
+				// Load preset data
+				$(this).find(".preset-data > div").each(function() {
+					if (!instance_options[$(this).attr('class')]) {
+						instance_options[$(this).attr('class')] = $(this).html();
+					}
+				});
+			
 				instance = $.data(this, name, new object(instance_options, this));
 			}
 		});
