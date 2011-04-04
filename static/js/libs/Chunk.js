@@ -7,6 +7,8 @@
  *     molds
  *     prev_chunk (optional)
  *     next_chunk (optional)
+ *     timeWasEditedCallback      (optional)
+ *     addChunkWasClickedCallback (optional)
  */
 
 var Chunk = Class.extend(
@@ -146,6 +148,16 @@ var Chunk = Class.extend(
 		
 		this._sortFixed();
 		this._sortUnfixed();
+		
+		var last_item = this.element.find("> .body > .item").last().data('item');
+		var next_chunk = this.options.next_chunk;
+		if (last_item && next_chunk) {
+			var end_time = new Date(last_item.options.time.getTime() + (last_item.options.duration * 60 * 1000));
+			if (end_time > next_chunk.options.time) {
+				next_chunk.options.time = end_time;
+				next_chunk.refresh();
+			}
+		}
 	},
 	
 	prependItemDiv: function(item_div, options)
@@ -175,6 +187,10 @@ var Chunk = Class.extend(
 	{
 		this.options.time = timeFromText(this.element.find("> .header > .time").text());
 		this.refresh();
+		
+		if (this.options.timeWasEditedCallback) {
+			this.options.timeWasEditedCallback(this);
+		}
 	},
 	
 	addItem: function(after_item)
@@ -199,30 +215,6 @@ var Chunk = Class.extend(
 		this.refresh();
 	},
 	
-	addChunk: function(after_item)
-	{
-		var chunk_div = this.options.molds.chunk.clone();
-		var chunk_time = new Date(after_item.options.time.getTime() + (after_item.options.duration * 60 * 1000));
-		chunk_div.chunk({
-			molds: this.options.molds,
-			time: timeToText(chunk_time),
-			prev_chunk: this,
-			next_chunk: this.options.next_chunk
-		});
-		var chunk = chunk_div.data('chunk');
-		this.options.next_chunk = chunk;
-		
-		var next_item = after_item.element.next().data('item');
-		while(next_item) {
-			chunk.appendItemDiv(next_item.element);
-			next_item = after_item.element.next().data('item');
-		}
-		
-		chunk.refresh();
-		
-		chunk.element.insertAfter(this.element);
-	},
-	
 	_addWasClicked: function()
 	{
 		this.addItem();
@@ -240,7 +232,9 @@ var Chunk = Class.extend(
 	
 	_itemAddChunkWasClicked: function(item)
 	{
-		this.addChunk(item);
+		if (this.options.addChunkWasClickedCallback) {
+			this.options.addChunkWasClickedCallback(this, item);
+		}
 	},
 	
 	_itemWasEdited: function(item)
