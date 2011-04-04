@@ -56,7 +56,7 @@ var Chunk = Class.extend(
 	
 	_sortFixed: function()
 	{
-		var start_time = this.options.time;
+		var chunk_start_time = this.options.time;
 		var prev_chunk = this.options.prev_chunk;
 		var next_chunk = this.options.next_chunk;
 		var prev_fixed = null;
@@ -65,7 +65,7 @@ var Chunk = Class.extend(
 			
 			if (item.options.fixed) {
 				if (prev_chunk &&
-					item.options.time < start_time) {
+					item.options.time < chunk_start_time) {
 					prev_chunk.appendItemDiv(item.element);
 					prev_chunk.refresh();
 				}
@@ -88,24 +88,56 @@ var Chunk = Class.extend(
 	
 	_sortUnfixed: function()
 	{
-		var start_time = this.options.time;
+		var chunk_start_time = this.options.time;
+		var prev_unfixed = null;
+		var unfixed_items = [];
 		this.element.find("> .body > .item").each(function() {
 			var item = $(this).data('item');
-			var prev_item = $(this).prev().data('item');
-			var next_item = $(this).next().data('item');
 			
 			if (!item.options.fixed) {
-				if (!prev_item) {
-					item.options.time = start_time;
-					item.refresh();
-				}
-				else if (prev_item &&
-					prev_item.options.fixed) {
-					var current_time = prev_item.options.time + (prev_item.options.duration * 60 * 1000);
-					alert("WIP");
-				}
+				item.element.detach();
+				unfixed_items.push(item);
 			}
 		});
+		
+		for (u in unfixed_items) {
+			var item = unfixed_items[u];
+			
+			var start_time = chunk_start_time;
+			var next_item = this.element.find("> .body > .item").first().data('item');
+			if (!next_item) {
+				item.options.time = start_time;
+				item.element.prependTo(this.element.find("> .body"));
+				item.refresh();
+			}
+			
+			// Find a long enough timeslot to fit this item from start_time onwards
+			var found_timeslot = false;
+			while(!found_timeslot) {
+				var end_time = new Date(start_time.getTime() + (item.options.duration * 60 * 1000));
+				if (!next_item) {
+					found_timeslot = true;
+				}
+				else if (next_item.options.fixed &&
+					end_time < next_item.options.time) {
+					found_timeslot = true;
+				}
+				
+				if (!found_timeslot) {
+					start_time = new Date(next_item.options.time.getTime() + (next_item.options.duration * 60 * 1000));
+					next_item = next_item.element.next().data('item');
+				}
+			}
+			
+			if (next_item) {
+				item.element.insertBefore(next_item.element);
+			}
+			else {
+				item.element.appendTo(this.element.find("> .body"));
+			}
+			item.options.time = start_time;
+			item.refresh();
+		}
 	},
 	
 	refresh: function()
