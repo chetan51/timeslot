@@ -210,9 +210,9 @@ var Chunk = Class.extend(
 		
 		var item = item_div.data('item');
 		item.refresh();
-		item.edit();
-		
 		this.refresh();
+		
+		item.edit();
 	},
 	
 	_addWasClicked: function()
