@@ -36,6 +36,13 @@ var Agenda = Class.extend(
 		}, this));
 	},
 
+	refresh: function()
+	{
+		this.element.find("> .body > .chunk").each(function() {
+			$(this).data('chunk').refresh();
+		});
+	},
+
 	_initChunk: function(chunk_div, prev_chunk, next_chunk, chunk_time)
 	{
 		var time = null;
@@ -51,6 +58,11 @@ var Agenda = Class.extend(
 			timeWasEditedCallback: $.proxy(this._chunkTimeWasEdited, this),
 			addChunkWasClickedCallback: $.proxy(this._addChunkWasClicked, this)
 		});
+		
+		chunk_div.find("> .body").sortable({
+			connectWith: ".chunk > .body",
+			stop: $.proxy(this._chunkSortingWasStopped, this)
+		});
 	},
 
 	_display: function()
@@ -60,14 +72,17 @@ var Agenda = Class.extend(
 
 	_chunkTimeWasEdited: function(chunk)
 	{
-		this.element.find("> .body > .chunk").each(function() {
-			$(this).data('chunk').refresh();
-		});
+		this.refresh();
 	},
 	
 	_addChunkWasClicked: function(this_chunk, after_item)
 	{
 		this.addChunk(this_chunk, after_item);
+	},
+	
+	_chunkSortingWasStopped: function()
+	{
+		this.refresh();
 	},
 	
 	addChunk: function(this_chunk, after_item)

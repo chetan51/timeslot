@@ -151,6 +151,10 @@
     display: none;
 }
 
+.agenda > .body > .chunk > .body {
+    min-height: 30px;
+}
+
 .agenda > .body > .chunk > .body > .item {
     position: relative;
     min-height: 60px;
