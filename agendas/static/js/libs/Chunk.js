@@ -177,6 +177,12 @@ var Chunk = Class.extend(
 	
 	_headerWasHoveredIn: function()
 	{
+		if (!this.options.prev_chunk) {
+			this.element.find("> .header > .controls > .delete").hide();
+		}
+		else {
+			this.element.find("> .header > .controls > .delete").show();
+		}
 		this.element.find("> .header > .controls").show();
 	},
 	

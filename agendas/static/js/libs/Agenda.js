@@ -133,9 +133,6 @@ var Agenda = Class.extend(
 			chunk.element.remove();
 			this.refresh();
 		}
-		else {
-			alert("Can't delete first separator");
-		}
 	}
 });
 
