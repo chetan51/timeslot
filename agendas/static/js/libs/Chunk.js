@@ -7,8 +7,9 @@
  *     molds
  *     prev_chunk (optional)
  *     next_chunk (optional)
- *     timeWasEditedCallback      (optional)
+ *     wasEditedCallback          (optional)
  *     addChunkWasClickedCallback (optional)
+ *     deleteWasClickedCallback   (optional)
  */
 
 var Chunk = Class.extend(
@@ -54,6 +55,7 @@ var Chunk = Class.extend(
 			onSubmit: $.proxy(this._timeWasEdited, this)
 		});
 		this.element.find("> .header > .controls > .add").click($.proxy(this._addWasClicked, this));
+		this.element.find("> .header > .controls > .delete").click($.proxy(this._deleteWasClicked, this));
 	},
 	
 	_sortFixed: function()
@@ -188,12 +190,34 @@ var Chunk = Class.extend(
 		this.options.time = timeFromText(this.element.find("> .header > .time").text());
 		this.refresh();
 		
-		if (this.options.timeWasEditedCallback) {
-			this.options.timeWasEditedCallback(this);
+		if (this.options.wasEditedCallback) {
+			this.options.wasEditedCallback(this);
 		}
 	},
 	
-	addItem: function(after_item)
+	newItem: function(after_item)
+	{
+		var item_div = this.options.molds.item.clone();
+		this._initItemDiv(item_div, {
+			time: timeToText(this.options.time),
+			duration: 60
+		});
+		
+		if (after_item) {
+			item_div.insertAfter(after_item.element);
+		}
+		else {
+			this.element.find("> .body").prepend(item_div);
+		}
+		
+		var item = item_div.data('item');
+		item.refresh();
+		this.refresh();
+		
+		item.edit();
+	},
+	
+	addItems: function(after_item)
 	{
 		var item_div = this.options.molds.item.clone();
 		this._initItemDiv(item_div, {
@@ -217,12 +241,19 @@ var Chunk = Class.extend(
 	
 	_addWasClicked: function()
 	{
-		this.addItem();
+		this.newItem();
 	},
 
+	_deleteWasClicked: function()
+	{
+		if (this.options.deleteWasClickedCallback) {
+			this.options.deleteWasClickedCallback(this);
+		}
+	},
+	
 	_itemAddWasClicked: function(item)
 	{
-		this.addItem(item);
+		this.newItem(item);
 	},
 	
 	_itemDeleteWasClicked: function(item)
