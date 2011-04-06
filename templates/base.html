@@ -38,86 +38,8 @@
 		</div>
 
 		<div id="content">
-			<div class="agenda">
-				<div class="preset-data">
-					<div class="ID">0</div>
-				</div>
-
-				<div class="header">
-					<h1 class="date">April 2, 2010</h1>
-				</div>
-
-				<div class="body">
-					<div class="chunk">
-						<div class="preset-data">
-							<div class="ID">0</div>
-							<div class="time">7:00 am</div>					
-						</div>
-
-						<div class="header">
-							<div class="time">7:00 am</div>					
-							<div class="controls">
-								<div class="delete">x</div>
-								<div class="add">+</div>
-							</div>
-						</div>
-
-						<div class="body">
-							<div class="item">
-								<div class="preset-data">
-									<div class="ID">0</div>
-									<div class="duration">60</div>
-								</div>
-								<div class="info">
-									<div class="time"></div>
-									<div class="duration"></div>
-									<div class="fixed">
-										<div class="control"><input type="checkbox" /></div>
-										<div class="text">Fixed</div>
-									</div>
-								</div>
-								<div class="controls">
-									<div class="delete">x</div>
-									<div class="add">+</div>
-								</div>
-								<div class="name">Running</div>
-								<div class="clear"></div>
-
-								<div class="add-chunk">add separator</div>
-							</div>
-
-							<div class="item">
-								<div class="preset-data">
-									<div class="ID">1</div>
-									<div class="duration">75</div>
-									<div class="fixed">true</div>
-									<div class="time">8:15 am</div>
-								</div>
-
-								<div class="info">
-									<div class="time">8:15 am</div>
-									<div class="duration"></div>
-									<div class="fixed">
-										<div class="control"><input type="checkbox" checked /></div>
-										<div class="text">Fixed</div>
-									</div>
-								</div>
-
-								<div class="controls">
-									<div class="delete">x</div>
-									<div class="add">+</div>
-								</div>
-
-								<div class="name">Breakfast</div>
-
-								<div class="clear"></div>
-
-								<div class="add-chunk">add separator</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{% block content %}
+			{% endblock content %}
 		</div>
 
 		<div id="footer">
