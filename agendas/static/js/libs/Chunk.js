@@ -153,8 +153,11 @@ var Chunk = Class.extend(
 		
 		var last_item = this.element.find("> .body > .item").last().data('item');
 		var next_chunk = this.options.next_chunk;
-		if (last_item && next_chunk) {
-			var end_time = new Date(last_item.options.time.getTime() + (last_item.options.duration * 60 * 1000));
+		if (next_chunk) {
+			var end_time = this.options.time;
+			if (last_item) {
+				end_time = new Date(last_item.options.time.getTime() + (last_item.options.duration * 60 * 1000));
+			}
 			if (end_time > next_chunk.options.time) {
 				next_chunk.options.time = end_time;
 				next_chunk.refresh();
