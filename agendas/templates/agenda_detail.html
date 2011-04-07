@@ -6,10 +6,11 @@
 </div>
 
 <div class="header">
-	<h1 class="date">{{ date }}</h1>
+	<h1 class="date">{{ agenda.date }}</h1>
 </div>
 
 <div class="body">
+	{% for chunk in agenda.chunk_set.all %}
 	<div class="chunk">
 		<div class="preset-data">
 			<div class="ID">0</div>
@@ -25,6 +26,7 @@
 		</div>
 
 		<div class="body">
+			{% for item in chunk.item_set.all %}
 			<div class="item">
 				<div class="preset-data">
 					<div class="ID">0</div>
@@ -76,7 +78,9 @@
 
 				<div class="add-chunk">add separator</div>
 			</div>
+			{% endfor %}
 		</div>
 	</div>
+	{% endfor %}
 </div>
 {% endblock agenda %}

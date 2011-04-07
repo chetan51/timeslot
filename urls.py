@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^agendas/$', 'agendas.views.index'),
-    #(r'^agendas/(?P<poll_id>\d+)/$', 'agendas.views.detail'),
+    (r'^agendas/(?P<agenda_id>\d+)/$', 'agendas.views.detail'),
     
     # Examples:
     # url(r'^$', 'timeslot.views.home', name='home'),
