@@ -109,130 +109,154 @@
 
 .agenda {
     display: block;
+    position: relative;
     width: 100%;
     margin: auto;
 }
 
-.agenda > .data {
-   display: none;
+.agenda .label {
+    display: none;
+    position: absolute;
+    left: -120px;
+    width: 100px;
+    text-align: right;
 }
 
 .agenda > .body {
     font-size: 1.2em;
 }
 
-.agenda > .body > .chunk {
-   position: relative;
-}
-
-.agenda > .body > .chunk > .header {
+.agenda > .header {
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
 }
 
-.agenda > .body > .chunk > .header > .time {
+.agenda > .header > .date {
+    font-size: 3em;
+    margin-bottom: 5px;
+}
+
+.agenda > .header > .start-time {
     color: #555;
     font-size: .9em;
 }
 
-.agenda > .body > .chunk > .header > .time > input {
+.agenda > .header > .start-time > input {
     width: 70px;   
 }
 
-.agenda > .body > .chunk > .header > .controls {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 10px;
-}
-
-.agenda > .body > .chunk > .data {
-    display: none;
-}
-
-.agenda > .body > .chunk > .body {
+.agenda > .body {
     min-height: 30px;
 }
 
-.agenda > .body > .chunk > .body > .item {
+.agenda > .body > .item {
     position: relative;
-    min-height: 60px;
+    min-height: 90px;
     margin-bottom: 10px;
     padding-bottom: 5px;
 }
 
-.agenda > .body > .chunk > .body > .item > .data {
+.agenda > .body > .item > .data {
     display: none;
 }
 
-.agenda > .body > .chunk > .body > .item > .info {
+.agenda > .body > .item > .info {
     float: left;
-    width: 70px;
+    width: 140px;
     margin: 0;
     text-align: right;
 }
 
-.agenda > .body > .chunk > .body > .item > .info > .time > input {
-    width: 70px;
+.agenda > .body > .item > .info > .time {
+    position: absolute;
+    width: 140px;
+    min-height: 32px;
 }
 
-.agenda > .body > .chunk > .body > .item > .info > .duration, .fixed {
-    font-size: .9em;
-}
-
-.agenda > .body > .chunk > .body > .item > .info > .duration {
-    margin-bottom: 5px;
-}
-
-.agenda > .body > .chunk > .body > .item > .info > .duration > select {
-    font-size: .9em;
-    width: 70px;
-}
-
-.agenda > .body > .chunk > .body > .item > .info > .fixed {
-    display: none;
-    font-style: italic;
-}
-
-.agenda > .body > .chunk > .body > .item > .info > .fixed div {
-    display: inline;
-}
-
-.agenda > .body > .chunk > .body > .item > .info > .fixed > .control > input {
+.agenda > .body > .item > .info > .start-time {
     top: 0;
 }
 
-.agenda > .body > .chunk > .body > .item > .name {
+.agenda > .body > .item > .info > .end-time {
+    bottom: 0;
+}
+
+.agenda > .body > .item > .info > .time > .restriction,
+.agenda > .body > .item > .info > .time > .restriction div,
+.agenda > .body > .item > .info > .time > .time {
+    display: inline-block;
+}
+
+.agenda > .body > .item > .info > .time > .restriction {
+    display: none;
+}
+
+.agenda > .body > .item > .info > .end-time > .time {
+    color: #888;   
+}
+
+.agenda > .body > .item > .info > .time > .restriction > .type {
+    font-size: .8em;
+    width: 60px;
+    text-align: left;
+}
+
+.agenda > .body > .item > .info > .time > .restriction > .time,
+.agenda > .body > .item > .info > .time > .time {
+    vertical-align: top;   
+    width: 70px;
+}
+
+.agenda > .body > .item > .info > .time > .restriction > .time > input {
+    width: 70px;
+}
+    
+.agenda > .body > .item > .info > .time > .restriction > .type > div {
+    margin-bottom: 2px;
+}
+
+.agenda > .body > .item > .info > .time > .restriction > .type > div > input {
+    margin-right: 3px;
+}
+
+.agenda > .body > .item > .info > .duration {
+    display: none;
+    position: absolute;
+    top: 30px;
+    width: 140px;
+    margin-bottom: 8px;
+}
+
+.agenda > .body > .item > .info > .duration > .length {
+    font-size: .9em;
+}
+
+.agenda > .body > .item > .info > .duration > .length > select {
+    font-size: .9em;
+    width: 70px;
+}
+
+.agenda > .body > .item > .name {
     height: 100%;
     overflow: hidden;
     vertical-align: top;
-    margin-left: 85px;
+    margin-left: 165px;
     margin-right: 35px;
     padding-left: 10px;
     border-left: 1px solid #000;
     font-size: 1.2em;
 }
 
-.agenda > .body > .chunk > .body > .item > .name > input {
+.agenda > .body > .item > .name > input {
     width: 95%;
 }
 
-.agenda > .body > .chunk > .body > .item > .controls {
+.agenda > .body > .item > .controls {
     display: none;
     float: right;
     width: 20px;
     margin: 0;
-}
-
-.agenda > .body > .chunk > .body > .item > .add-chunk {
-    display: none;
-    position: absolute;   
-    width: 100%;
-    border-bottom: 1px dotted #666;
-    bottom: 0;
-    text-align: center;
-    font-size: .8em;
 }
 
 /*

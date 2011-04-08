@@ -3,12 +3,15 @@
  * 
  * Constructor options:
  *     ID
- *     duration (optional)
- *     name     (optional)
- *     wasEditedCallback          (optional)
- *     addWasClickedCallback      (optional)
- *     deleteWasClickedCallback   (optional)
- *     addChunkWasClickedCallback (optional)
+ *     duration   (optional)
+ *     name       (optional)
+ *     start_time_restriction_type (optional)
+ *     start_time_restriction_time (optional)
+ *     end_time_restriction_type   (optional)
+ *     end_time_restriction_time   (optional)
+ *     wasEditedCallback           (optional)
+ *     addWasClickedCallback       (optional)
+ *     deleteWasClickedCallback    (optional)
  */
 
 var Item = Class.extend(
@@ -23,12 +26,32 @@ var Item = Class.extend(
 	 
 	_load: function()
 	{
-		// Convert fixed option to boolean
-		this.options.fixed = this.options.fixed == "true" ? true : false;
-		// Convert time option to Date object
-		if (this.options.time) {
-			this.options.time = timeFromText(this.options.time);
+		// Parse time restriction options
+		this.options.times = {
+			start: {
+				restriction: {
+					time: null,
+    					type: null
+				},
+    				time: null
+			},
+			end: {
+				restriction: {
+					time: null,
+    					type: null
+				},
+    				time: null
+			}
 		}
+		
+		if (this.options.start_time_restriction_time) {
+			this.options.times.start.restriction.time = new Time({timeString: this.options.start_time_restriction_time});
+		}
+		if (this.options.end_time_restriction_time) {
+			this.options.times.end.restriction.time = new Time({timeString: this.options.end_time_restriction_time});
+		}
+		this.options.times.start.restriction.type = this.options.start_time_restriction_type;
+		this.options.times.end.restriction.type = this.options.end_time_restriction_type;
 	},
 
 	_display: function()
@@ -37,7 +60,7 @@ var Item = Class.extend(
 		
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
-		this.element.find("> .info > .duration").editable({
+		this.element.find("> .info > .duration > .length").editable({
 			type: 'select',
 			options: {
 				15:'(15 m)',
@@ -52,63 +75,87 @@ var Item = Class.extend(
 			onEdit: $.proxy(this._durationWasClicked, this),
 			onSubmit: $.proxy(this._durationWasEdited, this)
 		});
-		this.element.find("> .info > .time").editable({
-			onSubmit: $.proxy(this._timeWasEdited, this)
+		
+		this.element.find("> .info > .start-time > .restriction > .type > .fixed > input").change($.proxy(this._startTimeRestrictionTypeFixedWasEdited, this));
+		this.element.find("> .info > .start-time > .restriction > .type > .range > input").change($.proxy(this._startTimeRestrictionTypeRangeWasEdited, this));
+		this.element.find("> .info > .start-time > .restriction > .time").editable({
+			onEdit: $.proxy(this._startTimeRestrictionTimeWasClicked, this),
+			onSubmit: $.proxy(this._startTimeRestrictionTimeWasEdited, this)
 		});
-		this.element.find("> .info > .fixed > .control > input").change($.proxy(this._fixedWasEdited, this));
-		this.element.find("> .name").editable({
-			onSubmit: $.proxy(this._nameWasEdited, this)
+		this.element.find("> .info > .end-time > .restriction > .time").editable({
+			onEdit: $.proxy(this._endTimeRestrictionTimeWasClicked, this),
+			onSubmit: $.proxy(this._endTimeRestrictionTimeWasEdited, this)
 		});
+		
 		this.element.find("> .controls > .add").click($.proxy(this._addWasClicked, this));
 		this.element.find("> .controls > .delete").click($.proxy(this._deleteWasClicked, this));
-		this.element.find("> .add-chunk").click($.proxy(this._addChunkWasClicked, this));
+	},
+	
+	_updateTimeRestriction: function(time, type, div)
+	{
+		var fixed_input = div.find("> .type > .fixed > input");
+		var range_input = div.find("> .type > .range > input");
+		if (type) {
+			if (type == "fixed") {
+				fixed_input.attr("checked", true);
+				range_input.attr("checked", false);
+			}
+			else if (type == "range") {
+				fixed_input.attr("checked", false);
+				range_input.attr("checked", true);
+			}
+		}
+		else {
+			fixed_input.attr("checked", false);
+			range_input.attr("checked", false);
+		}
+		
+		if (time && type) {
+			div.find("> .time").html(time.format());
+		}
+		else {
+			div.find("> .time").html("whenever");
+		}
 	},
 
 	refresh: function()
 	{
-		this.element.find("> .info > .duration").html(durationToText(this.options.duration));
+		this.element.find("> .info > .duration > .length").html(durationToText(this.options.duration));
 		var height = 60 + (this.options.duration / 15) * 5;
 		this.element.css("height", height + "px");
-		if (this.options.time) {
-			this.element.find("> .info > .time").html(timeToText(this.options.time));
-		}
-		if (this.options.fixed) {
-			this.element.find("> .info > .fixed > .control").hide();
-			this.element.find("> .info > .fixed").show();
-		}
-		else {
-			this.element.find("> .info > .fixed").hide();
-		}
+		
+		this._updateTimeRestriction(
+				this.options.times.start.restriction.time,
+				this.options.times.start.restriction.type,
+				this.element.find("> .info > .start-time > .restriction")
+		);
+		this._updateTimeRestriction(
+				this.options.times.end.restriction.time,
+				this.options.times.end.restriction.type,
+				this.element.find("> .info > .end-time > .restriction")
+		);
+		
 		this.element.find("> .name").html(this.options.name);
 	},
 	
 	_wasHoveredIn: function()
 	{
 		this.element.find("> .controls").show();
-		if (!this.options.fixed) {
-			this.element.find("> .info > .fixed").show();
-		}
-		this.element.find("> .info > .fixed > .control").show();
-		this.element.find("> .add-chunk").show();
+		this.element.find("> .info > .duration").show();
+		var time_div = this.element.find("> .info > .time");
+		time_div.find("> .label").show();
+		time_div.find("> .time").hide();
+		time_div.find("> .restriction").show();
 	},
 	
 	_wasHoveredOut: function()
 	{
 		this.element.find("> .controls").hide();
-		if (!this.options.fixed) {
-			this.element.find("> .info > .fixed").hide();
-		}
-		this.element.find("> .info > .fixed > .control").hide();
-		this.element.find("> .add-chunk").hide();
-	},
-	
-	_timeWasEdited: function()
-	{
-		this.options.time = timeFromText(this.element.find("> .info > .time").text());
-		
-		if (this.options.wasEditedCallback) {
-			this.options.wasEditedCallback(this);
-		}
+		this.element.find("> .info > .duration").hide();
+		var time_div = this.element.find("> .info > .time");
+		time_div.find("> .label").hide();
+		time_div.find("> .time").show();
+		time_div.find("> .restriction").hide();
 	},
 	
 	_durationWasClicked: function()
@@ -126,20 +173,96 @@ var Item = Class.extend(
 		}
 	},
 	
-	_fixedWasEdited: function()
+	_nameWasEdited: function()
 	{
-		this.options.fixed = this.element.find("> .info > .fixed > .control > input").is(":checked");
+	},
+	
+	_timeRestrictionTypeWasEdited: function(time_type, restriction_type, restriction_input, restriction_time_div)
+	{
+		var enabled = restriction_input.attr("checked");
+		if (enabled) {
+			this.options.times[time_type].restriction.type = restriction_type;
+		}
+		else {
+			this.options.times[time_type].restriction.type = null;
+		}
+		
+		this.refresh();
+		
+		if (enabled && !this.options.times[time_type].restriction.time) {
+			restriction_time_div.click();
+		}
+		else {
+			// Done editing
+			if (this.options.wasEditedCallback) {
+				this.options.wasEditedCallback(this);
+			}
+		}
+	},
+	
+	_startTimeRestrictionTypeFixedWasEdited: function()
+	{
+		this._timeRestrictionTypeWasEdited(
+			"start",
+			"fixed",
+			this.element.find("> .info > .start-time > .restriction > .type > .fixed > input"),
+			this.element.find("> .info > .start-time > .restriction > .time")
+		);
+	},
+	
+	_startTimeRestrictionTypeRangeWasEdited: function()
+	{
+		this._timeRestrictionTypeWasEdited(
+			"start",
+			"range",
+			this.element.find("> .info > .start-time > .restriction > .type > .range > input"),
+			this.element.find("> .info > .start-time > .restriction > .time")
+		);
+	},
+	
+	_timeRestrictionTimeWasEdited: function(content, time_type)
+	{
+		var new_time = new Time({timeString: content.current});
+		var old_time = new Time({timeString: content.previous});
+		if (new_time.options.time) {
+			this.options.times[time_type].restriction.time = new_time;
+		}
+		else if (old_time.options.time) {
+			this.options.times[time_type].restriction.time = old_time;
+		}
+		else {
+			this.options.times[time_type].restriction.time = null;
+		}
+		
 		this.refresh();
 		
 		if (this.options.wasEditedCallback) {
 			this.options.wasEditedCallback(this);
 		}
-		
-		this._wasHoveredIn();
 	},
-
-	_nameWasEdited: function()
+	
+	_startTimeRestrictionTimeWasEdited: function(content)
 	{
+		this._timeRestrictionTimeWasEdited(content, "start");
+	},
+	
+	_endTimeRestrictionTimeWasEdited: function(content)
+	{
+		this._timeRestrictionTimeWasEdited(content, "end");
+	},
+	
+	_startTimeRestrictionTimeWasClicked: function()
+	{
+		if (!this.options.times.start.restriction.time) {
+			this.element.find("> .info > .start-time > .restriction > .time > input").val("");
+		}
+	},
+	
+	_endTimeRestrictionTimeWasClicked: function()
+	{
+		if (!this.options.times.end.restriction.time) {
+			this.element.find("> .info > .end-time > .restriction > .time > input").val("");
+		}
 	},
 
 	_addWasClicked: function()
@@ -158,13 +281,6 @@ var Item = Class.extend(
 		}
 	},
 	
-	_addChunkWasClicked: function()
-	{
-		if (this.options.addChunkWasClickedCallback) {
-			this.options.addChunkWasClickedCallback(this);
-		}
-	},
-
 	edit: function()
 	{
 		this.element.find("> .name").click();

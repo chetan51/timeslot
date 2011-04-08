@@ -3,84 +3,141 @@
 {% block agenda %}
 <div class="preset-data">
 	<div class="ID">0</div>
+	<div class="start_time">7:00 am</div>					
 </div>
 
 <div class="header">
-	<h1 class="date">{{ agenda.date }}</h1>
+	<div class="date">{{ agenda.date }}</div>
+	<div class="start-time">
+		<div class="label">day start</div>
+		<div class="time">7:00 am</div>					
+	</div>
 </div>
 
 <div class="body">
-	{% for chunk in agenda.chunk_set.all %}
-	<div class="chunk">
+	{% for item in agenda.item_set.all %}
+	<div class="item">
 		<div class="preset-data">
 			<div class="ID">0</div>
-			<div class="time">7:00 am</div>					
+			<div class="duration">60</div>
+			<div class="start_time_restriction_time">6:00 pm</div>
+			<div class="start_time_restriction_type">fixed</div>
+			<div class="end_time_restriction_time">8:00 pm</div>
+			<div class="end_time_restriction_type">range</div>
 		</div>
-
-		<div class="header">
-			<div class="time">7:00 am</div>					
-			<div class="controls">
-				<div class="delete">x</div>
-				<div class="add">+</div>
-			</div>
-		</div>
-
-		<div class="body">
-			{% for item in chunk.item_set.all %}
-			<div class="item">
-				<div class="preset-data">
-					<div class="ID">0</div>
-					<div class="duration">60</div>
-				</div>
-				<div class="info">
-					<div class="time"></div>
-					<div class="duration"></div>
-					<div class="fixed">
-						<div class="control"><input type="checkbox" /></div>
-						<div class="text">Fixed</div>
+		<div class="info">
+			<div class="time start-time">
+				<div class="label">start</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="fixed">
+							<input type="checkbox" />at
+						</div>
+						<div class="range">
+							<input type="checkbox" />after
+						</div>
 					</div>
+					<div class="time">whenever</div>
 				</div>
-				<div class="controls">
-					<div class="delete">x</div>
-					<div class="add">+</div>
-				</div>
-				<div class="name">Running</div>
-				<div class="clear"></div>
-
-				<div class="add-chunk">add separator</div>
+				<div class="time">7:00 am</div>
 			</div>
-
-			<div class="item">
-				<div class="preset-data">
-					<div class="ID">1</div>
-					<div class="duration">75</div>
-					<div class="fixed">true</div>
-					<div class="time">8:15 am</div>
-				</div>
-
-				<div class="info">
-					<div class="time">8:15 am</div>
-					<div class="duration"></div>
-					<div class="fixed">
-						<div class="control"><input type="checkbox" checked /></div>
-						<div class="text">Fixed</div>
+			<div class="duration">
+				<div class="label">duration</div>
+				<div class="length">(60 m)</div>
+			</div>
+			<div class="time end-time">
+				<div class="label">end</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="fixed">
+							<input type="checkbox" />at
+						</div>
+						<div class="range">
+							<input type="checkbox" />before
+						</div>
 					</div>
+					<div class="time">whenever</div>
 				</div>
-
-				<div class="controls">
-					<div class="delete">x</div>
-					<div class="add">+</div>
-				</div>
-
-				<div class="name">Breakfast</div>
-
-				<div class="clear"></div>
-
-				<div class="add-chunk">add separator</div>
+				<div class="time">8:00 am</div>
 			</div>
-			{% endfor %}
 		</div>
+		<div class="controls">
+			<div class="delete">x</div>
+			<div class="add">+</div>
+		</div>
+		<div class="name">Running</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="item">
+		<div class="preset-data">
+			<div class="ID">0</div>
+			<div class="duration">60</div>
+		</div>
+		<div class="info">
+			<div class="time start-time">
+				<div class="label">start</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="fixed">
+							<input type="checkbox" />at
+						</div>
+						<div class="range">
+							<input type="checkbox" />after
+						</div>
+					</div>
+					<div class="time">whenever</div>
+				</div>
+				<div class="time">8:00 am</div>
+			</div>
+			<div class="duration">
+				<div class="length">(60 m)</div>
+			</div>
+			<div class="time end-time">
+				<div class="label">end</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="fixed">
+							<input type="checkbox" />at
+						</div>
+						<div class="range">
+							<input type="checkbox" />before
+						</div>
+					</div>
+					<div class="time">whenever</div>
+				</div>
+				<div class="time">9:00 am</div>
+			</div>
+		</div>
+		<div class="controls">
+			<div class="delete">x</div>
+			<div class="add">+</div>
+		</div>
+		<div class="name">Breakfast</div>
+		<div class="clear"></div>
 	</div>
 	{% endfor %}
 </div>
 {% endblock agenda %}
+
+<div id="molds">
+	<div class="item">
+		<div class="info">
+			<div class="time"></div>
+			<div class="duration"></div>
+			<div class="fixed">
+				<div class="control"><input type="checkbox" /></div>
+				<div class="text">Fixed</div>
+			</div>
+		</div>
+
+		<div class="controls">
+			<div class="delete">x</div>
+			<div class="add">+</div>
+		</div>
+
+		<div class="name"></div>
+
+		<div class="clear"></div>
+	</div>
+</div>
