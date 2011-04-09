@@ -129,7 +129,7 @@
 .agenda > .header {
     display: block;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .agenda > .header > .date {
@@ -153,8 +153,7 @@
 .agenda > .body > .item {
     position: relative;
     min-height: 90px;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .agenda > .body > .item > .data {

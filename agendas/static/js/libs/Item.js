@@ -87,6 +87,8 @@ var Item = Class.extend(
 			onEdit: $.proxy(this._startTimeRestrictionTimeWasClicked, this),
 			onSubmit: $.proxy(this._startTimeRestrictionTimeWasEdited, this)
 		});
+		
+		this.element.find("> .info > .end-time > .restriction > .type > .range > input").change($.proxy(this._endTimeRestrictionTypeRangeWasEdited, this));
 		this.element.find("> .info > .end-time > .restriction > .time").editable({
 			onEdit: $.proxy(this._endTimeRestrictionTimeWasClicked, this),
 			onSubmit: $.proxy(this._endTimeRestrictionTimeWasEdited, this)
@@ -222,6 +224,16 @@ var Item = Class.extend(
 			"range",
 			this.element.find("> .info > .start-time > .restriction > .type > .range > input"),
 			this.element.find("> .info > .start-time > .restriction > .time")
+		);
+	},
+	
+	_endTimeRestrictionTypeRangeWasEdited: function()
+	{
+		this._timeRestrictionTypeWasEdited(
+			"end",
+			"range",
+			this.element.find("> .info > .end-time > .restriction > .type > .range > input"),
+			this.element.find("> .info > .end-time > .restriction > .time")
 		);
 	},
 	
