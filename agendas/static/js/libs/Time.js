@@ -65,8 +65,11 @@ var Time = Class.extend(
 		}
 	},
 
-	add: function(minutes)
+	plusMinutes: function(minutes)
 	{
-		
+		var new_time = new Time();
+		new_time.options.time = new Date(this.options.time.getTime() + minutes * 60 * 1000);
+		new_time.options.time.setSeconds(0);
+		return new_time;
 	}
 });

@@ -241,7 +241,23 @@ var Item = Class.extend(
 	{
 		var new_time = new Time({timeString: content.current});
 		var old_time = new Time({timeString: content.previous});
-		if (new_time.options.time) {
+		
+		var sanity_check = true;
+		if (time_type == "start" &&
+			new_time.options.time &&
+			this.options.times.end.restriction.time) {
+				sanity_check = new_time.plusMinutes(this.options.duration).options.time <= this.options.times.end.restriction.time.options.time;
+		}
+		else if (time_type == "end" &&
+			new_time.options.time &&
+			this.options.times.start.restriction.time) {
+				sanity_check = this.options.times.start.restriction.time.plusMinutes(this.options.duration).options.time <= new_time.options.time;
+		}
+		else {
+			sanity_check = false;
+		}
+
+		if (sanity_check) {
 			this.options.times[time_type].restriction.time = new_time;
 		}
 		else if (old_time.options.time) {
