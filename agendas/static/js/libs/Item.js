@@ -60,6 +60,11 @@ var Item = Class.extend(
 		
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
+		
+		this.element.find("> .name").editable({
+			onSubmit: $.proxy(this._nameWasEdited, this)
+		});
+		
 		this.element.find("> .info > .duration > .length").editable({
 			type: 'select',
 			options: {
@@ -91,16 +96,16 @@ var Item = Class.extend(
 		this.element.find("> .controls > .delete").click($.proxy(this._deleteWasClicked, this));
 	},
 	
-	_updateTimeRestriction: function(time, type, div)
+	_updateTimeRestriction: function(restriction_type, restriction_time, restriction_div)
 	{
-		var fixed_input = div.find("> .type > .fixed > input");
-		var range_input = div.find("> .type > .range > input");
-		if (type) {
-			if (type == "fixed") {
+		var fixed_input = restriction_div.find("> .type > .fixed > input");
+		var range_input = restriction_div.find("> .type > .range > input");
+		if (restriction_type) {
+			if (restriction_type == "fixed") {
 				fixed_input.attr("checked", true);
 				range_input.attr("checked", false);
 			}
-			else if (type == "range") {
+			else if (restriction_type == "range") {
 				fixed_input.attr("checked", false);
 				range_input.attr("checked", true);
 			}
@@ -110,11 +115,11 @@ var Item = Class.extend(
 			range_input.attr("checked", false);
 		}
 		
-		if (time && type) {
-			div.find("> .time").html(time.format());
+		if (restriction_time && restriction_type) {
+			restriction_div.find("> .time").html(restriction_time.format());
 		}
 		else {
-			div.find("> .time").html("whenever");
+			restriction_div.find("> .time").html("whenever");
 		}
 	},
 
@@ -125,13 +130,13 @@ var Item = Class.extend(
 		this.element.css("height", height + "px");
 		
 		this._updateTimeRestriction(
-				this.options.times.start.restriction.time,
 				this.options.times.start.restriction.type,
+				this.options.times.start.restriction.time,
 				this.element.find("> .info > .start-time > .restriction")
 		);
 		this._updateTimeRestriction(
-				this.options.times.end.restriction.time,
 				this.options.times.end.restriction.type,
+				this.options.times.end.restriction.time,
 				this.element.find("> .info > .end-time > .restriction")
 		);
 		
@@ -279,11 +284,6 @@ var Item = Class.extend(
 		if (this.options.deleteWasClickedCallback) {
 			this.options.deleteWasClickedCallback(this);
 		}
-	},
-	
-	edit: function()
-	{
-		this.element.find("> .name").click();
 	}
 });
 
