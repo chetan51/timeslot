@@ -17,6 +17,7 @@ var Time = Class.extend(
 				t.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
 				t.setMinutes(parseInt(time[2]) || 0);
 				t.setSeconds(0);
+				t.setMilliseconds(0);
 			}
 			else {
 				t = null;
@@ -70,6 +71,7 @@ var Time = Class.extend(
 		var new_time = new Time();
 		new_time.options.time = new Date(this.options.time.getTime() + minutes * 60 * 1000);
 		new_time.options.time.setSeconds(0);
+		new_time.options.time.setMilliseconds(0);
 		return new_time;
 	}
 });
