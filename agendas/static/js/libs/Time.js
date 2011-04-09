@@ -13,7 +13,7 @@ var Time = Class.extend(
 		if (this.options.timeString) {
 			var t = new Date();
 			var time = this.options.timeString.match(/(\d+)(?::(\d\d))?\s*(p?)/);
-			if (time && time[1] && time[3]) {
+			if (time && time[1]) {
 				t.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
 				t.setMinutes(parseInt(time[2]) || 0);
 				t.setSeconds(0);

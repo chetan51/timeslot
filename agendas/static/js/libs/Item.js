@@ -127,7 +127,34 @@ var Item = Class.extend(
 
 	refresh: function()
 	{
+		if (this.options.conflict) {
+			this.element.addClass("conflict");
+			this.options.times.start.time = null;
+			this.options.times.end.time = null;
+		}
+		else {
+			this.element.removeClass("conflict");
+		}
+		
+		this.element.find("> .name").html(this.options.name);
+		
 		this.element.find("> .info > .duration > .length").html(durationToText(this.options.duration));
+		
+		var start_time_div = this.element.find("> .info > .start-time > .time");
+		if (this.options.times.start.time) {
+			start_time_div.html(this.options.times.start.time.format());
+		}
+		else {
+			start_time_div.html("");
+		}
+		var end_time_div = this.element.find("> .info > .end-time > .time");
+		if (this.options.times.end.time) {
+			end_time_div.html(this.options.times.end.time.format());
+		}
+		else {
+			end_time_div.html("");
+		}
+		
 		var height = 60 + (this.options.duration / 15) * 5;
 		this.element.css("height", height + "px");
 		
@@ -141,8 +168,6 @@ var Item = Class.extend(
 				this.options.times.end.restriction.time,
 				this.element.find("> .info > .end-time > .restriction")
 		);
-		
-		this.element.find("> .name").html(this.options.name);
 	},
 	
 	_wasHoveredIn: function()

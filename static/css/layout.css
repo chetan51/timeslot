@@ -156,6 +156,10 @@
     margin-bottom: 5px;
 }
 
+.agenda > .body > .conflict {
+    background-color: #F08080;
+}
+
 .agenda > .body > .item > .data {
     display: none;
 }

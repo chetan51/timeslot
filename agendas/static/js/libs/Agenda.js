@@ -20,22 +20,15 @@ var Agenda = Class.extend(
 	 
 	_load: function()
 	{
-		// Convert time option to Date object
+		// Parse start time option
 		if (this.options.start_time) {
-			this.options.start_time = timeFromText(this.options.start_time);
+			this.options.start_time = new Time({timeString: this.options.start_time});
 		}
 		
 		// Initialize all children items
 		$.each(this.element.find("> .body > .item"), $.proxy(function(i, item_div) {
 			this._initItemDiv($(item_div));
 		}, this));
-	},
-
-	refresh: function()
-	{
-		this.element.find("> .body > .chunk").each(function() {
-			$(this).data('chunk').refresh();
-		});
 	},
 
 	_initItemDiv: function(item_div, options) {
@@ -50,7 +43,97 @@ var Agenda = Class.extend(
 	_display: function()
 	{
 		this.element.find("> .header > .date").html(this.options.date);
-		this.element.find("> .header > .start-time > .time").html(timeToText(this.options.start_time));
+		
+		this.refresh();
+	},
+
+	refresh: function()
+	{
+		this.element.find("> .header > .start-time > .time").html(this.options.start_time.format());
+		
+		var agenda_start_time = this.options.start_time;
+		var first_item = this.element.find("> .body > .item").first().data('item');
+		var item = first_item;
+		
+		while (item) {
+			var start_restriction_type = item.options.times.start.restriction.type;
+			var start_restriction_time = item.options.times.start.restriction.time;
+			
+			var start_time = agenda_start_time;
+			var end_time = null;
+			var conflict = false;
+			
+			// Scan from the beginning, find an empty timeslot for the item
+			if (start_restriction_type == "fixed" &&
+				start_restriction_time) {
+				if (start_restriction_time.options.time < agenda_start_time.options.time) {
+					conflict = true;
+				}
+				else {
+					start_time = start_restriction_time;
+				}
+			}
+			
+			var current_item = first_item;
+			var placed_item = false;
+			
+			while (!placed_item &&
+				!conflict &&
+				current_item.element[0] != item.element[0]) {
+				if (start_restriction_type == "fixed" &&
+					start_restriction_time) {
+					if (!current_item.options.conflict &&
+						start_restriction_time.options.time < current_item.options.times.end.time.options.time) {
+						if (current_item.options.times.start.restriction.type != "fixed") {
+							item.element.insertBefore(current_item.element);
+							placed_item = true;
+						}
+						else {
+							conflict = true;
+						}
+					}
+					
+					if (placed_item) {
+						start_time = start_restriction_time;
+					}
+				}
+				else {
+					if (!current_item.options.conflict) {
+						if (current_item.options.times.start.restriction.type == "fixed") {
+							if (start_time.plusMinutes(item.options.duration).options.time <= current_item.options.times.start.time.options.time) {
+								item.element.insertBefore(current_item.element);
+								placed_item = true;
+							}
+							else {
+								start_time = current_item.options.times.end.time;
+							}
+						}
+						else {
+							start_time = current_item.options.times.end.time;
+						}
+					}
+				}
+				
+				if (!placed_item && !conflict) {
+					current_item = current_item.element.next().data('item');
+				}
+			}
+			
+			
+			item.options.conflict = conflict;
+			if (start_time) {
+				item.options.times.start.time = start_time;
+				item.options.times.end.time = start_time.plusMinutes(item.options.duration);
+			}
+			item.refresh();
+				
+			item = item.element.next().data('item');
+		}
+	},
+
+	_itemWasEdited: function()
+	{
+		this.refresh();
 	}
 });
 
