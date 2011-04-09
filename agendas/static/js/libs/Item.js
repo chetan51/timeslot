@@ -165,6 +165,10 @@ var Item = Class.extend(
 		time_div.find("> .restriction").hide();
 	},
 	
+	_nameWasEdited: function()
+	{
+	},
+	
 	_durationWasClicked: function()
 	{
 		// this.element.find("> .info > .duration > select").attr('size',6);
@@ -172,16 +176,23 @@ var Item = Class.extend(
 	
 	_durationWasEdited: function(content)
 	{
-		this.options.duration = durationFromText(content.current);
+		var new_duration = durationFromText(content.current);
+		var old_duration = durationFromText(content.previous);
+		
+		var sanity_check = this._timeSanityCheck(this.options.times.start.restriction.time, this.options.times.end.restriction.time, new_duration);
+
+		if (sanity_check) {
+			this.options.duration = new_duration;
+		}
+		else {
+			this.options.duration = old_duration;
+		}
+		
 		this.refresh();
 		
 		if (this.options.wasEditedCallback) {
 			this.options.wasEditedCallback(this);
 		}
-	},
-	
-	_nameWasEdited: function()
-	{
 	},
 	
 	_timeRestrictionTypeWasEdited: function(time_type, restriction_type, restriction_input, restriction_time_div)
@@ -237,21 +248,29 @@ var Item = Class.extend(
 		);
 	},
 	
+	_timeSanityCheck: function(start_time, end_time, duration)
+	{
+		if (start_time.options.time &&
+			end_time.options.time &&
+			duration) {
+			return start_time.plusMinutes(this.options.duration).options.time <= end_time.options.time;
+		}
+		else {
+			return false;
+		}
+	},
+	
 	_timeRestrictionTimeWasEdited: function(content, time_type)
 	{
 		var new_time = new Time({timeString: content.current});
 		var old_time = new Time({timeString: content.previous});
 		
 		var sanity_check = true;
-		if (time_type == "start" &&
-			new_time.options.time &&
-			this.options.times.end.restriction.time) {
-				sanity_check = new_time.plusMinutes(this.options.duration).options.time <= this.options.times.end.restriction.time.options.time;
+		if (time_type == "start") {
+			sanity_check = this._timeSanityCheck(new_time, this.options.times.end.restriction.time, this.options.duration);
 		}
-		else if (time_type == "end" &&
-			new_time.options.time &&
-			this.options.times.start.restriction.time) {
-				sanity_check = this.options.times.start.restriction.time.plusMinutes(this.options.duration).options.time <= new_time.options.time;
+		else if (time_type == "end") {
+			sanity_check = this._timeSanityCheck(this.options.times.start.restriction.time, new_time, this.options.duration);
 		}
 		else {
 			sanity_check = false;
