@@ -43,7 +43,7 @@
 }
 
 #sitename a {
-    color: #000;
+    color: #444;
 }
 
 #sitenav {
@@ -127,6 +127,7 @@
 }
 
 .agenda > .header {
+    position: relative;
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
@@ -135,6 +136,13 @@
 .agenda > .header > .date {
     font-size: 3em;
     margin-bottom: 5px;
+}
+
+.agenda > .header > .add-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
 }
 
 .agenda > .header > .start-time > .time {

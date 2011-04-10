@@ -54,6 +54,8 @@ var Agenda = Class.extend(
 			onSubmit: $.proxy(this._startTimeWasEdited, this)
 		});
 		
+		this.element.find("> .header > .add-item").click($.proxy(this._itemAddWasClicked, this));
+		
 		this.refresh();
 	},
 
@@ -190,7 +192,7 @@ var Agenda = Class.extend(
 		var new_item_div = this.options.molds.item.clone();
 		this._initItemDiv(new_item_div);
 		var new_item = new_item_div.data('item');
-		if (item) {
+		if (item.options) {
 			new_item.element.insertAfter(item.element);
 		}
 		else {
