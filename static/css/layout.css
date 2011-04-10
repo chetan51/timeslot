@@ -137,12 +137,12 @@
     margin-bottom: 5px;
 }
 
-.agenda > .header > .start-time {
+.agenda > .header > .start-time > .time {
     color: #555;
     font-size: .9em;
 }
 
-.agenda > .header > .start-time > input {
+.agenda > .header > .start-time > .time > input {
     width: 70px;   
 }
 
