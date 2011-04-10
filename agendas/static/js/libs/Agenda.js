@@ -44,6 +44,11 @@ var Agenda = Class.extend(
 	{
 		this.element.find("> .header > .date").html(this.options.date);
 		
+		// Add event handlers
+		this.element.find("> .body").sortable({
+			stop: $.proxy(this._sortWasFinished, this)
+		});
+		
 		this.refresh();
 	},
 
@@ -192,6 +197,11 @@ var Agenda = Class.extend(
 	_itemDeleteWasClicked: function(item)
 	{
 		item.element.remove();
+		this.refresh();
+	},
+	
+	_sortWasFinished: function()
+	{
 		this.refresh();
 	}
 });
