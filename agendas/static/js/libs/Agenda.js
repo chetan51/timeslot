@@ -49,6 +49,10 @@ var Agenda = Class.extend(
 			stop: $.proxy(this._sortWasFinished, this)
 		});
 		
+		this.element.find("> .header > .start-time > .time").editable({
+			onSubmit: $.proxy(this._startTimeWasEdited, this)
+		});
+		
 		this.refresh();
 	},
 
@@ -202,6 +206,17 @@ var Agenda = Class.extend(
 	
 	_sortWasFinished: function()
 	{
+		this.refresh();
+	},
+
+	_startTimeWasEdited: function(content)
+	{
+		var new_time = new Time({timeString: content.current});
+		
+		if (new_time.options.time) {
+			this.options.start_time = new_time;
+		}
+		
 		this.refresh();
 	}
 });
