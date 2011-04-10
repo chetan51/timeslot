@@ -356,8 +356,6 @@ var Item = Class.extend(
 	
 	_deleteWasClicked: function()
 	{
-		this.element.remove();
-		
 		if (this.options.deleteWasClickedCallback) {
 			this.options.deleteWasClickedCallback(this);
 		}

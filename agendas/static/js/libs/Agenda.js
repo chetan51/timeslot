@@ -35,7 +35,7 @@ var Agenda = Class.extend(
 		var options = $.extend({
 			wasEditedCallback: $.proxy(this._itemWasEdited, this),
 			addWasClickedCallback: $.proxy(this._itemAddWasClicked, this),
-			deleteWasClickedCallback: $.proxy(this._itemDeleteWasClicked, this),
+			deleteWasClickedCallback: $.proxy(this._itemDeleteWasClicked, this)
 		}, options);
 		item_div.item(options);
 	},
@@ -172,6 +172,26 @@ var Agenda = Class.extend(
 
 	_itemWasEdited: function()
 	{
+		this.refresh();
+	},
+
+	_itemAddWasClicked: function(item)
+	{
+		var new_item_div = this.options.molds.item.clone();
+		this._initItemDiv(new_item_div);
+		var new_item = new_item_div.data('item');
+		if (item) {
+			new_item.element.insertAfter(item.element);
+		}
+		else {
+			new_item.element.appendTo(this.element.find("> .body"));
+		}
+		this.refresh();
+	},
+
+	_itemDeleteWasClicked: function(item)
+	{
+		item.element.remove();
 		this.refresh();
 	}
 });

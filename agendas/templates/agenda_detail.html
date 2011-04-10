@@ -158,26 +158,50 @@
 	</div>
 	{% endfor %}
 </div>
-{% endblock agenda %}
 
 <div id="molds">
 	<div class="item">
+		<div class="preset-data">
+			<div class="duration">60</div>
+		</div>
 		<div class="info">
-			<div class="time"></div>
-			<div class="duration"></div>
-			<div class="fixed">
-				<div class="control"><input type="checkbox" /></div>
-				<div class="text">Fixed</div>
+			<div class="time start-time">
+				<div class="label">start</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="fixed">
+							<input type="checkbox" />at
+						</div>
+						<div class="range">
+							<input type="checkbox" />after
+						</div>
+					</div>
+					<div class="time">whenever</div>
+				</div>
+				<div class="time"></div>
+			</div>
+			<div class="duration">
+				<div class="length"></div>
+			</div>
+			<div class="time end-time">
+				<div class="label">end</div>
+				<div class="restriction">
+					<div class="type">
+						<div class="range">
+							<input type="checkbox" />before
+						</div>
+					</div>
+					<div class="time">whenever</div>
+				</div>
+				<div class="time"></div>
 			</div>
 		</div>
-
 		<div class="controls">
 			<div class="delete">x</div>
 			<div class="add">+</div>
 		</div>
-
 		<div class="name"></div>
-
 		<div class="clear"></div>
 	</div>
 </div>
+{% endblock agenda %}
