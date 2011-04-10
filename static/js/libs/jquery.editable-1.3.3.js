@@ -17,7 +17,7 @@ $.fn.editable = function(options){
 		submit: null,
 		cancel: null,
 		type: 'text', //text, textarea or select
-		submitBy: 'blur', //blur,change,dblclick,click
+		submitBy: 'focusout', //focusout,blur,change,dblclick,click
 		editBy: 'click',
 		options: null
 	}
@@ -36,7 +36,8 @@ $.fn.editable = function(options){
 	options.toEditable = function(){
 		$this = $(this);
 		$this.data('editable.current',$this.html());
-		opts = $this.data('editable.options');
+		$this.data('editable.editing',true);
+		var opts = $this.data('editable.options');
 		$.editableFactory[opts.type].toEditable($this.empty(),opts);
 		// Configure events,styles for changed content
 		$this.data('editable.previous',$this.data('editable.current'))
@@ -67,7 +68,8 @@ $.fn.editable = function(options){
 								);
 	}
 	options.toNonEditable = function($this,change){
-		opts = $this.data('editable.options');
+		var opts = $this.data('editable.options');
+		$this.data('editable.editing',false);
 		// Configure events,styles for changed content
 		$this.one(opts.editBy,opts.toEditable)
 			 .data( 'editable.current',

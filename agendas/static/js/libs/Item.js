@@ -118,10 +118,14 @@ var Item = Class.extend(
 		}
 		
 		if (restriction_time && restriction_type) {
-			restriction_div.find("> .time").html(restriction_time.format());
+			if (!restriction_div.find("> .time").data('editable.editing')) {
+				restriction_div.find("> .time").html(restriction_time.format());
+			}
 		}
 		else {
-			restriction_div.find("> .time").html("whenever");
+			if (!restriction_div.find("> .time").data('editable.editing')) {
+				restriction_div.find("> .time").html("whenever");
+			}
 		}
 	},
 
@@ -136,9 +140,13 @@ var Item = Class.extend(
 			this.element.removeClass("conflict");
 		}
 		
-		this.element.find("> .name").html(this.options.name);
+		if (!this.element.find("> .name").data('editable.editing')) {
+			this.element.find("> .name").html(this.options.name);
+		}
 		
-		this.element.find("> .info > .duration > .length").html(durationToText(this.options.duration));
+		if (!this.element.find("> .info > .duration > .length").data('editable.editing')) {
+			this.element.find("> .info > .duration > .length").html(durationToText(this.options.duration));
+		}
 		
 		var start_time_div = this.element.find("> .info > .start-time > .time");
 		if (this.options.times.start.time) {
