@@ -52,15 +52,15 @@ var Agenda = Class.extend(
 		this.element.find("> .header > .start-time > .time").html(this.options.start_time.format());
 		
 		var agenda_start_time = this.options.start_time;
-		var first_item = this.element.find("> .body > .item").first().data('item');
-		var item = first_item;
+		var item = this.element.find("> .body > .item").first().data('item');
 		
 		while (item) {
 			var start_restriction_type = item.options.times.start.restriction.type;
 			var start_restriction_time = item.options.times.start.restriction.time;
+			var end_restriction_type = item.options.times.end.restriction.type;
+			var end_restriction_time = item.options.times.end.restriction.time;
 			
 			var start_time = agenda_start_time;
-			var end_time = null;
 			var conflict = false;
 			
 			// Scan from the beginning, find an empty timeslot for the item
@@ -73,8 +73,23 @@ var Agenda = Class.extend(
 					start_time = start_restriction_time;
 				}
 			}
+			if (start_restriction_type == "range" &&
+				start_restriction_time) {
+				if (start_restriction_time.options.time > agenda_start_time.options.time) {
+					start_time = start_restriction_time;
+				}
+				else {
+					start_time = agenda_start_time;
+				}
+			}
+			if (end_restriction_type == "range" &&
+				end_restriction_time) {
+				if (agenda_start_time.plusMinutes(item.options.duration).options.time > end_restriction_time.options.time) {
+					conflict = true;
+				}
+			}
 			
-			var current_item = first_item;
+			var current_item = this.element.find("> .body > .item").first().data('item');
 			var placed_item = false;
 			
 			while (!placed_item &&
@@ -99,17 +114,42 @@ var Agenda = Class.extend(
 				}
 				else {
 					if (!current_item.options.conflict) {
-						if (current_item.options.times.start.restriction.type == "fixed") {
+						if (current_item.options.times.start.restriction.type == "fixed" ||
+						current_item.options.times.start.restriction.type == "range") {
 							if (start_time.plusMinutes(item.options.duration).options.time <= current_item.options.times.start.time.options.time) {
 								item.element.insertBefore(current_item.element);
 								placed_item = true;
 							}
-							else {
+						}
+						
+						if (!placed_item) {
+							if (item.options.times.start.restriction.type != "range" ||
+							(item.options.times.start.restriction.type == "range" &&
+							item.options.times.start.restriction.time.options.time <= current_item.options.times.end.time.options.time)) {
 								start_time = current_item.options.times.end.time;
 							}
 						}
+					}
+				}
+				
+				if (end_restriction_type == "range" &&
+					end_restriction_time) {
+					if (start_time.plusMinutes(item.options.duration).options.time > end_restriction_time.options.time) {
+						if (placed_item) {
+							conflict = true;
+						}
 						else {
-							start_time = current_item.options.times.end.time;
+							if (current_item.options.times.start.restriction.type != "fixed" &&
+							(!current_item.options.times.end.restriction.type ||
+							 (current_item.options.times.end.restriction.type == "range" && 
+							  current_item.options.times.end.time.plusMinutes(item.options.duration).options.time <= current_item.options.times.end.restriction.time.options.time))) {
+								item.element.insertBefore(current_item.element);
+								start_time = current_item.options.times.start.time;
+								placed_item = true;
+							}
+							else {
+								conflict = true;
+							}
 						}
 					}
 				}
@@ -118,7 +158,6 @@ var Agenda = Class.extend(
 					current_item = current_item.element.next().data('item');
 				}
 			}
-			
 			
 			item.options.conflict = conflict;
 			if (start_time) {
