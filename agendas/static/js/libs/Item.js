@@ -205,14 +205,7 @@ var Item = Class.extend(
 	
 	_editWasClicked: function()
 	{
-		this.options.being_edited = true;
-		this.element.find("> .controls > .edit").hide();
-		this.element.find("> .controls > .edit-done").show();
-		
-		var time_div = this.element.find("> .info > .time");
-		time_div.find("> .label").show();
-		time_div.find("> .time").hide();
-		time_div.find("> .restriction").show();
+		this.edit();
 	},
 	
 	_editDoneWasClicked: function()
@@ -225,6 +218,24 @@ var Item = Class.extend(
 		time_div.find("> .label").hide();
 		time_div.find("> .time").show();
 		time_div.find("> .restriction").hide();
+	},
+	
+	edit: function()
+	{
+		this.options.being_edited = true;
+		this.element.find("> .controls").show();
+		this.element.find("> .controls > .edit").hide();
+		this.element.find("> .controls > .edit-done").show();
+		
+		var time_div = this.element.find("> .info > .time");
+		time_div.find("> .label").show();
+		time_div.find("> .time").hide();
+		time_div.find("> .restriction").show();
+	},
+	
+	editName: function()
+	{
+		this.element.find("> .name").click();
 	},
 	
 	_nameWasEdited: function()

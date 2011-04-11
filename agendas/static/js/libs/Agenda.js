@@ -199,6 +199,8 @@ var Agenda = Class.extend(
 		else {
 			new_item.element.appendTo(this.element.find("> .body"));
 		}
+		new_item.edit();
+		new_item.editName();
 		this.refresh();
 	},
 
