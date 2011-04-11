@@ -265,9 +265,23 @@
 
 .agenda > .body > .item > .controls {
     display: none;
+    position: relative;
     float: right;
-    width: 20px;
+    width: 100px;
+    height: 100%;
     margin: 0;
+    text-align: right;
+    font-size: .9em;
+}
+
+.agenda > .body > .item > .controls > .edit-done {
+    display: none;
+}
+
+.agenda > .body > .item > .controls > .add {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 /*

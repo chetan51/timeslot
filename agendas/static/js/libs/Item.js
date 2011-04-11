@@ -61,6 +61,9 @@ var Item = Class.extend(
 		// Add event handlers
 		this.element.hover($.proxy(this._wasHoveredIn, this), $.proxy(this._wasHoveredOut, this));
 		
+		this.element.find("> .controls > .edit").click($.proxy(this._editWasClicked, this));
+		this.element.find("> .controls > .edit-done").click($.proxy(this._editDoneWasClicked, this));
+		
 		this.element.find("> .name").editable({
 			onSubmit: $.proxy(this._nameWasEdited, this)
 		});
@@ -186,18 +189,38 @@ var Item = Class.extend(
 	
 	_wasHoveredIn: function()
 	{
-		this.element.find("> .controls").show();
-		this.element.find("> .info > .duration").show();
+		if (!this.options.being_edited) {
+			this.element.find("> .controls").show();
+			this.element.find("> .info > .duration").show();
+		}
+	},
+	
+	_wasHoveredOut: function()
+	{
+		if (!this.options.being_edited) {
+			this.element.find("> .controls").hide();
+			this.element.find("> .info > .duration").hide();
+		}
+	},
+	
+	_editWasClicked: function()
+	{
+		this.options.being_edited = true;
+		this.element.find("> .controls > .edit").hide();
+		this.element.find("> .controls > .edit-done").show();
+		
 		var time_div = this.element.find("> .info > .time");
 		time_div.find("> .label").show();
 		time_div.find("> .time").hide();
 		time_div.find("> .restriction").show();
 	},
 	
-	_wasHoveredOut: function()
+	_editDoneWasClicked: function()
 	{
-		this.element.find("> .controls").hide();
-		this.element.find("> .info > .duration").hide();
+		this.options.being_edited = false;
+		this.element.find("> .controls > .edit").show();
+		this.element.find("> .controls > .edit-done").hide();
+		
 		var time_div = this.element.find("> .info > .time");
 		time_div.find("> .label").hide();
 		time_div.find("> .time").show();
