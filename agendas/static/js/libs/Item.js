@@ -102,7 +102,7 @@ var Item = Class.extend(
 	{
 		var fixed_input = restriction_div.find("> .type > .fixed > input");
 		var range_input = restriction_div.find("> .type > .range > input");
-		if (restriction_type) {
+		if (restriction_type && restriction_time) {
 			if (restriction_type == "fixed") {
 				fixed_input.attr("checked", true);
 				range_input.attr("checked", false);
@@ -111,18 +111,15 @@ var Item = Class.extend(
 				fixed_input.attr("checked", false);
 				range_input.attr("checked", true);
 			}
-		}
-		else {
-			fixed_input.attr("checked", false);
-			range_input.attr("checked", false);
-		}
-		
-		if (restriction_time && restriction_type) {
+			
 			if (!restriction_div.find("> .time").data('editable.editing')) {
 				restriction_div.find("> .time").html(restriction_time.format());
 			}
 		}
 		else {
+			fixed_input.attr("checked", false);
+			range_input.attr("checked", false);
+			
 			if (!restriction_div.find("> .time").data('editable.editing')) {
 				restriction_div.find("> .time").html("whenever");
 			}
@@ -165,6 +162,15 @@ var Item = Class.extend(
 		
 		var height = 60 + (this.options.duration / 15) * 5;
 		this.element.css("height", height + "px");
+		
+		if (!this.options.times.start.restriction.type || !this.options.times.start.restriction.time) {
+			this.options.times.start.restriction.type = null;
+			this.options.times.start.restriction.time = null;
+		}
+		if (!this.options.times.end.restriction.type || !this.options.times.end.restriction.time) {
+			this.options.times.end.restriction.type = null;
+			this.options.times.end.restriction.time = null;
+		}
 		
 		this._updateTimeRestriction(
 				this.options.times.start.restriction.type,
@@ -235,13 +241,13 @@ var Item = Class.extend(
 			this.options.times[time_type].restriction.time = null;
 		}
 		
-		this.refresh();
-		
 		if (enabled && !this.options.times[time_type].restriction.time) {
 			restriction_time_div.click();
 		}
 		else {
 			// Done editing
+			this.refresh();
+		
 			if (this.options.wasEditedCallback) {
 				this.options.wasEditedCallback(this);
 			}
