@@ -101,7 +101,7 @@ var Item = Class.extend(
 		this.element.find("> .controls > .delete").click($.proxy(this._deleteWasClicked, this));
 	},
 	
-	_updateTimeRestriction: function(restriction_type, restriction_time, restriction_div)
+	_updateTimeRestriction: function(restriction_type, restriction_time, restriction_div, actual_time)
 	{
 		var fixed_input = restriction_div.find("> .type > .fixed > input");
 		var range_input = restriction_div.find("> .type > .range > input");
@@ -124,7 +124,12 @@ var Item = Class.extend(
 			range_input.attr("checked", false);
 			
 			if (!restriction_div.find("> .time").data('editable.editing')) {
-				restriction_div.find("> .time").html("whenever");
+				if (actual_time) {
+					restriction_div.find("> .time").html(actual_time.format());
+				}
+				else {
+					restriction_div.find("> .time").html("whenever");
+				}
 			}
 		}
 	},
@@ -178,12 +183,14 @@ var Item = Class.extend(
 		this._updateTimeRestriction(
 				this.options.times.start.restriction.type,
 				this.options.times.start.restriction.time,
-				this.element.find("> .info > .start-time > .restriction")
+				this.element.find("> .info > .start-time > .restriction"),
+				this.options.times.start.time
 		);
 		this._updateTimeRestriction(
 				this.options.times.end.restriction.type,
 				this.options.times.end.restriction.time,
-				this.element.find("> .info > .end-time > .restriction")
+				this.element.find("> .info > .end-time > .restriction"),
+				this.options.times.end.time
 		);
 	},
 	
@@ -371,11 +378,17 @@ var Item = Class.extend(
 	_timeRestrictionTimeWasClicked: function(time_type, input)
 	{
 		var time = this.options.times[time_type].restriction.time;
+		var type = this.options.times[time_type].restriction.type;
+		
 		if (time) {
 			input.val(time.format());
 		}
 		else {
 			input.val("");
+		}
+		
+		if (!type) {
+			input.blur();
 		}
 	},
 	
