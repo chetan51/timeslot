@@ -1,5 +1,6 @@
 /*
  * Class Time
+ * Note: Only cares about hours and minutes.
  * 
  * Constructor options:
  *     timeString
@@ -65,6 +66,11 @@ var Time = Class.extend(
 			return "";
 		}
 	},
+	
+	isValid: function()
+	{
+		return this.options.time != null;
+	},
 
 	plusMinutes: function(minutes)
 	{
@@ -73,5 +79,25 @@ var Time = Class.extend(
 		new_time.options.time.setSeconds(0);
 		new_time.options.time.setMilliseconds(0);
 		return new_time;
+	},
+
+	isLessOrEqual: function(time) // less than or equal to
+	{
+		return this.options.time <= time.options.time;
+	},
+
+	isLess: function(time) // less than
+	{
+		return this.options.time < time.options.time;
+	},
+
+	isGreaterOrEqual: function(time) // greater than or equal to
+	{
+		return this.options.time >= time.options.time;
+	},
+
+	isGreater: function(time) // greater than
+	{
+		return this.options.time > time.options.time;
 	}
 });

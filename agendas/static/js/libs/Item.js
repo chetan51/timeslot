@@ -280,10 +280,10 @@ var Item = Class.extend(
 	
 	_timeSanityCheck: function(start_time, end_time, duration)
 	{
-		if (start_time && start_time.options.time &&
-			end_time && end_time.options.time &&
+		if (start_time && start_time.isValid() &&
+			end_time && end_time.isValid() &&
 			duration) {
-			return start_time.plusMinutes(this.options.duration).options.time <= end_time.options.time;
+			return start_time.plusMinutes(this.options.duration).isLessOrEqual(end_time);
 		}
 		else {
 			return true;
@@ -305,7 +305,7 @@ var Item = Class.extend(
 			sanity_check = false;
 		}
 
-		if (new_time.options.time &&
+		if (new_time.isValid() &&
 			this.options.times[time_type].restriction.type &&
 			sanity_check) {
 			this.options.times[time_type].restriction.time = new_time;

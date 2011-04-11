@@ -78,7 +78,7 @@ var Agenda = Class.extend(
 			// Scan from the beginning, find an empty timeslot for the item
 			if (start_restriction_type == "fixed" &&
 				start_restriction_time) {
-				if (start_restriction_time.options.time < agenda_start_time.options.time) {
+				if (start_restriction_time.isLess(agenda_start_time)) {
 					conflict = true;
 				}
 				else {
@@ -87,7 +87,7 @@ var Agenda = Class.extend(
 			}
 			if (start_restriction_type == "range" &&
 				start_restriction_time) {
-				if (start_restriction_time.options.time > agenda_start_time.options.time) {
+				if (start_restriction_time.isGreater(agenda_start_time)) {
 					start_time = start_restriction_time;
 				}
 				else {
@@ -96,7 +96,7 @@ var Agenda = Class.extend(
 			}
 			if (end_restriction_type == "range" &&
 				end_restriction_time) {
-				if (agenda_start_time.plusMinutes(item.options.duration).options.time > end_restriction_time.options.time) {
+				if (agenda_start_time.plusMinutes(item.options.duration).isGreater(end_restriction_time)) {
 					conflict = true;
 				}
 			}
@@ -110,7 +110,7 @@ var Agenda = Class.extend(
 				if (start_restriction_type == "fixed" &&
 					start_restriction_time) {
 					if (!current_item.options.conflict &&
-						(start_restriction_time.options.time < current_item.options.times.end.time.options.time)) {
+						(start_restriction_time.isLess(current_item.options.times.end.time))) {
 						if (current_item.options.times.start.restriction.type != "fixed") {
 							item.element.insertBefore(current_item.element);
 							placed_item = true;
@@ -128,7 +128,7 @@ var Agenda = Class.extend(
 					if (!current_item.options.conflict) {
 						if (current_item.options.times.start.restriction.type == "fixed" ||
 						current_item.options.times.start.restriction.type == "range") {
-							if (start_time.plusMinutes(item.options.duration).options.time <= current_item.options.times.start.time.options.time) {
+							if (start_time.plusMinutes(item.options.duration).isLessOrEqual(current_item.options.times.start.time)) {
 								item.element.insertBefore(current_item.element);
 								placed_item = true;
 							}
@@ -137,7 +137,7 @@ var Agenda = Class.extend(
 						if (!placed_item) {
 							if (start_restriction_type != "range" ||
 							(start_restriction_type == "range" &&
-							start_restriction_time <= current_item.options.times.end.time.options.time)) {
+							start_restriction_time.isLessOrEqual(current_item.options.times.end.time))) {
 								start_time = current_item.options.times.end.time;
 							}
 						}
@@ -146,7 +146,7 @@ var Agenda = Class.extend(
 				
 				if (end_restriction_type == "range" &&
 					end_restriction_time) {
-					if (start_time.plusMinutes(item.options.duration).options.time > end_restriction_time.options.time) {
+					if (start_time.plusMinutes(item.options.duration).isGreater(end_restriction_time)) {
 						if (placed_item) {
 							conflict = true;
 						}
@@ -155,7 +155,7 @@ var Agenda = Class.extend(
 							(!current_item.options.times.end.restriction.type ||
 							 (current_item.options.times.end.restriction.type == "range" &&
 							  current_item.options.times.end.restriction.time &&
-							  (current_item.options.times.end.time.plusMinutes(item.options.duration).options.time <= current_item.options.times.end.restriction.time.options.time)))) {
+							  (current_item.options.times.end.time.plusMinutes(item.options.duration).isLessOrEqual(current_item.options.times.end.restriction.time))))) {
 								item.element.insertBefore(current_item.element);
 								start_time = current_item.options.times.start.time;
 								placed_item = true;
@@ -227,7 +227,7 @@ var Agenda = Class.extend(
 	{
 		var new_time = new Time({timeString: content.current});
 		
-		if (new_time.options.time) {
+		if (new_time.isValid()) {
 			this.options.start_time = new_time;
 		}
 		
