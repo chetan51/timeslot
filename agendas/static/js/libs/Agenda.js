@@ -110,7 +110,7 @@ var Agenda = Class.extend(
 				if (start_restriction_type == "fixed" &&
 					start_restriction_time) {
 					if (!current_item.options.conflict &&
-						start_restriction_time.options.time < current_item.options.times.end.time.options.time) {
+						(start_restriction_time.options.time < current_item.options.times.end.time.options.time)) {
 						if (current_item.options.times.start.restriction.type != "fixed") {
 							item.element.insertBefore(current_item.element);
 							placed_item = true;
@@ -135,9 +135,9 @@ var Agenda = Class.extend(
 						}
 						
 						if (!placed_item) {
-							if (item.options.times.start.restriction.type != "range" ||
-							(item.options.times.start.restriction.type == "range" &&
-							item.options.times.start.restriction.time.options.time <= current_item.options.times.end.time.options.time)) {
+							if (start_restriction_type != "range" ||
+							(start_restriction_type == "range" &&
+							start_restriction_time <= current_item.options.times.end.time.options.time)) {
 								start_time = current_item.options.times.end.time;
 							}
 						}
@@ -153,8 +153,9 @@ var Agenda = Class.extend(
 						else {
 							if (current_item.options.times.start.restriction.type != "fixed" &&
 							(!current_item.options.times.end.restriction.type ||
-							 (current_item.options.times.end.restriction.type == "range" && 
-							  current_item.options.times.end.time.plusMinutes(item.options.duration).options.time <= current_item.options.times.end.restriction.time.options.time))) {
+							 (current_item.options.times.end.restriction.type == "range" &&
+							  current_item.options.times.end.restriction.time &&
+							  (current_item.options.times.end.time.plusMinutes(item.options.duration).options.time <= current_item.options.times.end.restriction.time.options.time)))) {
 								item.element.insertBefore(current_item.element);
 								start_time = current_item.options.times.start.time;
 								placed_item = true;
