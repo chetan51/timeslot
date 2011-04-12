@@ -235,6 +235,8 @@ var Item = Class.extend(
 		this.element.find("> .controls > .edit").show();
 		this.element.find("> .controls > .edit-done").hide();
 		
+		this.element.find("> .info > .duration").hide();
+		
 		var time_div = this.element.find("> .info > .time");
 		time_div.find("> .label").hide();
 		time_div.find("> .time").show();
@@ -249,6 +251,8 @@ var Item = Class.extend(
 		this.element.find("> .controls").show();
 		this.element.find("> .controls > .edit").hide();
 		this.element.find("> .controls > .edit-done").show();
+		
+		this.element.find("> .info > .duration").show();
 		
 		var time_div = this.element.find("> .info > .time");
 		time_div.find("> .label").show();
