@@ -157,12 +157,21 @@
     min-height: 30px;
 }
 
-.agenda > .body > .item {
+.agenda > .body > .item,
+.agenda > .body > .free-time {
     position: relative;
-    min-height: 90px;
     margin-bottom: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.agenda > .body > .item {
+    min-height: 90px;
+}
+
+.agenda > .body > .free-time {
+    min-height: 50px;
+	background-color: #eee;
 }
 
 .agenda > .body > .item-A {
@@ -180,7 +189,8 @@
     display: none;
 }
 
-.agenda > .body > .item > .info {
+.agenda > .body > .item > .info,
+.agenda > .body > .free-time > .info {
     float: left;
     width: 140px;
     margin-left: -70px;
@@ -239,15 +249,25 @@
     margin-right: 3px;
 }
 
-.agenda > .body > .item > .info > .duration {
-    display: none;
+.agenda > .body > .item > .info > .duration,
+.agenda > .body > .free-time > .info > .duration {
     position: absolute;
-    top: 30px;
-    width: 140px;
+    left: 0;
+    width: 70px;
     margin-bottom: 8px;
 }
 
-.agenda > .body > .item > .info > .duration > .length {
+.agenda > .body > .item > .info > .duration {
+    display: none;
+    top: 30px;
+}
+
+.agenda > .body > .free-time > .info > .duration {
+    top: 10px;
+}
+
+.agenda > .body > .item > .info > .duration > .length,
+.agenda > .body > .free-time > .info > .duration > .length {
     font-size: .9em;
 }
 
@@ -256,15 +276,23 @@
     width: 70px;
 }
 
-.agenda > .body > .item > .name {
+.agenda > .body > .item > .name,
+.agenda > .body > .free-time > .name {
     height: 100%;
     overflow: hidden;
     vertical-align: top;
     margin-left: 95px;
     margin-right: 35px;
     padding-left: 10px;
-    border-left: 1px solid #000;
     font-size: 1.2em;
+}
+
+.agenda > .body > .item > .name {
+    border-left: 1px solid #000;
+}
+
+.agenda > .body > .free-time > .name {
+	font-style: italic;
 }
 
 .agenda > .body > .item > .name > input {

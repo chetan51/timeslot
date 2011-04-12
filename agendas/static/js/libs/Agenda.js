@@ -46,7 +46,9 @@ var Agenda = Class.extend(
 		
 		// Add event handlers
 		this.element.find("> .body").sortable({
-			stop: $.proxy(this._sortWasFinished, this)
+			stop: $.proxy(this._sortWasFinished, this),
+			items: ".item",
+			cancel: ".free-time"
 		});
 		
 		this.element.find("> .header > .start-time").hover($.proxy(this._startTimeWasHoveredIn, this), $.proxy(this._startTimeWasHoveredOut, this))
@@ -169,15 +171,15 @@ var Agenda = Class.extend(
 				}
 				
 				if (!placed_item && !conflict) {
-					current_item = current_item.element.next().data('item');
+					current_item = current_item.element.nextAll(".item:first").data('item');
 				}
 			}
 			
+			var end_time = start_time.plusMinutes(item.options.duration);
+			
 			item.options.conflict = conflict;
-			if (start_time) {
-				item.options.times.start.time = start_time;
-				item.options.times.end.time = start_time.plusMinutes(item.options.duration);
-			}
+			item.options.times.start.time = start_time;
+			item.options.times.end.time = end_time;
 			item.refresh();
 				
 			if (counter % 2 == 0) {
@@ -189,7 +191,32 @@ var Agenda = Class.extend(
 				item.element.addClass("item-B");
 			}
 			
-			item = item.element.next().data('item');
+			// Add / modify free time block before item as necessary
+			var prev_item = item.element.prevAll(".item:first").data('item');
+			var free_time = 0; // in minutes
+			
+			if (prev_item) {
+				free_time = item.options.times.start.time.minus(prev_item.options.times.end.time);
+			}
+			
+			var free_time_div = item.element.prev();
+			var new_free_time_div = false;
+			if (!free_time_div.length || !free_time_div.hasClass("free-time")) {
+				free_time_div = this.options.molds.free_time.clone();
+				new_free_time_div = true;
+			}
+			free_time_div.find("> .info > .duration > .length").html(durationToText(free_time));
+			var height = 50 + (free_time / 15) * 5;
+			free_time_div.css("height", height + "px");
+			
+			if (free_time != 0 && new_free_time_div) {
+				free_time_div.insertBefore(item.element);
+			}
+			else if (free_time == 0) {
+				free_time_div.remove();
+			}
+			
+			item = item.element.nextAll(".item:first").data('item');
 			counter++;
 		}
 	},

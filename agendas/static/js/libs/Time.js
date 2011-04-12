@@ -80,6 +80,11 @@ var Time = Class.extend(
 		new_time.options.time.setMilliseconds(0);
 		return new_time;
 	},
+	
+	minus: function(time)
+	{
+		return (this.options.time.getTime() - time.options.time.getTime()) / (60 * 1000);
+	},
 
 	isLessOrEqual: function(time) // less than or equal to
 	{

@@ -66,7 +66,13 @@ function durationToText(duration) // in minutes
         text_elements.push(minutes + " m");
         duration -= minutes;
     }
-    return "(" + text_elements.join(', ') + ")";
+    
+	if (text_elements.length > 0) {
+		return "(" + text_elements.join(', ') + ")";
+	}
+	else {
+		return "(0 m)";
+	}
 }
 
 function durationFromText(durationText)
