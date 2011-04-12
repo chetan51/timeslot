@@ -142,7 +142,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    cursor: pointer;
 }
 
 .agenda > .header > .start-time > .time {
@@ -278,19 +277,15 @@
     float: right;
     width: 100px;
     height: 100%;
-    margin: 0;
+    padding-right: 5px;
     text-align: right;
     font-size: .9em;
-}
-
-.agenda > .body > .item > .controls > .edit-done {
-    display: none;
 }
 
 .agenda > .body > .item > .controls > .add {
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 5px;
 }
 
 /*

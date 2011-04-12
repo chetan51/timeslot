@@ -110,6 +110,9 @@ var Item = Class.extend(
 		
 		this.element.find("> .controls > .add").click($.proxy(this._addWasClicked, this));
 		this.element.find("> .controls > .delete").click($.proxy(this._deleteWasClicked, this));
+		
+		// Hide elements
+		this.element.find("> .controls > .edit-done").hide();
 	},
 	
 	_updateTimeRestriction: function(restriction_type, restriction_time, restriction_div, actual_time)
