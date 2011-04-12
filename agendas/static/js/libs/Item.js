@@ -179,7 +179,7 @@ var Item = Class.extend(
 			end_time_div.html("");
 		}
 		
-		var height = 60 + (this.options.duration / 15) * 5;
+		var height = 80 + (this.options.duration / 15) * 5;
 		this.element.css("height", height + "px");
 		
 		if (!this.options.times.start.restriction.type || !this.options.times.start.restriction.time) {
