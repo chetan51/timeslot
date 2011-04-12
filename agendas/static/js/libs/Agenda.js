@@ -198,12 +198,19 @@ var Agenda = Class.extend(
 			if (prev_item) {
 				free_time = item.options.times.start.time.minus(prev_item.options.times.end.time);
 			}
+			else {
+				free_time = item.options.times.start.time.minus(agenda_start_time);
+			}
 			
-			var free_time_div = item.element.prev();
+			var prev_div = item.element.prev();
+			var free_time_div;
 			var new_free_time_div = false;
-			if (!free_time_div.length || !free_time_div.hasClass("free-time")) {
+			if (!prev_div.length || !prev_div.hasClass("free-time")) {
 				free_time_div = this.options.molds.free_time.clone();
 				new_free_time_div = true;
+			}
+			else {
+				free_time_div = prev_div;
 			}
 			free_time_div.find("> .info > .duration > .length").html(durationToText(free_time));
 			var height = 50 + (free_time / 15) * 5;
