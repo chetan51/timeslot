@@ -65,6 +65,7 @@ var Agenda = Class.extend(
 		
 		var agenda_start_time = this.options.start_time;
 		var item = this.element.find("> .body > .item").first().data('item');
+		var counter = 0;
 		
 		while (item) {
 			var start_restriction_type = item.options.times.start.restriction.type;
@@ -179,7 +180,17 @@ var Agenda = Class.extend(
 			}
 			item.refresh();
 				
+			if (counter % 2 == 0) {
+				item.element.addClass("item-A");
+				item.element.removeClass("item-B");
+			}
+			else {
+				item.element.removeClass("item-A");
+				item.element.addClass("item-B");
+			}
+			
 			item = item.element.next().data('item');
+			counter++;
 		}
 	},
 
