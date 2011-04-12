@@ -193,7 +193,7 @@
 .agenda > .body > .free-time > .info {
     float: left;
     width: 140px;
-    margin-left: -70px;
+    margin-left: -60px;
     text-align: right;
 }
 
@@ -253,7 +253,7 @@
 .agenda > .body > .free-time > .info > .duration {
     position: absolute;
     left: 0;
-    width: 70px;
+    width: 80px;
     margin-bottom: 8px;
 }
 
