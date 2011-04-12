@@ -47,8 +47,7 @@ var Agenda = Class.extend(
 		// Add event handlers
 		this.element.find("> .body").sortable({
 			stop: $.proxy(this._sortWasFinished, this),
-			items: ".item",
-			cancel: ".free-time"
+			items: ".item"
 		});
 		
 		this.element.find("> .header > .start-time").hover($.proxy(this._startTimeWasHoveredIn, this), $.proxy(this._startTimeWasHoveredOut, this))
