@@ -239,6 +239,8 @@ var Item = Class.extend(
 		time_div.find("> .label").hide();
 		time_div.find("> .time").show();
 		time_div.find("> .restriction").hide();
+		
+		this.element.find("input").blur();
 	},
 	
 	edit: function()
