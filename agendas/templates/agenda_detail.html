@@ -1,220 +1,222 @@
 {% extends "base_agendas.html" %}
 
-{% block agenda %}
-<div class="preset-data">
-	<div class="ID">0</div>
-	<div class="start_time">7:00 am</div>					
-</div>
-
-<div class="header">
-	<div class="date">{{ agenda.date }}</div>
-	<div class="add-item button button-big">Add item</div>
-	<div class="start-time">
-		<div class="label">day start</div>
-		<div class="time">7:00 am</div>					
+{% block content %}
+<div id="agenda">
+	<div class="preset-data">
+		<div class="ID">0</div>
+		<div class="start_time">7:00 am</div>					
 	</div>
-</div>
 
-<div class="body">
-	{% for item in agenda.item_set.all %}
-	<div class="item">
-		<div class="preset-data">
-			<div class="ID">0</div>
-			<div class="duration">60</div>
+	<div class="header">
+		<div class="date">{{ agenda.date }}</div>
+		<div class="add-item button button-big">Add item</div>
+		<div class="start-time">
+			<div class="label">day start</div>
+			<div class="time">7:00 am</div>					
+		</div>
+	</div>
+
+	<div class="items">
+		{% for item in agenda.item_set.all %}
+		<div class="item">
+			<div class="preset-data">
+				<div class="ID">0</div>
+				<div class="duration">60</div>
+				<div class="name">Running</div>
+			</div>
+			<div class="info">
+				<div class="time start-time">
+					<div class="label">start</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="fixed">
+								<input type="checkbox" />at
+							</div>
+							<div class="range">
+								<input type="checkbox" />after
+							</div>
+						</div>
+						<div class="time">whenever</div>
+					</div>
+					<div class="time"></div>
+				</div>
+				<div class="duration">
+					<div class="label">duration</div>
+					<div class="length">(60 m)</div>
+				</div>
+				<div class="time end-time">
+					<div class="label">end</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="range">
+								<input type="checkbox" />before
+							</div>
+						</div>
+						<div class="time">whenever</div>
+					</div>
+					<div class="time"></div>
+				</div>
+			</div>
+			<div class="controls">
+				<div class="delete button button-small">delete</div>
+				<div class="edit button button-small">edit</div>
+				<div class="edit-done button button-small">done</div>
+				<div class="add button button-small">add after</div>
+			</div>
 			<div class="name">Running</div>
+			<div class="clear"></div>
 		</div>
-		<div class="info">
-			<div class="time start-time">
-				<div class="label">start</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="fixed">
-							<input type="checkbox" />at
+
+		<div class="item">
+			<div class="preset-data">
+				<div class="ID">1</div>
+				<div class="duration">30</div>
+			</div>
+			<div class="info">
+				<div class="time start-time">
+					<div class="label">start</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="fixed">
+								<input type="checkbox" />at
+							</div>
+							<div class="range">
+								<input type="checkbox" />after
+							</div>
 						</div>
-						<div class="range">
-							<input type="checkbox" />after
-						</div>
+						<div class="time">whenever</div>
 					</div>
-					<div class="time">whenever</div>
+					<div class="time"></div>
 				</div>
-				<div class="time"></div>
-			</div>
-			<div class="duration">
-				<div class="label">duration</div>
-				<div class="length">(60 m)</div>
-			</div>
-			<div class="time end-time">
-				<div class="label">end</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="range">
-							<input type="checkbox" />before
+				<div class="duration">
+					<div class="length">(60 m)</div>
+				</div>
+				<div class="time end-time">
+					<div class="label">end</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="range">
+								<input type="checkbox" />before
+							</div>
 						</div>
+						<div class="time">whenever</div>
 					</div>
-					<div class="time">whenever</div>
+					<div class="time"></div>
 				</div>
-				<div class="time"></div>
 			</div>
+			<div class="controls">
+				<div class="delete button button-small">delete</div>
+				<div class="edit button button-small">edit</div>
+				<div class="edit-done button button-small">done</div>
+				<div class="add button button-small">add after</div>
+			</div>
+			<div class="name">Breakfast</div>
+			<div class="clear"></div>
 		</div>
-		<div class="controls">
-			<div class="delete button button-small">delete</div>
-			<div class="edit button button-small">edit</div>
-			<div class="edit-done button button-small">done</div>
-			<div class="add button button-small">add after</div>
+
+		<div class="item">
+			<div class="preset-data">
+				<div class="ID">2</div>
+				<div class="duration">60</div>
+			</div>
+			<div class="info">
+				<div class="time start-time">
+					<div class="label">start</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="fixed">
+								<input type="checkbox" />at
+							</div>
+							<div class="range">
+								<input type="checkbox" />after
+							</div>
+						</div>
+						<div class="time">whenever</div>
+					</div>
+					<div class="time"></div>
+				</div>
+				<div class="duration">
+					<div class="length">(60 m)</div>
+				</div>
+				<div class="time end-time">
+					<div class="label">end</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="range">
+								<input type="checkbox" />before
+							</div>
+						</div>
+						<div class="time">whenever</div>
+					</div>
+					<div class="time"></div>
+				</div>
+			</div>
+			<div class="controls">
+				<div class="delete button button-small">delete</div>
+				<div class="edit button button-small">edit</div>
+				<div class="edit-done button button-small">done</div>
+				<div class="add button button-small">add after</div>
+			</div>
+			<div class="name">Shower</div>
+			<div class="clear"></div>
 		</div>
-		<div class="name">Running</div>
-		<div class="clear"></div>
+		{% endfor %}
 	</div>
 
-	<div class="item">
-		<div class="preset-data">
-			<div class="ID">1</div>
-			<div class="duration">30</div>
-		</div>
-		<div class="info">
-			<div class="time start-time">
-				<div class="label">start</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="fixed">
-							<input type="checkbox" />at
+	<div id="molds">
+		<div class="item">
+			<div class="preset-data">
+				<div class="duration">60</div>
+			</div>
+			<div class="info">
+				<div class="time start-time">
+					<div class="label">start</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="fixed">
+								<input type="checkbox" />at
+							</div>
+							<div class="range">
+								<input type="checkbox" />after
+							</div>
 						</div>
-						<div class="range">
-							<input type="checkbox" />after
-						</div>
+						<div class="time">whenever</div>
 					</div>
-					<div class="time">whenever</div>
+					<div class="time"></div>
 				</div>
-				<div class="time"></div>
-			</div>
-			<div class="duration">
-				<div class="length">(60 m)</div>
-			</div>
-			<div class="time end-time">
-				<div class="label">end</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="range">
-							<input type="checkbox" />before
+				<div class="duration">
+					<div class="length"></div>
+				</div>
+				<div class="time end-time">
+					<div class="label">end</div>
+					<div class="restriction">
+						<div class="type">
+							<div class="range">
+								<input type="checkbox" />before
+							</div>
 						</div>
+						<div class="time">whenever</div>
 					</div>
-					<div class="time">whenever</div>
+					<div class="time"></div>
 				</div>
-				<div class="time"></div>
 			</div>
+			<div class="controls">
+				<div class="delete button button-small">delete</div>
+				<div class="edit button button-small">edit</div>
+				<div class="edit-done button button-small">done</div>
+				<div class="add button button-small">add after</div>
+			</div>
+			<div class="name"></div>
+			<div class="clear"></div>
 		</div>
-		<div class="controls">
-			<div class="delete button button-small">delete</div>
-			<div class="edit button button-small">edit</div>
-			<div class="edit-done button button-small">done</div>
-			<div class="add button button-small">add after</div>
-		</div>
-		<div class="name">Breakfast</div>
-		<div class="clear"></div>
-	</div>
-
-	<div class="item">
-		<div class="preset-data">
-			<div class="ID">2</div>
-			<div class="duration">60</div>
-		</div>
-		<div class="info">
-			<div class="time start-time">
-				<div class="label">start</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="fixed">
-							<input type="checkbox" />at
-						</div>
-						<div class="range">
-							<input type="checkbox" />after
-						</div>
-					</div>
-					<div class="time">whenever</div>
+		<div class="free-time">
+			<div class="info">
+				<div class="duration">
+					<div class="length"></div>
 				</div>
-				<div class="time"></div>
 			</div>
-			<div class="duration">
-				<div class="length">(60 m)</div>
-			</div>
-			<div class="time end-time">
-				<div class="label">end</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="range">
-							<input type="checkbox" />before
-						</div>
-					</div>
-					<div class="time">whenever</div>
-				</div>
-				<div class="time"></div>
-			</div>
+			<div class="name">free time</div>
 		</div>
-		<div class="controls">
-			<div class="delete button button-small">delete</div>
-			<div class="edit button button-small">edit</div>
-			<div class="edit-done button button-small">done</div>
-			<div class="add button button-small">add after</div>
-		</div>
-		<div class="name">Shower</div>
-		<div class="clear"></div>
-	</div>
-	{% endfor %}
-</div>
-
-<div id="molds">
-	<div class="item">
-		<div class="preset-data">
-			<div class="duration">60</div>
-		</div>
-		<div class="info">
-			<div class="time start-time">
-				<div class="label">start</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="fixed">
-							<input type="checkbox" />at
-						</div>
-						<div class="range">
-							<input type="checkbox" />after
-						</div>
-					</div>
-					<div class="time">whenever</div>
-				</div>
-				<div class="time"></div>
-			</div>
-			<div class="duration">
-				<div class="length"></div>
-			</div>
-			<div class="time end-time">
-				<div class="label">end</div>
-				<div class="restriction">
-					<div class="type">
-						<div class="range">
-							<input type="checkbox" />before
-						</div>
-					</div>
-					<div class="time">whenever</div>
-				</div>
-				<div class="time"></div>
-			</div>
-		</div>
-		<div class="controls">
-			<div class="delete button button-small">delete</div>
-			<div class="edit button button-small">edit</div>
-			<div class="edit-done button button-small">done</div>
-			<div class="add button button-small">add after</div>
-		</div>
-		<div class="name"></div>
-		<div class="clear"></div>
-	</div>
-	<div class="free-time">
-		<div class="info">
-			<div class="duration">
-				<div class="length"></div>
-			</div>
-		</div>
-		<div class="name">free time</div>
 	</div>
 </div>
-{% endblock agenda %}
+{% endblock content %}
