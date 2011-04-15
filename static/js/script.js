@@ -16,8 +16,8 @@ $(function(){
 	});
 	
 	agenda.items.refresh([
-		{name: "Running"},
 		{name: "Breakfast"},
+		{name: "Running"},
 		{name: "Shower"}
 	]);
 });

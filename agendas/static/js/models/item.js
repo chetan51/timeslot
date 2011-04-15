@@ -1,6 +1,8 @@
 window.Item = Backbone.Model.extend
 ({
-	//template: _.template($('#item-template').html()),
+	defaults: {
+		"duration": 60
+	}
 });
 
 
