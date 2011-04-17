@@ -18,7 +18,6 @@ window.AgendaView = Backbone.View.extend
 
 	addItem: function()
 	{
-		var item = new Item;
-		this.model.items.add(item);
+		this.model.items.create();
 	}
 });

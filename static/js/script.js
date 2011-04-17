@@ -15,9 +15,10 @@ $(function(){
 		model: agenda
 	});
 	
-	agenda.items.refresh([
+	/*agenda.items.refresh([
 		{name: "Breakfast"},
 		{name: "Running"},
 		{name: "Shower"}
-	]);
+	]);*/
+	agenda.items.fetch();
 });
