@@ -144,12 +144,12 @@
     right: 0;
 }
 
-#agenda > .header > .start-time > .time {
+#agenda > .header > .start.time > .display-time {
     color: #555;
     font-size: .9em;
 }
 
-#agenda > .header > .start-time > .time > input {
+#agenda > .header > .start.time > .display-time > input {
     width: 70px;   
 }
 
@@ -167,6 +167,7 @@
 
 #agenda > .items > .item {
     min-height: 90px;
+    height: 90px;
 }
 
 #agenda > .items > .free-time {
@@ -213,7 +214,7 @@
 
 #agenda > .items > .item > .info > .time > .restriction,
 #agenda > .items > .item > .info > .time > .restriction div,
-#agenda > .items > .item > .info > .time > .time {
+#agenda > .items > .item > .info > .time > .display-time {
     display: inline-block;
 }
 
@@ -221,7 +222,7 @@
     display: none;
 }
 
-#agenda > .items > .item > .info > .end-time > .time {
+#agenda > .items > .item > .info > .end.time > .display-time {
     color: #888;   
 }
 
@@ -231,13 +232,13 @@
     text-align: left;
 }
 
-#agenda > .items > .item > .info > .time > .restriction > .time,
-#agenda > .items > .item > .info > .time > .time {
+#agenda > .items > .item > .info > .time > .restriction > .restriction-time,
+#agenda > .items > .item > .info > .time > .display-time {
     vertical-align: top;   
     width: 70px;
 }
 
-#agenda > .items > .item > .info > .time > .restriction > .time > input {
+#agenda > .items > .item > .info > .time > .restriction > .restriction-time > input {
     width: 70px;
 }
     

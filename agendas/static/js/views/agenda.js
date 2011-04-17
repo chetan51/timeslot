@@ -5,13 +5,13 @@ window.AgendaView = Backbone.View.extend
 	events: {
 		"click .add-item": "addItem"
 	},
-
+	
 	initialize: function()
 	{
 		_.bindAll(this, 'addItem');
 		
 		this.items = new ItemCollectionView({
-			el: this.$(".items"),
+			el: this.$("> .items"),
 			collection: this.model.items
 		})
 	},
@@ -19,6 +19,6 @@ window.AgendaView = Backbone.View.extend
 	addItem: function()
 	{
 		var item = new Item;
-		this.items.add(item);
+		this.model.items.add(item);
 	}
 });
