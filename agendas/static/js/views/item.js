@@ -28,6 +28,7 @@ window.ItemView = Backbone.View.extend
 			controls: this.$(".controls"),
 			duration: this.$(".info .duration"),
 			time: this.$(".time"),
+			name: this.$(".name"),
 		});
 		$.extend(this.elements, {
 			edit: this.elements.controls.find(".edit"),
@@ -41,7 +42,20 @@ window.ItemView = Backbone.View.extend
 		
 		this.elements.edit_done.hide();
 		
+		this.makeInteractive();
+		
 		return this;
+	},
+	
+	makeInteractive: function()
+	{
+		var self = this;
+		
+		this.elements.name.editable({
+			onSubmit: function(content) {
+				self.model.save({name: content.current});
+			}
+		});
 	},
 
 	hoverIn: function()
