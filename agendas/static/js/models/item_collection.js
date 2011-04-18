@@ -9,4 +9,9 @@ window.ItemCollection = Backbone.Collection.extend
 		this.options = {};
 		this.options.start_time = options.start_time;
 	},
+	
+	comparator: function(item)
+	{
+		return item.get("seq");
+	},
 });

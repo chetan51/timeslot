@@ -22,7 +22,19 @@ window.ItemView = Backbone.View.extend
 	render: function()
 	{
 		$(this.el).html(this.template(this.model.toJSON()));
+		$(this.el).data('model', this.model);
 		
+		this.loadElements();
+		
+		this.elements.edit_done.hide();
+		
+		this.makeInteractive();
+		
+		return this;
+	},
+
+	loadElements: function()
+	{
 		this.elements = {};
 		$.extend(this.elements, {
 			controls: this.$(".controls"),
@@ -39,12 +51,6 @@ window.ItemView = Backbone.View.extend
 			time_restriction: this.elements.time.find(".restriction"),
 			display_time: this.elements.time.find(".display-time"),
 		});
-		
-		this.elements.edit_done.hide();
-		
-		this.makeInteractive();
-		
-		return this;
 	},
 	
 	makeInteractive: function()
