@@ -2,10 +2,10 @@ window.ItemCollectionView = Backbone.View.extend
 ({
 	initialize: function()
 	{
-		_.bindAll(this, 'add', 'render', 'saveOrder');
+		_.bindAll(this, 'add', 'addNew', 'render', 'saveOrder');
 		
 		this.collection.bind('refresh', this.render);
-		this.collection.bind('add', this.add);
+		this.collection.bind('add', this.addNew);
 		
 		this.views = [];
 	},
@@ -13,6 +13,12 @@ window.ItemCollectionView = Backbone.View.extend
 	add: function(item)
 	{
 		this.addAfter(item);
+	},
+
+	addNew: function(item)
+	{
+		this.addAfter(item);
+		this.saveOrder();
 	},
 	
 	addAfter: function(item, after)
@@ -34,10 +40,9 @@ window.ItemCollectionView = Backbone.View.extend
 	render: function()
 	{
 		$(this.el).html('');
-		this.addAll();
 		
 		this.loadElements();
-		
+		this.addAll();
 		this.makeInteractive();
 	},
 	
@@ -55,7 +60,6 @@ window.ItemCollectionView = Backbone.View.extend
 		
 		$(this.el).sortable({
 			update: function() {
-				self.loadElements();
 				self.saveOrder();
 				self.collection.sort({silent: true});
 			},
@@ -65,6 +69,7 @@ window.ItemCollectionView = Backbone.View.extend
 	
 	saveOrder: function()
 	{
+		this.loadElements();
 		this.elements.items.each(function(seq, item_div) {
 			var item = $(item_div).data('model');
 			item.save({seq: seq});
