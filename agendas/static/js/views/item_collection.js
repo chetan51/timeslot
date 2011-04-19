@@ -2,12 +2,12 @@ window.ItemCollectionView = Backbone.View.extend
 ({
 	initialize: function()
 	{
-		_.bindAll(this, 'add', 'addNew', 'render', 'saveOrder');
+		_.bindAll(this, 'add', 'addNew', 'render', 'refresh', 'saveOrder');
 		
 		this.collection.bind('refresh', this.render);
 		this.collection.bind('add', this.addNew);
 		
-		this.views = [];
+		this.render();
 	},
 	
 	add: function(item)
@@ -79,7 +79,7 @@ window.ItemCollectionView = Backbone.View.extend
 	
 	refresh: function()
 	{
-		var collection_start_time = this.collection.options.start_time;
+		var collection_start_time = new Time({timeString: this.collection.options.start_time});
 		var item_div = this.elements.items.first();
 		var item = item_div.data('model');
 		var counter = 0;

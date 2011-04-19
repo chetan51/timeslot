@@ -1,11 +1,20 @@
 window.Agenda = Backbone.Model.extend
 ({
 	defaults: {
-		'start_time': new Time({timeString: "7:00 pm"})
+		start_time: "7:00 am"
 	},
 
 	initialize: function()
 	{
+		var url = "/agenda/" + this.get('date');
+		this.setUrl(url);
+		this.id = this.cid;
+
 		this.items = new ItemCollection(null, {start_time: this.get('start_time')});
-	}
+		this.items.setUrl(url + "/items");
+	},
+	
+	setUrl: function(url) {
+		this.localStorage = new Store(url);
+	},
 });
