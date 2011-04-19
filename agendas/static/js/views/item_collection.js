@@ -57,13 +57,12 @@ window.ItemCollectionView = Backbone.View.extend
 
 	makeInteractive: function()
 	{
-		var self = this;
-		
 		$(this.el).sortable({
-			update: function() {
-				self.saveOrder();
-				self.collection.sort({silent: true});
-			},
+			update: _.bind(function() {
+				this.saveOrder();
+				this.collection.sort({silent: true});
+				this.refresh();
+			}, this),
 			items: ".item"
 		});
 	},
@@ -71,23 +70,22 @@ window.ItemCollectionView = Backbone.View.extend
 	saveOrder: function()
 	{
 		this.element('items').each(function(seq, item_div) {
-			var item = $(item_div).data('model');
-			item.save({seq: seq});
+			var item = $(item_div).data('view');
+			item.model.save({seq: seq});
 		});
 	},
 	
 	refresh: function()
 	{
 		var collection_start_time = new Time({timeString: this.options.start_time});
-		var item_div = this.element('items').first();
-		var item = item_div.data('model');
+		var item = this.element('items').first().data('view');
 		var counter = 0;
 		
 		while (item) {
-			var start_restriction_type = item.get('start_restriction_type');
-			var start_restriction_time = item.get('start_restriction_time');
-			var end_restriction_type = item.get('end_restriction_type');
-			var end_restriction_time = item.get('end_restriction_time');
+			var start_restriction_type = item.model.get('start_restriction_type');
+			var start_restriction_time = item.model.get('start_restriction_time');
+			var end_restriction_type = item.model.get('end_restriction_type');
+			var end_restriction_time = item.model.get('end_restriction_time');
 			
 			var start_time = collection_start_time;
 			var conflict = false;
@@ -118,21 +116,18 @@ window.ItemCollectionView = Backbone.View.extend
 				}
 			}
 			
-			var current_item_div = this.element('items').first();
-			var current_item = current_item_div.data('model');
+			var current_item = this.element('items').first().data('view');
 			var placed_item = false;
-			
-			// up to here works
 			
 			while (!placed_item &&
 				!conflict &&
-				current_item_div[0] != item_div[0]) {
+				$(current_item.el)[0] != $(item.el)[0]) {
 				if (start_restriction_type == "fixed" &&
 					start_restriction_time) {
-					if (!current_item_div.data('conflict') &&
-						(start_restriction_time.isLess(current_item_div.data('end_time')))) {
-						if (current_item.get('start_restriction_type') != "fixed") {
-							item_div.insertBefore(current_item_div);
+					if (!current_item.options.conflict &&
+						(start_restriction_time.isLess(new Time({timeString: current_item.options.end_time})))) {
+						if (current_item.model.get('start_restriction_type') != "fixed") {
+							$(item.el).insertBefore($(current_item.el));
 							placed_item = true;
 						}
 						else {
@@ -145,11 +140,11 @@ window.ItemCollectionView = Backbone.View.extend
 					}
 				}
 				else {
-					if (!current_item_div.data('conflict')) {
-						if (current_item.get('start_restriction_type') == "fixed" ||
-						current_item.get('start_restriction_type') == "range") {
-							if (start_time.plusMinutes(item.get('duration')).isLessOrEqual(current_item_div.data('start_time'))) {
-								item_div.insertBefore(current_item_div);
+					if (!current_item.options.conflict) {
+						if (current_item.model.get('start_restriction_type') == "fixed" ||
+						current_item.model.get('start_restriction_type') == "range") {
+							if (start_time.plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.options.start_time}))) {
+								$(item.el).insertBefore($(current_item.el));
 								placed_item = true;
 							}
 						}
@@ -157,8 +152,8 @@ window.ItemCollectionView = Backbone.View.extend
 						if (!placed_item) {
 							if (start_restriction_type != "range" ||
 							(start_restriction_type == "range" &&
-							start_restriction_time.isLessOrEqual(current_item_div.data('end_time')))) {
-								start_time = current_item_div.data('end_time');
+							start_restriction_time.isLessOrEqual(new Time({timeString: current_item.options.end_time})))) {
+								start_time = new Time({timeString: current_item.options.end_time});
 							}
 						}
 					}
@@ -190,25 +185,24 @@ window.ItemCollectionView = Backbone.View.extend
 				*/
 				
 				if (!placed_item && !conflict) {
-					current_item_div = current_item_div.nextAll(".item:first");
-					current_item = current_item_div.data('model');
+					current_item = $(current_item.el).nextAll(".item:first").data('view');
 				}
 			}
 			
-			var end_time = start_time.plusMinutes(item.get('duration'));
+			var end_time = start_time.plusMinutes(item.model.get('duration'));
 			
-			item_div.data('conflict', conflict);
-			item_div.data('start_time', start_time);
-			item_div.data('end_time', end_time);
-			//item.refresh();
+			item.options.conflict = conflict;
+			item.options.start_time = start_time.format();
+			item.options.end_time = end_time.format();
+			item.refresh();
 			
 			if (counter % 2 == 0) {
-				item_div.addClass("item-A");
-				item_div.removeClass("item-B");
+				$(item.el).addClass("item-A");
+				$(item.el).removeClass("item-B");
 			}
 			else {
-				item_div.removeClass("item-A");
-				item_div.addClass("item-B");
+				$(item.el).removeClass("item-A");
+				$(item.el).addClass("item-B");
 			}
 			
 			/*
@@ -245,8 +239,7 @@ window.ItemCollectionView = Backbone.View.extend
 			}
 			*/
 			
-			item_div = item_div.nextAll(".item:first");
-			item = item_div.data('model');
+			item = $(item.el).nextAll(".item:first").data('view');
 			counter++;
 		}
 	},

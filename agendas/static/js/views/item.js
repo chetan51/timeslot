@@ -24,6 +24,9 @@ window.ItemView = Backbone.View.extend
 		time_label: ".time .label",
 		time_restriction: ".time .restriction",
 		display_time: ".time .display-time",
+		
+		start_display_time: ".start-time .display-time",
+		end_display_time: ".end-time .display-time",
 	},
 	
 	element: function(selector)
@@ -41,7 +44,7 @@ window.ItemView = Backbone.View.extend
 	render: function()
 	{
 		$(this.el).html(this.template(this.model.toJSON()));
-		$(this.el).data('model', this.model);
+		$(this.el).data('view', this);
 		
 		this.element('edit_done').hide();
 		
@@ -50,14 +53,18 @@ window.ItemView = Backbone.View.extend
 		return this;
 	},
 	
+	refresh: function()
+	{
+		this.element('start_display_time').html(this.options.start_time);
+		this.element('end_display_time').html(this.options.end_time);
+	},
+	
 	makeInteractive: function()
 	{
-		var self = this;
-		
 		this.element('name').editable({
-			onSubmit: function(content) {
-				self.model.save({name: content.current});
-			}
+			onSubmit: _.bind(function(content) {
+				this.model.save({name: content.current});
+			}, this)
 		});
 	},
 
