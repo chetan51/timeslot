@@ -159,7 +159,6 @@ window.ItemCollectionView = Backbone.View.extend
 					}
 				}
 				
-				/*
 				if (end_restriction_type == "range" &&
 					end_restriction_time) {
 					if (start_time.plusMinutes(item.options.duration).isGreater(end_restriction_time)) {
@@ -167,13 +166,13 @@ window.ItemCollectionView = Backbone.View.extend
 							conflict = true;
 						}
 						else {
-							if (current_item.options.times.start.restriction.type != "fixed" &&
-							(!current_item.options.times.end.restriction.type ||
-							 (current_item.options.times.end.restriction.type == "range" &&
-							  current_item.options.times.end.restriction.time &&
-							  (current_item.options.times.end.time.plusMinutes(item.options.duration).isLessOrEqual(current_item.options.times.end.restriction.time))))) {
-								item.element.insertBefore(current_item.element);
-								start_time = current_item.options.times.start.time;
+							if (current_item.model.get('start_restriction_type') != "fixed" &&
+							(!current_item.model.get('end_restriction_type') ||
+							 (current_item.model.get('end_restriction_type') == "range" &&
+							  current_item.model.get('end_restriction_time') &&
+							  (new Time({timeString: current_item.options.end_time}).plusMinutes(item.options.duration).isLessOrEqual(new Time({timeString: current_item.model.get('end_restriction_time')})))))) {
+								$(item.el).insertBefore($(current_item.el));
+								start_time = new Time({timeString: current_item.options.start_time});
 								placed_item = true;
 							}
 							else {
@@ -182,7 +181,6 @@ window.ItemCollectionView = Backbone.View.extend
 						}
 					}
 				}
-				*/
 				
 				if (!placed_item && !conflict) {
 					current_item = $(current_item.el).nextAll(".item:first").data('view');
