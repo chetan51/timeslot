@@ -22,7 +22,8 @@ window.AgendaView = Backbone.View.extend
 		
 		this.items = new ItemCollectionView({
 			el: this.$(".items"),
-			collection: this.model.items
+			collection: this.model.items,
+			start_time: this.model.get('start_time'),
 		});
 		
 		this.model.bind('change', _.bind(function() {

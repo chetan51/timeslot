@@ -10,7 +10,7 @@ window.Agenda = Backbone.Model.extend
 		this.setUrl(url);
 		this.id = this.cid;
 
-		this.items = new ItemCollection(null, {start_time: this.get('start_time')});
+		this.items = new ItemCollection;
 		this.items.setUrl(url + "/items");
 	},
 	

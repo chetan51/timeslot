@@ -9,12 +9,14 @@ window.ItemCollectionView = Backbone.View.extend
 		return this.$(this.selectors[selector]);
 	},
 
-	initialize: function()
+	initialize: function(options)
 	{
 		_.bindAll(this, 'add', 'addNew', 'render', 'refresh', 'saveOrder');
 		
 		this.collection.bind('refresh', this.render);
 		this.collection.bind('add', this.addNew);
+		
+		this.start_time = options.start_time;
 		
 		this.render();
 	},
@@ -78,7 +80,7 @@ window.ItemCollectionView = Backbone.View.extend
 	
 	refresh: function()
 	{
-		var collection_start_time = new Time({timeString: this.collection.options.start_time});
+		var collection_start_time = new Time({timeString: this.start_time});
 		var item_div = this.element('items').first();
 		var item = item_div.data('model');
 		var counter = 0;
