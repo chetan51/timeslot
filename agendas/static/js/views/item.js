@@ -94,7 +94,7 @@ window.ItemView = Backbone.View.extend
 		this.element('duration').show();
 		
 		this.element('time_label').show();
-		this.element('display_time').show();
+		this.element('display_time').hide();
 		this.element('time_restriction').show();
 	},
 
@@ -105,7 +105,7 @@ window.ItemView = Backbone.View.extend
 		this.element('edit_done').hide();
 		
 		this.element('time_label').hide();
-		this.element('display_time').hide();
+		this.element('display_time').show();
 		this.element('time_restriction').hide();
 		
 		$(this.el).find("input").blur();
