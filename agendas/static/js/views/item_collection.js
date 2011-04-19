@@ -1,5 +1,14 @@
 window.ItemCollectionView = Backbone.View.extend
 ({
+	selectors: {
+		items: '.item'
+	},
+
+	element: function(selector)
+	{
+		return this.$(this.selectors[selector]);
+	},
+
 	initialize: function()
 	{
 		_.bindAll(this, 'add', 'addNew', 'render', 'refresh', 'saveOrder');
@@ -43,16 +52,7 @@ window.ItemCollectionView = Backbone.View.extend
 		
 		this.addAll();
 		this.makeInteractive();
-		this.loadElements();
 		this.refresh();
-	},
-	
-	loadElements: function()
-	{
-		this.elements = {};
-		$.extend(this.elements, {
-			items: this.$(".item"),
-		});
 	},
 
 	makeInteractive: function()
@@ -70,8 +70,7 @@ window.ItemCollectionView = Backbone.View.extend
 	
 	saveOrder: function()
 	{
-		this.loadElements();
-		this.elements.items.each(function(seq, item_div) {
+		this.element('items').each(function(seq, item_div) {
 			var item = $(item_div).data('model');
 			item.save({seq: seq});
 		});
@@ -80,7 +79,7 @@ window.ItemCollectionView = Backbone.View.extend
 	refresh: function()
 	{
 		var collection_start_time = new Time({timeString: this.collection.options.start_time});
-		var item_div = this.elements.items.first();
+		var item_div = this.element('items').first();
 		var item = item_div.data('model');
 		var counter = 0;
 		
@@ -119,7 +118,7 @@ window.ItemCollectionView = Backbone.View.extend
 				}
 			}
 			
-			var current_item_div = this.elements.items.first();
+			var current_item_div = this.element('items').first();
 			var current_item = current_item_div.data('model');
 			var placed_item = false;
 			

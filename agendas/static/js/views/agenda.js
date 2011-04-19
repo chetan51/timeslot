@@ -5,6 +5,16 @@ window.AgendaView = Backbone.View.extend
 	events: {
 		"click .add-item": "addItem"
 	},
+
+	selectors: {
+		date: ".date",
+		start_time: ".start-time .time",
+	},
+	
+	element: function(selector)
+	{
+		return this.$(this.selectors[selector]);
+	},
 	
 	initialize: function()
 	{
@@ -31,15 +41,15 @@ window.AgendaView = Backbone.View.extend
 
 	render: function()
 	{
-		this.$(".date").html(this.model.get('date'));
-		this.$(".start-time .time").html(this.model.get('start_time'));
+		this.element('date').html(this.model.get('date'));
+		this.element('start_time').html(this.model.get('start_time'));
 	},
 	
 	makeInteractive: function()
 	{
 		var self = this;
 
-		this.$(".start-time .time").editable({
+		this.element('start_time').editable({
 			onSubmit: function(content) {
 				var new_time = new Time({timeString: content.current});
 				if (new_time.isValid()) {

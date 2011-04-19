@@ -12,6 +12,25 @@ window.ItemView = Backbone.View.extend
 		"click .controls .delete": "delete",
 	},
 
+	selectors: {
+		controls: ".controls",
+		duration: ".info .duration",
+		time: ".time",
+		name: ".name",
+
+		edit: ".controls .edit",
+		edit_done: ".controls .edit-done",
+		
+		time_label: ".time .label",
+		time_restriction: ".time .restriction",
+		display_time: ".time .display-time",
+	},
+	
+	element: function(selector)
+	{
+		return this.$(this.selectors[selector]);
+	},
+
 	initialize: function(options)
 	{
 		_.bindAll(this, 'render', 'hoverIn', 'hoverOut');
@@ -24,40 +43,18 @@ window.ItemView = Backbone.View.extend
 		$(this.el).html(this.template(this.model.toJSON()));
 		$(this.el).data('model', this.model);
 		
-		this.loadElements();
-		
-		this.elements.edit_done.hide();
+		this.element('edit_done').hide();
 		
 		this.makeInteractive();
 		
 		return this;
-	},
-
-	loadElements: function()
-	{
-		this.elements = {};
-		$.extend(this.elements, {
-			controls: this.$(".controls"),
-			duration: this.$(".info .duration"),
-			time: this.$(".time"),
-			name: this.$(".name"),
-		});
-		$.extend(this.elements, {
-			edit: this.elements.controls.find(".edit"),
-			edit_done: this.elements.controls.find(".edit-done")
-		});
-		$.extend(this.elements, {
-			time_label: this.elements.time.find(".label"),
-			time_restriction: this.elements.time.find(".restriction"),
-			display_time: this.elements.time.find(".display-time"),
-		});
 	},
 	
 	makeInteractive: function()
 	{
 		var self = this;
 		
-		this.elements.name.editable({
+		this.element('name').editable({
 			onSubmit: function(content) {
 				self.model.save({name: content.current});
 			}
@@ -67,42 +64,42 @@ window.ItemView = Backbone.View.extend
 	hoverIn: function()
 	{
 		if (!this.options.being_edited) {
-			this.elements.controls.show();
-			this.elements.duration.show();
+			this.element('controls').show();
+			this.element('duration').show();
 		}
 	},
 	
 	hoverOut: function()
 	{
 		if (!this.options.being_edited) {
-			this.elements.controls.hide();
-			this.elements.duration.hide();
+			this.element('controls').hide();
+			this.element('duration').hide();
 		}
 	},
 
 	edit: function()
 	{
 		this.options.being_edited = true;
-		this.elements.controls.show();
-		this.elements.edit.hide();
-		this.elements.edit_done.show();
+		this.element('controls').show();
+		this.element('edit').hide();
+		this.element('edit_done').show();
 		
-		this.elements.duration.show();
+		this.element('duration').show();
 		
-		this.elements.time_label.show();
-		this.elements.display_time.show();
-		this.elements.time_restriction.show();
+		this.element('time_label').show();
+		this.element('display_time').show();
+		this.element('time_restriction').show();
 	},
 
 	editDone: function()
 	{
 		this.options.being_edited = false;
-		this.elements.edit.show();
-		this.elements.edit_done.hide();
+		this.element('edit').show();
+		this.element('edit_done').hide();
 		
-		this.elements.time_label.hide();
-		this.elements.display_time.hide();
-		this.elements.time_restriction.hide();
+		this.element('time_label').hide();
+		this.element('display_time').hide();
+		this.element('time_restriction').hide();
 		
 		$(this.el).find("input").blur();
 	},
