@@ -36,9 +36,9 @@ window.ItemView = Backbone.View.extend
 
 	initialize: function(options)
 	{
-		_.bindAll(this, 'render', 'hoverIn', 'hoverOut');
+		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut');
 		
-		this.model.bind('change', this.render);
+		this.model.bind('change', this.refresh);
 	},
 
 	render: function()
@@ -55,6 +55,8 @@ window.ItemView = Backbone.View.extend
 	
 	refresh: function()
 	{
+		this.element('name').html(this.model.get('name'));
+		
 		this.element('start_display_time').html(this.options.start_time);
 		this.element('end_display_time').html(this.options.end_time);
 	},
@@ -114,6 +116,5 @@ window.ItemView = Backbone.View.extend
 	delete: function()
 	{
 		this.model.destroy();
-		this.remove();
 	}
 });

@@ -11,9 +11,10 @@ window.ItemCollectionView = Backbone.View.extend
 
 	initialize: function(options)
 	{
-		_.bindAll(this, 'add', 'addNew', 'render', 'refresh', 'saveOrder');
+		_.bindAll(this, 'add', 'addNew', 'remove', 'render', 'refresh', 'saveOrder');
 		
 		this.collection.bind('refresh', this.render);
+		this.collection.bind('remove', this.render);
 		this.collection.bind('add', this.addNew);
 		
 		this.render();
@@ -39,13 +40,14 @@ window.ItemCollectionView = Backbone.View.extend
 		else {
 			$(this.el).append($(item_view.render().el));
 		}
+		this.refresh();
 	},
 	
 	addAll: function()
 	{
 		this.collection.each(this.add);
 	},
-
+	
 	render: function()
 	{
 		$(this.el).html('');
