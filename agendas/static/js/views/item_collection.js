@@ -40,6 +40,9 @@ window.ItemCollectionView = Backbone.View.extend
 		else {
 			$(this.el).append($(item_view.render().el));
 		}
+		
+		item.bind('change', this.refresh);
+		
 		this.refresh();
 	},
 	

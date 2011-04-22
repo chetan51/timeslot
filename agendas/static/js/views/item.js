@@ -71,6 +71,35 @@ window.ItemView = Backbone.View.extend
 				this.model.save({name: content.current});
 			}, this)
 		});
+		
+		this.element('duration_length').editable({
+			type: 'select',
+			options: {
+				15:'(15 m)',
+				30:'(30 m)',
+				45:'(45 m)',
+				60:'(1 h)',
+				75:'(1 h, 15 m)',
+				90:'(1 h, 30 m)',
+				105:'(1 h, 45 m)',
+				120:'(2 h)',
+				135:'(2 h, 15 m)',
+				150:'(2 h, 30 m)',
+				165:'(2 h, 45 m)',
+				180:'(3 h)',
+				195:'(3 h, 15 m)',
+				210:'(3 h, 30 m)',
+				225:'(3 h, 45 m)',
+				240:'(4 h)',
+				255:'(4 h, 15 m)',
+				270:'(4 h, 30 m)',
+				285:'(4 h, 45 m)',
+				300:'(5 h)'
+			},
+			onSubmit: _.bind(function(content) {
+				this.model.save({duration: durationFromText(content.current)});    
+			},this)
+		});
 	},
 
 	hoverIn: function()
