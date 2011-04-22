@@ -15,6 +15,7 @@ window.ItemView = Backbone.View.extend
 	selectors: {
 		controls: ".controls",
 		duration: ".info .duration",
+		duration_length: ".info .duration .length",
 		time: ".time",
 		name: ".name",
 
@@ -36,6 +37,8 @@ window.ItemView = Backbone.View.extend
 
 	initialize: function(options)
 	{
+		this.model.view = this;
+		
 		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut');
 		
 		this.model.bind('change', this.refresh);

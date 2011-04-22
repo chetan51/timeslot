@@ -14,8 +14,8 @@ window.ItemCollectionView = Backbone.View.extend
 		_.bindAll(this, 'add', 'addNew', 'remove', 'render', 'refresh', 'saveOrder');
 		
 		this.collection.bind('refresh', this.render);
-		this.collection.bind('remove', this.render);
 		this.collection.bind('add', this.addNew);
+		this.collection.bind('remove', this.remove);
 		
 		this.render();
 	},
@@ -46,6 +46,12 @@ window.ItemCollectionView = Backbone.View.extend
 	addAll: function()
 	{
 		this.collection.each(this.add);
+	},
+	
+	remove: function(item)
+	{
+		item.view.remove();
+		this.refresh();
 	},
 	
 	render: function()
