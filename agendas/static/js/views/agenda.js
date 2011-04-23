@@ -55,7 +55,23 @@ window.AgendaView = Backbone.View.extend
 				if (new_time.isValid()) {
 					this.model.save({start_time: new_time.format()});
 				}
+			}, this)
+		});
+		
+		this.element('date').editable({
+			submit: "Load",
+			onEdit: _.bind(function() {
+				var input = this.element('date').find("input");
+				input.datepicker({
+					dateFormat: "MM d, yy"
+				});
+				input.datepicker("show");
 			}, this),
+			onSubmit: _.bind(function(content) {
+				this.model.setUrl(content.current);
+				this.model.fetch();
+				this.model.items.fetch();
+			}, this)
 		});
 	},
 });

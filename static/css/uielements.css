@@ -8,12 +8,13 @@
 /*	Buttons
 -------------------------------------------------------------- */
 
-.button {
+button, .button {
 	display:inline-block;
 	text-align:center;
 	color:#555;
-    cursor: pointer;
-    margin-bottom: 3px;
+	cursor: pointer;
+	margin-bottom: 3px;
+	border: 1px solid #888;
 	
 	background: #eee; /* for non-css3 browsers */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dddddd'); /* for IE */

@@ -138,6 +138,17 @@
     margin-bottom: 5px;
 }
 
+#agenda > .header > .date .hasDatepicker {
+    width: 300px;
+}
+
+#agenda > .header > .date button {
+    font-size: .6em;
+	padding:0 5px 0 5px;
+    margin-left: 5px;
+    vertical-align: bottom;
+}
+
 #agenda > .header > .add-item {
     position: absolute;
     top: 0;
