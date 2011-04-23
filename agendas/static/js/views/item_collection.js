@@ -101,6 +101,25 @@ window.ItemCollectionView = Backbone.View.extend
 			var start_time = collection_start_time;
 			var conflict = false;
 			
+			// Sanity check on the item's restrictions
+			if (start_restriction_type == "fixed" &&
+				start_restriction_time.isValid() &&
+				start_restriction_time.isLess(collection_start_time)) {
+				conflict = true;
+			}
+			if (end_restriction_type == "range" &&
+				end_restriction_time.isValid() &&
+				end_restriction_time.isLess(collection_start_time.plusMinutes(item.model.get('duration')))) {
+				conflict = true;
+			}
+			if (start_restriction_type &&
+				start_restriction_time.isValid() &&
+				end_restriction_type &&
+				end_restriction_time.isValid() &&
+				start_restriction_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time)) {
+				conflict = true;
+			}
+			
 			// Scan from the beginning, find an empty timeslot for the item
 			if (start_restriction_type == "fixed" &&
 				start_restriction_time.isValid()) {
