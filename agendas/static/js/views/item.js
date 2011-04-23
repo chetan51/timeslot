@@ -7,6 +7,7 @@ window.ItemView = Backbone.View.extend
 	events: {
 		"mouseenter": "hoverIn",
 		"mouseleave": "hoverOut",
+
 		"click .controls .edit": "edit",
 		"click .controls .edit-done": "editDone",
 		"click .controls .delete": "delete",
@@ -28,6 +29,12 @@ window.ItemView = Backbone.View.extend
 		
 		start_display_time: ".start-time .display-time",
 		end_display_time: ".end-time .display-time",
+		
+		start_restriction_fixed: ".start-time .restriction .fixed input",
+		start_restriction_range: ".start-time .restriction .range input",
+		start_restriction_time: ".start-time .restriction .restriction-time",
+		end_restriction_range: ".end-time .restriction .range input",
+		end_restriction_time: ".end-time .restriction .restriction-time",
 	},
 	
 	element: function(selector)
@@ -60,12 +67,66 @@ window.ItemView = Backbone.View.extend
 	{
 		this.element('name').html(this.model.get('name'));
 		
+		if (this.options.conflict) {
+			$(this.el).addClass("conflict");
+			this.options.start_time = null;
+			this.options.end_time = null;
+		}
+		else {
+			$(this.el).removeClass("conflict");
+		}
+		
 		this.element('start_display_time').html(this.options.start_time);
 		this.element('end_display_time').html(this.options.end_time);
+		
+		this.refreshTimeRestrictions("start");
+		this.refreshTimeRestrictions("end");
+	},
+	
+	refreshTimeRestrictions: function(type)
+	{
+		var restriction_type = this.model.get(type + '_restriction_type');
+		var restriction_time = this.model.get(type + '_restriction_time');
+		
+		var restriction_fixed_element = this.element(type + '_restriction_fixed');
+		var restriction_range_element = this.element(type + '_restriction_range');
+		var restriction_time_element = this.element(type + '_restriction_time');
+		
+		if (restriction_type && restriction_time) {
+			if (restriction_type == "fixed") {
+				restriction_fixed_element.attr("checked", true);
+				restriction_range_element.attr("checked", false);
+			}
+			else if (restriction_type == "range") {
+				restriction_fixed_element.attr("checked", false);
+				restriction_range_element.attr("checked", true);
+			}
+			
+			if (!restriction_time_element.data('editable.editing')) {
+				restriction_time_element.html(restriction_time);
+			}
+		}
+		else {
+			if (!restriction_time_element.data('editable.editing')) {
+				restriction_fixed_element.attr("checked", false);
+				restriction_range_element.attr("checked", false);
+			}
+			
+			if (!restriction_time_element.data('editable.editing')) {
+				if (this.options[type + '_time']) {
+					restriction_time_element.html(this.options[type + '_time']);
+				}
+				else {
+					restriction_time_element.html("whenever");
+				}
+			}
+		}
 	},
 	
 	makeInteractive: function()
 	{
+		var self = this;
+		
 		this.element('name').editable({
 			onSubmit: _.bind(function(content) {
 				this.model.save({name: content.current});
@@ -99,6 +160,58 @@ window.ItemView = Backbone.View.extend
 			onSubmit: _.bind(function(content) {
 				this.model.save({duration: durationFromText(content.current)});    
 			},this)
+		});
+		
+		this.makeInteractiveRestrictionTime("start");
+		this.makeInteractiveRestrictionType("start", "fixed");
+		this.makeInteractiveRestrictionType("start", "range");
+		
+		this.makeInteractiveRestrictionTime("end");
+		this.makeInteractiveRestrictionType("end", "range");
+	},
+	
+	makeInteractiveRestrictionTime: function(time_type)
+	{
+		this.element(time_type + '_restriction_time').editable({
+			onEdit: _.bind(function() {
+				if (!this.model.get(time_type + '_restriction_time')) {
+					this.element(time_type + '_restriction_time').find("input").val("");
+				}
+			}, this),
+			onSubmit: _.bind(function(content) {
+				var attribute = {};
+				var time = new Time({timeString: content.current});
+				if (time.isValid()) {
+					attribute[time_type + '_restriction_time'] = time.format();
+				}
+				else {
+					attribute[time_type + '_restriction_time'] = null;
+				}
+				this.model.save(attribute);
+				this.refresh();
+			}, this)
+		});
+	},
+	
+	makeInteractiveRestrictionType: function(time_type, restriction_type)
+	{
+		var self = this;
+		
+		this.element(time_type + '_restriction_' + restriction_type).change(function() {
+			var type;
+			if ($(this).attr("checked")) {
+				type = restriction_type;
+				if (!self.model.get(time_type + '_restriction_time')) {
+					self.element(time_type + '_restriction_time').click();
+				}
+			}
+			else {
+				type = null;
+			}
+			var attribute = {};
+			attribute[time_type + '_restriction_type'] = type;
+			self.model.save(attribute);
+			self.refresh();
 		});
 	},
 
@@ -148,5 +261,5 @@ window.ItemView = Backbone.View.extend
 	delete: function()
 	{
 		this.model.destroy();
-	}
+	},
 });
