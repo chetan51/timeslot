@@ -225,39 +225,48 @@ window.ItemCollectionView = Backbone.View.extend
 			item.options.end_time = end_time.format();
 			item.refresh();
 			
-			/*
 			// Add / modify free time block before item as necessary
-			var prev_item = item.element.prevAll(".item:first").data('item');
-			var free_time = 0; // in minutes
+			var prev_item = $(item.el).prevAll(".item:first").data('view');
+			while (prev_item && prev_item.options.conflict) {
+				prev_item = $(item.el).prevAll(".item:first").data('view');
+			}
+			var free_time_duration = 0; // in minutes
 			
-			if (prev_item) {
-				free_time = item.options.times.start.time.minus(prev_item.options.times.end.time);
+			if (!item.options.conflict) {
+				if (prev_item) {
+					free_time_duration = new Time({timeString: item.options.start_time}).minus(new Time({timeString: prev_item.options.end_time}));
+				}
+				else {
+					free_time_duration = new Time({timeString: item.options.start_time}).minus(collection_start_time);
+				}
+			}
+			
+			var prev_view = $(item.el).prev().data('view');
+			var free_time;
+			var new_free_time = false;
+			if (prev_view && prev_view.className == "free-time") {
+				free_time = prev_view;
+				free_time.options.duration = free_time_duration;
 			}
 			else {
-				free_time = item.options.times.start.time.minus(collection_start_time);
+				free_time = new FreeTimeView({duration: free_time_duration});
+				new_free_time = true;
 			}
 			
-			var prev_div = item.element.prev();
-			var free_time_div;
-			var new_free_time_div = false;
-			if (!prev_div.length || !prev_div.hasClass("free-time")) {
-				free_time_div = this.model.options.molds.free_time.clone();
-				new_free_time_div = true;
+			if (free_time_duration !== 0 && new_free_time) {
+				$(free_time.render().el).insertBefore($(item.el));
 			}
-			else {
-				free_time_div = prev_div;
+			else if (free_time_duration === 0) {
+				$(free_time.el).remove();
 			}
-			free_time_div.find("> .info > .duration > .length").html(durationToText(free_time));
-			var height = 50 + (free_time / 15) * 5;
-			free_time_div.css("height", height + "px");
 			
-			if (free_time != 0 && new_free_time_div) {
-				free_time_div.insertBefore(item.element);
+			// Remove free time block after item if this is the last item
+			var next_item = $(item.el).nextAll(".item:first").data('view');
+			var next_view = $(item.el).next().data('view');
+			if (!next_item && next_view &&
+				next_view.className == "free-time") {
+				next_view.remove();
 			}
-			else if (free_time == 0) {
-				free_time_div.remove();
-			}
-			*/
 			
 			item = $(item.el).nextAll(".item:first").data('view');
 		}
