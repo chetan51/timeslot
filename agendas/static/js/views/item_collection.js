@@ -90,7 +90,6 @@ window.ItemCollectionView = Backbone.View.extend
 	{
 		var collection_start_time = new Time({timeString: this.options.start_time});
 		var item = this.element('items').first().data('view');
-		var counter = 0;
 		
 		while (item) {
 			var start_restriction_type = item.model.get('start_restriction_type');
@@ -226,15 +225,6 @@ window.ItemCollectionView = Backbone.View.extend
 			item.options.end_time = end_time.format();
 			item.refresh();
 			
-			if (counter % 2 === 0) {
-				$(item.el).addClass("item-A");
-				$(item.el).removeClass("item-B");
-			}
-			else {
-				$(item.el).removeClass("item-A");
-				$(item.el).addClass("item-B");
-			}
-			
 			/*
 			// Add / modify free time block before item as necessary
 			var prev_item = item.element.prevAll(".item:first").data('item');
@@ -270,7 +260,28 @@ window.ItemCollectionView = Backbone.View.extend
 			*/
 			
 			item = $(item.el).nextAll(".item:first").data('view');
+		}
+		
+		this.refreshAlternatingItems();
+	},
+	
+	refreshAlternatingItems: function()
+	{
+		var counter = 0;
+		var item = this.element('items').first().data('view');
+		
+		while (item) {
+			if (counter % 2 === 0) {
+				$(item.el).addClass("item-A");
+				$(item.el).removeClass("item-B");
+			}
+			else {
+				$(item.el).removeClass("item-A");
+				$(item.el).addClass("item-B");
+			}
+			
+			item = $(item.el).nextAll(".item:first").data('view');
 			counter++;
 		}
-	},
+	}
 });
