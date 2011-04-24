@@ -20,8 +20,7 @@ var AgendaController = Backbone.Controller.extend
 			model: this.agenda
 		});
 		
-		this.agenda.set({date: date});
-		this.agenda.setUrl(date);
+		this.agenda.loadStorage(this.agenda.url + "/" + date);
 		this.agenda.fetch();
 		this.agenda.items.fetch();
 	},

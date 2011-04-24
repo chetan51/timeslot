@@ -4,21 +4,18 @@ window.Agenda = Backbone.Model.extend
 		start_time: "7:00 am"
 	},
 	
-	baseUrl: "/agenda",
+	url: "/agenda",
 
 	initialize: function()
 	{
 		this.items = new ItemCollection();
 		
-		this.setUrl(this.get('date'));
 		this.id = this.get('date');
 	},
 	
-	setUrl: function(url)
+	loadStorage: function(url)
 	{
-		this.url = this.baseUrl + "/" + url;
-		this.localStorage = new Store(this.url);
-		
-		this.items.setUrl(this.url + "/items");
+		this.localStorage = new Store(url);
+		this.items.loadStorage(url + "/items");
 	}
 });

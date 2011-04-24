@@ -2,7 +2,7 @@ window.ItemCollection = Backbone.Collection.extend
 ({
 	model: Item,
 
-	setUrl: function(url) {
+	loadStorage: function(url) {
 		this.localStorage = new Store(url);
 	},
 	
