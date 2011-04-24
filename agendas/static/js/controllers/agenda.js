@@ -2,7 +2,7 @@ var AgendaController = Backbone.Controller.extend
 ({
 	routes: {
 		"":             "loadTodaysAgenda",
-		"agenda/:date": "loadAgenda" // #agenda/April 23, 2011
+		"day/:date": "loadAgenda" // #agenda/April 23, 2011
 	},
 
 	initialize: function(options)
@@ -38,6 +38,6 @@ var AgendaController = Backbone.Controller.extend
 		var date = (m_names[curr_month] + " " + curr_date + ", " + curr_year);
 		
 		this.loadAgenda(date);
-		this.saveLocation("agenda/" + date);
+		this.saveLocation("day/" + date);
 	}
 });
