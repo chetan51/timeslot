@@ -5,8 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^agendas/$', 'agendas.views.index'),
-    (r'^agendas/(?P<agenda_id>\d+)/$', 'agendas.views.detail'),
+    (r'^$',        'timeslot.views.index'),
+    (r'^agendas/', include('timeslot.agendas.urls')),
     
     # Examples:
     # url(r'^$', 'timeslot.views.home', name='home'),
