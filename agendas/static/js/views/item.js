@@ -10,7 +10,7 @@ window.ItemView = Backbone.View.extend
 
 		"click .controls .edit": "edit",
 		"click .controls .edit-done": "editDone",
-		"click .controls .delete": "delete",
+		"click .controls .delete": "destroy",
 	},
 
 	selectors: {
@@ -46,7 +46,7 @@ window.ItemView = Backbone.View.extend
 	{
 		this.model.view = this;
 		
-		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut');
+		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut', 'edit', 'editDone', 'destroy');
 		
 		this.model.bind('change', this.refresh);
 	},
@@ -259,8 +259,8 @@ window.ItemView = Backbone.View.extend
 		$(this.el).find("input").blur();
 	},
 
-	delete: function()
+	destroy: function()
 	{
 		this.model.destroy();
-	},
+	}
 });
