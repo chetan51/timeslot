@@ -1,7 +1,7 @@
 var AgendaController = Backbone.Controller.extend
 ({
 	routes: {
-		"":             "loadTodaysAgenda",
+		"":          "loadTodaysAgenda",
 		"day/:date": "loadAgenda" // #agenda/April 23, 2011
 	},
 
@@ -12,6 +12,7 @@ var AgendaController = Backbone.Controller.extend
 
 	loadAgenda: function(date)
 	{
+		date = unescape(date);
 		this.agenda = new Agenda({
 			date: date
 		});
