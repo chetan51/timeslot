@@ -9,5 +9,5 @@ window.ItemCollection = Backbone.Collection.extend
 	comparator: function(item)
 	{
 		return item.get("seq");
-	},
+	}
 });

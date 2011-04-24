@@ -3,6 +3,7 @@
  * Editable 1.3.3
  *
  * Copyright (c) 2009 Arash Karimzadeh (arashkarimzadeh.com)
+ * Modified by Chetan Surpur, 2011
  * Licensed under the MIT (MIT-LICENSE.txt)
  * http://www.opensource.org/licenses/mit-license.php
  *
@@ -20,6 +21,12 @@ $.fn.editable = function(options){
 		submitBy: 'focusout', //focusout,blur,change,dblclick,click
 		editBy: 'click',
 		options: null
+	}
+	if (this.data('editable.options')) {
+		this.unbind(this.data('editable.options').editBy,this.data('editable.options').toEditable)
+						.data('editable.previous',null)
+						.data('editable.current',null)
+						.data('editable.options',null);
 	}
 	if(options=='disable')
 		return this.unbind(this.data('editable.options').editBy,this.data('editable.options').toEditable);

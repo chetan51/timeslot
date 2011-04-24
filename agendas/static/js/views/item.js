@@ -58,8 +58,7 @@ window.ItemView = Backbone.View.extend
 		
 		this.element('edit_done').hide();
 		
-		this.makeInteractive();
-		
+		this.refresh();
 		return this;
 	},
 	
@@ -81,6 +80,8 @@ window.ItemView = Backbone.View.extend
 		
 		this.refreshTimeRestrictions("start");
 		this.refreshTimeRestrictions("end");
+		
+		this.makeInteractive();
 	},
 	
 	refreshTimeRestrictions: function(type)
@@ -197,7 +198,7 @@ window.ItemView = Backbone.View.extend
 	{
 		var self = this;
 		
-		this.element(time_type + '_restriction_' + restriction_type).change(function() {
+		this.element(time_type + '_restriction_' + restriction_type).unbind("change").change(function() {
 			var type;
 			if ($(this).attr("checked")) {
 				type = restriction_type;

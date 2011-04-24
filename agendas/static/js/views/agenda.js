@@ -33,7 +33,6 @@ window.AgendaView = Backbone.View.extend
 		}, this));
 		
 		this.render();
-		this.makeInteractive();
 	},
 
 	addItem: function()
@@ -45,6 +44,8 @@ window.AgendaView = Backbone.View.extend
 	{
 		this.element('date').html(this.model.get('date'));
 		this.element('start_time').html(this.model.get('start_time'));
+		
+		this.makeInteractive();
 	},
 	
 	makeInteractive: function()

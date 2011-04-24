@@ -1,7 +1,8 @@
 window.ItemCollectionView = Backbone.View.extend
 ({
 	selectors: {
-		items: '.item'
+		items: '.item',
+		item_add: '.item .add'
 	},
 
 	element: function(selector)
@@ -62,12 +63,13 @@ window.ItemCollectionView = Backbone.View.extend
 		$(this.el).html('');
 		
 		this.addAll();
-		this.makeInteractive();
 		this.refresh();
 	},
 
 	makeInteractive: function()
 	{
+		var self = this;
+		
 		$(this.el).sortable({
 			update: _.bind(function() {
 				this.saveOrder();
@@ -272,6 +274,7 @@ window.ItemCollectionView = Backbone.View.extend
 		}
 		
 		this.refreshAlternatingItems();
+		this.makeInteractive();
 	},
 	
 	refreshAlternatingItems: function()
