@@ -226,7 +226,7 @@ window.ItemCollectionView = Backbone.View.extend
 			// Add / modify free time block before item as necessary
 			var prev_item = $(item.el).prevAll(".item:first").data('view');
 			while (prev_item && prev_item.options.conflict) {
-				prev_item = $(item.el).prevAll(".item:first").data('view');
+				prev_item = $(prev_item.el).prevAll(".item:first").data('view');
 			}
 			var free_time_duration = 0; // in minutes
 			
