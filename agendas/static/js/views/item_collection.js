@@ -23,24 +23,8 @@ window.ItemCollectionView = Backbone.View.extend
 	
 	add: function(item)
 	{
-		this.addAfter(item);
-	},
-
-	addNew: function(item)
-	{
-		this.addAfter(item);
-		this.saveOrder();
-	},
-	
-	addAfter: function(item, after)
-	{
 		var item_view = new ItemView({model: item});
-		if (after) {
-			$(item_view.render().el).insertAfter($(after.el));
-		}
-		else {
-			$(this.el).append($(item_view.render().el));
-		}
+		$(this.el).append($(item_view.render().el));
 		
 		item.bind('change', this.refresh);
 		
@@ -50,6 +34,12 @@ window.ItemCollectionView = Backbone.View.extend
 	addAll: function()
 	{
 		this.collection.each(this.add);
+	},
+	
+	addNew: function(item)
+	{
+		this.add(item);
+		this.saveOrder();
 	},
 	
 	remove: function(item)
