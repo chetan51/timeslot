@@ -18,7 +18,7 @@ window.AgendaView = Backbone.View.extend
 	
 	initialize: function()
 	{
-		_.bindAll(this, 'addItem', 'render');
+		_.bindAll(this, 'addItem', 'refresh');
 		
 		this.items = new ItemCollectionView({
 			el: this.$(".items"),
@@ -26,13 +26,14 @@ window.AgendaView = Backbone.View.extend
 			start_time: this.model.get('start_time'),
 		});
 		
+		this.model.bind('refresh', this.refresh);
 		this.model.bind('change', _.bind(function() {
-			this.render();
+			this.refresh();
 			this.items.options.start_time = this.model.get('start_time');
 			this.items.refresh();
 		}, this));
 		
-		this.render();
+		this.refresh();
 	},
 
 	addItem: function()
@@ -40,7 +41,7 @@ window.AgendaView = Backbone.View.extend
 		this.model.items.create();
 	},
 
-	render: function()
+	refresh: function()
 	{
 		this.element('date').html(this.model.get('date'));
 		this.element('start_time').html(this.model.get('start_time'));
@@ -69,9 +70,11 @@ window.AgendaView = Backbone.View.extend
 				input.datepicker("show");
 			}, this),
 			onSubmit: _.bind(function(content) {
+				this.model.set({date: content.current});
 				this.model.setUrl(content.current);
 				this.model.fetch();
 				this.model.items.fetch();
+				window.agendaController.saveLocation("agenda/" + this.model.get('date'));
 			}, this)
 		});
 	},

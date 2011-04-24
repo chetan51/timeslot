@@ -1,11 +1,14 @@
 $(function(){
-	var agenda = new Agenda({
+	window.agenda = new Agenda({
 		date: "April 14, 2011"
 	});
-	var agendaView = new AgendaView({
+	window.agendaView = new AgendaView({
 		model: agenda
 	});
+	window.agendaController = new AgendaController({agenda: agenda});
 	
-	agenda.fetch();
-	agenda.items.fetch();
+	window.agenda.fetch();
+	window.agenda.items.fetch();
+	
+	Backbone.history.start();
 });
