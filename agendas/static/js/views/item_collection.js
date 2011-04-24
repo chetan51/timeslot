@@ -250,6 +250,7 @@ window.ItemCollectionView = Backbone.View.extend
 				free_time = new FreeTimeView({duration: free_time_duration});
 				new_free_time = true;
 			}
+			free_time.render();
 			
 			if (free_time_duration !== 0 && new_free_time) {
 				$(free_time.render().el).insertBefore($(item.el));
