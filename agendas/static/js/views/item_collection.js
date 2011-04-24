@@ -78,6 +78,12 @@ window.ItemCollectionView = Backbone.View.extend
 			}, this),
 			items: ".item"
 		});
+		
+		this.element('item_add').unbind("click").click(function() {
+			var item = self.collection.create();
+			$(item.view.el).insertAfter($(this).parents(".item"));
+			self.saveOrder();
+		});
 	},
 	
 	saveOrder: function()
