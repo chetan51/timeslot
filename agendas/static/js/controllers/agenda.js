@@ -7,13 +7,18 @@ var AgendaController = Backbone.Controller.extend
 
 	initialize: function(options)
 	{
-		this.agenda = options.agenda;
-		
 		_.bindAll(this, 'loadAgenda');
 	},
 
 	loadAgenda: function(date)
 	{
+		this.agenda = new Agenda({
+			date: date
+		});
+		this.agendaView = new AgendaView({
+			model: this.agenda
+		});
+		
 		this.agenda.set({date: date});
 		this.agenda.setUrl(date);
 		this.agenda.fetch();

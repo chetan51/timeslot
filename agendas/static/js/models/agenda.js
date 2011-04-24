@@ -11,7 +11,7 @@ window.Agenda = Backbone.Model.extend
 		this.items = new ItemCollection();
 		
 		this.setUrl(this.get('date'));
-		this.id = this.cid;
+		this.id = this.get('date');
 	},
 	
 	setUrl: function(url)
