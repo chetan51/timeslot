@@ -70,11 +70,7 @@ window.AgendaView = Backbone.View.extend
 				input.datepicker("show");
 			}, this),
 			onSubmit: _.bind(function(content) {
-				this.model.set({date: content.current});
-				this.model.setUrl(content.current);
-				this.model.fetch();
-				this.model.items.fetch();
-				window.agendaController.saveLocation("agenda/" + this.model.get('date'));
+				window.location.hash = "agenda/" + content.current;
 			}, this)
 		});
 	},
