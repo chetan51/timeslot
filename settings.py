@@ -168,6 +168,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
-EMAIL_HOST = 'timeslot.me'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'team@timeslot.me'
+EMAIL_HOST_PASSWORD = 'timeslot90'
+EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'team@timeslot.me'
 LOGIN_REDIRECT_URL = '/'
