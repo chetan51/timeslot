@@ -1,0 +1,230 @@
+/* --------------------------------------------------------------
+
+   agenda.css
+
+-------------------------------------------------------------- */
+
+/* Divs
+-------------------------------------------------------------- */
+
+#agenda {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+
+#agenda .label {
+    display: none;
+    position: absolute;
+    left: -120px;
+    width: 100px;
+    text-align: right;
+}
+
+#agenda > .items {
+    font-size: 1.2em;
+}
+
+#agenda > .header {
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+#agenda > .header > .date {
+    min-height: 48px;
+    font-size: 3em;
+    margin-bottom: 5px;
+}
+
+#agenda > .header > .date .hasDatepicker {
+    width: 300px;
+}
+
+#agenda > .header > .date button {
+    font-size: .6em;
+	padding:0 5px 0 5px;
+    margin-left: 5px;
+    vertical-align: bottom;
+}
+
+#agenda > .header > .add-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#agenda > .header > .start-time > .display-time {
+    color: #555;
+    font-size: .9em;
+}
+
+#agenda > .header > .start-time > .display-time > input {
+    width: 70px;   
+}
+
+#agenda > .items {
+    min-height: 30px;
+}
+
+#agenda > .items > .item,
+#agenda > .items > .free-time {
+    position: relative;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#agenda > .items > .item {
+    min-height: 90px;
+    height: 90px;
+}
+
+#agenda > .items > .free-time {
+    min-height: 50px;
+	background-color: #eee;
+}
+
+#agenda > .items > .item-A {
+	background-color: #EAFCEF;
+}
+
+#agenda > .items > .item-B {
+}
+
+#agenda > .items > .conflict {
+    background-color: #F08080;
+}
+
+#agenda > .items > .item > .data {
+    display: none;
+}
+
+#agenda > .items > .item > .info,
+#agenda > .items > .free-time > .info {
+    float: left;
+    width: 140px;
+    margin-left: -60px;
+    text-align: right;
+}
+
+#agenda > .items > .item > .info > .time {
+    position: absolute;
+    width: 140px;
+    min-height: 32px;
+}
+
+#agenda > .items > .item > .info > .start-time {
+    top: 5px;
+}
+
+#agenda > .items > .item > .info > .end-time {
+    bottom: 0;
+}
+
+#agenda > .items > .item > .info > .time > .restriction,
+#agenda > .items > .item > .info > .time > .restriction div,
+#agenda > .items > .item > .info > .time > .display-time {
+    display: inline-block;
+}
+
+#agenda > .items > .item > .info > .time > .restriction {
+    display: none;
+}
+
+#agenda > .items > .item > .info > .end-time > .display-time {
+    color: #888;   
+}
+
+#agenda > .items > .item > .info > .time > .restriction > .type {
+    font-size: .8em;
+    width: 60px;
+    text-align: left;
+}
+
+#agenda > .items > .item > .info > .time > .restriction > .restriction-time,
+#agenda > .items > .item > .info > .time > .display-time {
+    vertical-align: top;   
+    width: 70px;
+}
+
+#agenda > .items > .item > .info > .time > .restriction > .restriction-time > input {
+    width: 70px;
+}
+    
+#agenda > .items > .item > .info > .time > .restriction > .type > div {
+    margin-bottom: 2px;
+}
+
+#agenda > .items > .item > .info > .time > .restriction > .type > div > input {
+    margin-right: 3px;
+}
+
+#agenda > .items > .item > .info > .duration,
+#agenda > .items > .free-time > .info > .duration {
+    position: absolute;
+    left: 0;
+    width: 80px;
+    margin-bottom: 8px;
+}
+
+#agenda > .items > .item > .info > .duration {
+    display: none;
+    top: 30px;
+}
+
+#agenda > .items > .free-time > .info > .duration {
+    top: 10px;
+}
+
+#agenda > .items > .item > .info > .duration > .length,
+#agenda > .items > .free-time > .info > .duration > .length {
+    font-size: .9em;
+}
+
+#agenda > .items > .item > .info > .duration > .length > select {
+    font-size: .9em;
+    width: 70px;
+}
+
+#agenda > .items > .item > .name,
+#agenda > .items > .free-time > .name {
+    height: 100%;
+    overflow: hidden;
+    vertical-align: top;
+    margin-left: 95px;
+    margin-right: 35px;
+    padding-left: 10px;
+    font-size: 1.2em;
+}
+
+#agenda > .items > .item > .name {
+    border-left: 1px solid #000;
+}
+
+#agenda > .items > .free-time > .name {
+	font-style: italic;
+}
+
+#agenda > .items > .item > .name > input {
+    width: 95%;
+}
+
+#agenda > .items > .item > .controls {
+    display: none;
+    position: relative;
+    float: right;
+    width: 100px;
+    height: 100%;
+    padding-right: 5px;
+    text-align: right;
+    font-size: .9em;
+}
+
+#agenda > .items > .item > .controls > .add {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+}
