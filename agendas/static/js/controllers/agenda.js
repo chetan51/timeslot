@@ -12,7 +12,6 @@ var AgendaController = Backbone.Controller.extend
 
 	loadAgenda: function(date)
 	{
-		date = unescape(date);
 		this.agenda = new Agenda({
 			date: date
 		});
@@ -29,15 +28,11 @@ var AgendaController = Backbone.Controller.extend
 	
 	loadTodaysAgenda: function()
 	{
-		var m_names = new Array("January", "February", "March", 
-		"April", "May", "June", "July", "August", "September", 
-		"October", "November", "December");
-
 		var d = new Date();
-		var curr_date = d.getDate();
-		var curr_month = d.getMonth();
+		var curr_day = d.getDate();
+		var curr_month = d.getMonth() + 1;
 		var curr_year = d.getFullYear();
-		var date = (m_names[curr_month] + " " + curr_date + ", " + curr_year);
+		var date = curr_year + "-" + curr_month + "-" + curr_day;
 		
 		this.loadAgenda(date);
 		this.saveLocation("day/" + date);

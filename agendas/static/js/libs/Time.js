@@ -72,10 +72,29 @@ var Time = Class.extend(
 			return "";
 		}
 	},
+
+	format24Hour: function()
+	{
+		if (this.options.time) {
+			var d = this.options.time;
+			var curr_hour = d.getHours();
+			var curr_min = d.getMinutes();
+			curr_min = curr_min + "";
+			if (curr_min.length == 1)
+			{
+				curr_min = "0" + curr_min;
+			}
+			
+			return curr_hour + ":" + curr_min;
+		}
+		else {
+			return null;
+		}
+	},
 	
 	isValid: function()
 	{
-		return this.options.time != null;
+		return this.options.time !== null;
 	},
 
 	plusMinutes: function(minutes)

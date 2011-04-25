@@ -26,7 +26,6 @@ window.AgendaView = Backbone.View.extend
 			start_time: this.model.get('start_time'),
 		});
 		
-		this.model.bind('refresh', this.refresh);
 		this.model.bind('change', _.bind(function() {
 			this.refresh();
 			this.items.options.start_time = this.model.get('start_time');
@@ -43,8 +42,18 @@ window.AgendaView = Backbone.View.extend
 
 	refresh: function()
 	{
-		this.element('date').html(this.model.get('date'));
-		this.element('start_time').html(this.model.get('start_time'));
+		var m_names = new Array("January", "February", "March", 
+		"April", "May", "June", "July", "August", "September", 
+		"October", "November", "December");
+
+		var d = new Date(this.model.get('date'));
+		var curr_date = d.getDate();
+		var curr_month = d.getMonth();
+		var curr_year = d.getFullYear();
+		var date = (m_names[curr_month] + " " + curr_date + ", " + curr_year);
+		
+		this.element('date').html(date);
+		this.element('start_time').html(new Time({timeString: this.model.get('start_time')}).format());
 		
 		this.makeInteractive();
 	},
@@ -55,7 +64,7 @@ window.AgendaView = Backbone.View.extend
 			onSubmit: _.bind(function(content) {
 				var new_time = new Time({timeString: content.current});
 				if (new_time.isValid()) {
-					this.model.save({start_time: new_time.format()});
+					this.model.save({start_time: new_time.format24Hour()});
 				}
 			}, this)
 		});
@@ -70,7 +79,12 @@ window.AgendaView = Backbone.View.extend
 				input.datepicker("show");
 			}, this),
 			onSubmit: _.bind(function(content) {
-				window.location.hash = "day/" + content.current;
+				var d = new Date(content.current);
+				var curr_day = d.getDate();
+				var curr_month = d.getMonth() + 1;
+				var curr_year = d.getFullYear();
+				var date = curr_year + "-" + curr_month + "-" + curr_day;
+				window.location.hash = "day/" + date;
 			}, this)
 		});
 	},
