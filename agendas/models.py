@@ -10,17 +10,28 @@ class Agenda(models.Model):
     updated = models.DateTimeField('updated time', editable=False)
     def __unicode__(self):
         return self.date.isoformat()
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.today()
+        if not self.start_time:
+            self.start_time = "7:00"
         self.updated = datetime.datetime.today()
-        super(Agenda, self).save()
+        super(Agenda, self).save(*args, **kwargs)
     
 class Item(models.Model):
+    START_RESTRICTON_TYPE_CHOICES = (
+        ('fixed', 'fixed'),
+        ('range', 'range'),
+    )
+    END_RESTRICTON_TYPE_CHOICES = (
+        ('range', 'range'),
+    )
     agenda = models.ForeignKey(Agenda)
     duration = models.PositiveIntegerField('duration in minutes')
-    name = models.CharField(max_length=255)
-    start_time = models.TimeField('start time', blank=True, null=True)
-    end_time = models.TimeField('end time', blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    start_restriction_type = models.CharField(max_length=5, choices=START_RESTRICTON_TYPE_CHOICES, blank=True, null=True)
+    end_restriction_type = models.CharField(max_length=5, choices=END_RESTRICTON_TYPE_CHOICES, blank=True, null=True)
+    start_restriction_time = models.TimeField('start time', blank=True, null=True)
+    end_restriction_time = models.TimeField('end time', blank=True, null=True)
     def __unicode__(self):
         return self.name

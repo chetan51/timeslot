@@ -104,7 +104,7 @@ window.ItemView = Backbone.View.extend
 			}
 			
 			if (!restriction_time_element.data('editable.editing')) {
-				restriction_time_element.html(restriction_time);
+				restriction_time_element.html(new Time({timeString: restriction_time}).format());
 			}
 		}
 		else {
@@ -115,7 +115,7 @@ window.ItemView = Backbone.View.extend
 			
 			if (!restriction_time_element.data('editable.editing')) {
 				if (this.options[type + '_time']) {
-					restriction_time_element.html(this.options[type + '_time']);
+					restriction_time_element.html(new Time({timeString: this.options[type + '_time']}).format());
 				}
 				else {
 					restriction_time_element.html("whenever");
@@ -183,7 +183,7 @@ window.ItemView = Backbone.View.extend
 				var attribute = {};
 				var time = new Time({timeString: content.current});
 				if (time.isValid()) {
-					attribute[time_type + '_restriction_time'] = time.format();
+					attribute[time_type + '_restriction_time'] = time.format24Hour();
 				}
 				else {
 					attribute[time_type + '_restriction_time'] = null;

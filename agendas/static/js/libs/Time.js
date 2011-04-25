@@ -94,13 +94,13 @@ var Time = Class.extend(
 	
 	isValid: function()
 	{
-		return this.options.time !== null;
+		return this.options.time != null;
 	},
 
 	plusMinutes: function(minutes)
 	{
 		var new_time = new Time();
-		new_time.options.time = new Date(this.options.time.getTime() + minutes * 60 * 1000);
+		new_time.options.time = new Date(this.options.time.getTime() + parseInt(minutes) * 60 * 1000);
 		new_time.options.time.setSeconds(0);
 		new_time.options.time.setMilliseconds(0);
 		return new_time;

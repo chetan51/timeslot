@@ -1,6 +1,5 @@
-from pprint import pprint
 from piston.handler import BaseHandler
-from agendas.models import Agenda
+from agendas.models import Agenda, Item
 from piston.utils import rc
 
 class AgendaHandler(BaseHandler):
@@ -23,11 +22,7 @@ class AgendaHandler(BaseHandler):
         if request.content_type:
             data = request.data
             
-            try:
-                agenda = self.model.objects.get(date=data['date'])
-            except (self.model.DoesNotExist):
-                agenda = self.model(date=data['date'], start_time=data['start_time'])
-                agenda.save()
+            agenda, create = self.model.objects.get_or_create(date=data.get('date'), defaults={'start_time': data.get('start_time')})
             
             return agenda
         else:
@@ -42,10 +37,78 @@ class AgendaHandler(BaseHandler):
             except (self.model.DoesNotExist):
                 return None
             
-            agenda.date = data['date']
-            agenda.start_time = data['start_time']
+            agenda.date = data.get('date')
+            agenda.start_time = data.get('start_time')
             agenda.save()
             
             return agenda
         else:
             return None
+ 
+class ItemHandler(BaseHandler):
+    allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
+    fields = (('item', ('id')), 'id', 'duration', 'name',  'start_restriction_type', 'start_restriction_time', 'end_restriction_type', 'end_restriction_time')
+    model = Item
+
+    def read(self, request, item_id=None, item_date=None):
+        try:
+            if item_id:
+                return self.model.objects.get(pk=item_id)
+            elif item_date:
+                agenda = Agenda.objects.get(date=item_date)
+                return self.model.objects.filter(agenda=agenda)
+            else:
+                return self.model.objects.all()
+        except (self.model.DoesNotExist, Agenda.DoesNotExist):
+            return None
+     
+    def create(self, request, item_date=None):
+        if item_date and request.content_type:
+            data = request.data
+            
+            agenda, create = Agenda.objects.get_or_create(date=item_date)
+            
+            item = self.model(
+                    agenda=agenda,
+                    duration=data.get('duration'),
+                    name=data.get('name'),
+                    start_restriction_type=data.get('start_restriction_type'),
+                    start_restriction_time=data.get('start_restriction_time'),
+                    end_restriction_type=data.get('end_restriction_type'),
+                    end_restriction_time=data.get('end_restriction_time')
+            )
+            item.save()
+        
+            return item
+        else:
+            return None
+     
+    def update(self, request, item_id=None):
+        if request.content_type:
+            data = request.data
+            
+            try:
+                item = self.model.objects.get(pk=item_id)
+            except (self.model.DoesNotExist):
+                return None
+            
+            item.duration = data.get('duration')
+            item.name = data.get('name')
+            item.start_restriction_type = data.get('start_restriction_type')
+            item.end_restriction_type = data.get('end_restriction_type')
+            item.start_restriction_time = data.get('start_restriction_time')
+            item.end_restriction_time = data.get('end_restriction_time')
+            item.save()
+            
+            return item
+        else:
+            return None
+     
+    def delete(self, request, item_id=None):
+        try:
+            item = self.model.objects.get(pk=item_id)
+        except (self.model.DoesNotExist):
+            return None
+        
+        item.delete()
+        return rc.DELETED
