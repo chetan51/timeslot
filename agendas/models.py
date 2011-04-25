@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 import time, datetime
 
 class Agenda(models.Model):
-    #user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     date = models.DateField()
     start_time = models.TimeField('start time', blank=True, null=True)
     created = models.DateTimeField('created time', editable=False)
