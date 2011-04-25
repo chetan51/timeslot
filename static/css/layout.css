@@ -103,9 +103,8 @@
 	display: none;
 }
 
-/*
- * (Start) Agenda
- */
+/* (Start) Agenda
+-------------------------------------------------------------- */
 
 #agenda {
     display: block;
@@ -329,10 +328,8 @@
     right: 5px;
 }
 
-/*
- * (End) Agenda
- */
-
+/* --------------------------------------------------------------
+   (End) Agenda */
 
 
 #follow-me {
@@ -375,4 +372,25 @@ hr {
     color: #aaa;
     background-color: #aaa;
     height: 1px;
+}
+
+form, p {
+	text-align: center;
+}
+
+form {
+	margin-bottom: 15px;
+}
+
+form label {
+	float: left;
+	width: 10em;
+	margin-left: 4em;
+	text-align: right;
+}
+
+form input[type="text"], input[type="password"] {
+	width: 15em;
+	margin: 0;
+	margin-left: -9em;
 }
