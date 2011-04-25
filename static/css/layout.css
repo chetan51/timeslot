@@ -389,7 +389,10 @@ form label {
 	text-align: right;
 }
 
-form input[type="text"], input[type="password"] {
+form  input[type="text"],
+	input[type="text"]:focus,
+	input[type="password"],
+	input[type="password"]:focus {
 	width: 15em;
 	margin: 0;
 	margin-left: -9em;
