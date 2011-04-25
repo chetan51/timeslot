@@ -105,6 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'timeslot.disable.DisableCSRF', # temporary
 )
 
 ROOT_URLCONF = 'timeslot.urls'
@@ -124,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'agendas',
+    'registration',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -152,3 +154,9 @@ LOGGING = {
         },
     }
 }
+
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_HOST = 'localhost'
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+LOGIN_REDIRECT_URL = '/'
