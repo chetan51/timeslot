@@ -8,9 +8,19 @@
 /* Divs
 -------------------------------------------------------------- */
 
+body {
+    background: #eee;
+}
+
 #container {
     margin: 0 auto;
     width: 750px;
+    background: white;
+    padding: 20px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    -o-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
 }
 
 #header {
@@ -24,9 +34,9 @@
 
 #footer {
     margin: .5em;
+    margin-top: 1em;
     padding-top: .5em;
     text-align: center;
-    border-top: 1px solid #aaa;
 }
 
 #sitename {
