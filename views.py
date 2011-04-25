@@ -1,6 +1,11 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
-from django.template import Context, loader
+from django.template import RequestContext, loader
 
 def index(request):
-    return HttpResponseRedirect("/agendas/")
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/agendas/")
+    else:
+        template = loader.get_template('base_landing.html')
+        context = RequestContext(request)
+        return HttpResponse(template.render(context))
