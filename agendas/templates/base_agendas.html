@@ -74,5 +74,19 @@
 {% endblock content %}
 
 {% block scripts %}
+
+{% load compress %}
+{% compress js %}
+<script src="/static/js/controllers/agenda.js"></script>
+<script src="/static/js/models/item.js"></script>
+<script src="/static/js/models/item_collection.js"></script>
+<script src="/static/js/models/agenda.js"></script>
+<script src="/static/js/views/item.js"></script>
+<script src="/static/js/views/free_time.js"></script>
+<script src="/static/js/views/item_collection.js"></script>
+<script src="/static/js/views/agenda.js"></script>
+
 <script src="/static/js/script.js"></script>
+{% endcompress %}
+
 {% endblock scripts %}

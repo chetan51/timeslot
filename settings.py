@@ -7,6 +7,7 @@ DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
+COMPRESS = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -51,12 +52,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(SITE_ROOT, "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -67,6 +68,12 @@ STATIC_ROOT = os.path.join(SITE_ROOT, "static-collected")
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
+
+# Controls the absolute file path that linked media will be read from and compressed media will be written to.
+COMPRESS_ROOT = STATIC_ROOT
+
+# Controls the URL that linked media will be read from and compressed media will be written to.
+COMPRESS_URL = STATIC_URL
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -126,6 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'agendas',
     'registration',
+    'compressor',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
