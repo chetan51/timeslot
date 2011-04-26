@@ -202,6 +202,7 @@
 #agenda > .items > .item .name,
 #agenda > .items > .free-time .name {
     overflow: hidden;
+    min-height: 1.2em;
     vertical-align: top;
     font-size: 1.2em;
 }
