@@ -134,14 +134,14 @@ body {
 }
 
 
+/* AddThis
+-------------------------------------------------------------- */
+
 #share-buttons {
 	position: absolute;
 	right: -50px;
 	top: 10px;
 }
-
-/* AddThis
--------------------------------------------------------------- */
 
 .addthis_toolbox.atfixed {
     border: 1px solid #eee;
