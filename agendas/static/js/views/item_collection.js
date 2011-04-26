@@ -70,9 +70,22 @@ window.ItemCollectionView = Backbone.View.extend
 		});
 		
 		this.element('item_add').unbind("click").click(function() {
-			var item = self.collection.create();
-			$(item.view.el).insertAfter($(this).parents(".item"));
-			self.saveOrder();
+			var this_item = $(this).parents(".item").data('view').model;
+			var new_item;
+			
+			if (this_item.get('start_restriction_type') &&
+				new Time({timeString: this_item.get('start_restriction_time')}).isValid()) {
+				start_restriction_type = "range";
+				start_restriction_time = new Time({timeString: this_item.view.options.start_time}).format24Hour();
+				
+				new_item = self.collection.create({
+					start_restriction_type: start_restriction_type,
+					start_restriction_time: start_restriction_time
+				});
+			}
+			else {
+				new_item = self.collection.create();
+			}
 		});
 	},
 	
