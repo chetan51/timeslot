@@ -54,7 +54,7 @@ class AgendaHandler(BaseHandler):
  
 class ItemHandler(BaseHandler):
     allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
-    fields = (('item', ('id')), 'id', 'duration', 'name',  'start_restriction_type', 'start_restriction_time', 'end_restriction_type', 'end_restriction_time')
+    fields = (('item', ('id')), 'id', 'duration', 'name', 'seq', 'start_restriction_type', 'start_restriction_time', 'end_restriction_type', 'end_restriction_time')
     model = Item
 
     def read(self, request, item_id=None, item_date=None):
@@ -83,6 +83,7 @@ class ItemHandler(BaseHandler):
                     agenda=agenda,
                     duration=data.get('duration'),
                     name=data.get('name'),
+                    seq=data.get('seq'),
                     start_restriction_type=data.get('start_restriction_type'),
                     start_restriction_time=data.get('start_restriction_time'),
                     end_restriction_type=data.get('end_restriction_type'),
@@ -107,6 +108,7 @@ class ItemHandler(BaseHandler):
             
             item.duration = data.get('duration')
             item.name = data.get('name')
+            item.seq = data.get('seq')
             item.start_restriction_type = data.get('start_restriction_type')
             item.end_restriction_type = data.get('end_restriction_type')
             item.start_restriction_time = data.get('start_restriction_time')
