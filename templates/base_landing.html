@@ -1,5 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-Welcome to Timeslot.
+<div id="headline">
+	<h1>Timeslot makes planning your day <br> a <em>breeze</em>.</h1>
+</div>
+<div id="description">
+	<h4>
+		Timeslot is great. It works like this. It helps you do this. Whee.  Timeslot is great. It works like this. It helps you do this. Whee.  Timeslot is great. It works like this. It helps you do this. Whee.
+	</h4>
+</div>
+<div id="gallery">
+	<div id="slides">
+		<div class="slide"><img src="/static/img/sample_slides/macbook.jpg" width="690" height="300" /></div>
+		<div class="slide"><img src="/static/img/sample_slides/iphone.jpg" width="690" height="300" /></div>
+		<div class="slide"><img src="/static/img/sample_slides/imac.jpg" width="690" height="300" /></div>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="fbar">&nbsp;</li>
+			<li class="menuItem"><a href=""><img src="/static/img/sample_slides/thumb_macbook.png" /></a></li>
+			<li class="menuItem"><a href=""><img src="/static/img/sample_slides/thumb_iphone.png" /></a></li>
+			<li class="menuItem"><a href=""><img src="/static/img/sample_slides/thumb_imac.png" /></a></li>
+		</ul>
+	</div>
+</div>
+<hr>
+<div id="features">
+	<div class="feature feature-A">
+		<div class="text">
+			<h3>Feature 1</h3>
+			<p>Feature description goes here.</p>
+		</div>
+		<div class="feature-image">
+			<img src="/static/img/sample_slides/iphone.jpg" width="530" height="230" />
+		</div>
+	</div>
+	<hr>
+	<div class="feature feature-B">
+		<div class="text">
+			<h3>Feature 2</h3>
+			<p>Feature description goes here.</p>
+		</div>
+		<div class="feature-image">
+			<img src="/static/img/sample_slides/imac.jpg" width="530" height="230" />
+		</div>
+	</div>
+</div>
 {% endblock content %}
+
+{% block scripts %}
+
+{% load compress %}
+{% compress js %}
+<script src="/static/js/slideshow.js"></script>
+{% endcompress %}
+
+{% endblock scripts %}

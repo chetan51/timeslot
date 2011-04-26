@@ -133,6 +133,149 @@ body {
     margin-top: 25px;
 }
 
+/* Home / landing page
+-------------------------------------------------------------- */
+
+#headline, #description {
+	text-align: center;
+}
+
+#headline {
+	margin-top: 20px;
+}
+
+.feature .text,
+.feature .feature-image {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.feature .text {
+	width: 200px;
+}
+
+.feature-A .text {
+	float: left;
+}
+
+.feature-A .text,
+.feature-A p {
+	text-align: left;
+}
+
+.feature-B .text {
+	float: right;
+}
+
+.feature-B .text,
+.feature-B p {
+	text-align: right;
+}
+
+.feature .feature-image {
+	width: 530px;
+}
+
+.feature .text h3 {
+	margin-top: 5px;
+}
+
+
+
+/* Apple-esque slideshow
+-------------------------------------------------------------- */
+
+#gallery{
+	/* CSS3 Box Shadow */
+	-moz-box-shadow:0 0 3px #AAAAAA;
+	-webkit-box-shadow:0 0 3px #AAAAAA;
+	box-shadow:0 0 3px #AAAAAA;
+
+	/* CSS3 Rounded Corners */
+
+	-moz-border-radius-bottomleft:4px;
+	-webkit-border-bottom-left-radius:4px;
+	border-bottom-left-radius:4px;
+
+	-moz-border-radius-bottomright:4px;
+	-webkit-border-bottom-right-radius:4px;
+	border-bottom-right-radius:4px;
+
+	border:1px solid white;
+
+	background:url(/static/img/panel.jpg) repeat-x bottom center #ffffff;
+
+	/* The width of the gallery */
+	width:690px;
+	overflow:hidden;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+}
+
+#slides{
+	/* This is the slide area */
+	height:300px;
+
+	/* jQuery changes the width later on to the sum of the widths of all the slides. */
+	width:690px;
+	overflow:hidden;
+}
+
+#slides .slide{
+	float:left;
+}
+
+#menu{
+	/* This is the container for the thumbnails */
+	height:45px;
+	text-align: center;
+}
+
+#gallery ul{
+	margin:0px;
+	padding:0px;
+}
+
+#gallery li{
+	/* Every thumbnail is a li element */
+	width:60px;
+	display:inline-block;
+	list-style:none;
+	height:45px;
+	overflow:hidden;
+}
+
+#gallery li.inact:hover {
+	/* The inactive state, highlighted on mouse over */
+	background:url(/static/img/pic_bg.png) repeat;
+}
+
+#gallery li.act,li.act:hover {
+	/* The active state of the thumb */
+	background:url(/static/img/active_bg.png) no-repeat;
+}
+
+#gallery li.act a{
+	cursor:default;
+}
+
+#gallery .fbar{
+	/* The left-most vertical bar, next to the first thumbnail */
+	width:2px;
+	background:url(/static/img/divider.png) no-repeat right;
+}
+
+#gallery li a{
+	display:block;
+	background:url(/static/img/divider.png) no-repeat right;
+	height:35px;
+	padding-top:10px;
+}
+
+#gallery a img{
+	border:none;
+}
 
 /* AddThis
 -------------------------------------------------------------- */
