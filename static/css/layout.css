@@ -16,6 +16,7 @@ body {
     position: relative;
     margin: 0 auto;
     width: 750px;
+    min-height: 200px;
     background: white;
     padding: 20px;
     -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
