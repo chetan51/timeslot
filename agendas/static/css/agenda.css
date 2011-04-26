@@ -190,26 +190,27 @@
     width: 70px;
 }
 
-#agenda > .items > .item > .name,
-#agenda > .items > .free-time > .name {
+#agenda > .items > .item .body,
+#agenda > .items > .free-time .body {
     height: 100%;
-    overflow: hidden;
-    vertical-align: top;
     margin-left: 95px;
     margin-right: 35px;
     padding-left: 10px;
-    font-size: 1.2em;
-}
-
-#agenda > .items > .item > .name {
     border-left: 1px solid #000;
 }
 
-#agenda > .items > .free-time > .name {
+#agenda > .items > .item .name,
+#agenda > .items > .free-time .name {
+    overflow: hidden;
+    vertical-align: top;
+    font-size: 1.2em;
+}
+
+#agenda > .items > .free-time .name {
 	font-style: italic;
 }
 
-#agenda > .items > .item > .name > input {
+#agenda > .items > .item .name > input {
     width: 95%;
 }
 

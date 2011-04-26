@@ -18,6 +18,7 @@ window.ItemView = Backbone.View.extend
 		duration: ".info .duration",
 		duration_length: ".info .duration .length",
 		time: ".time",
+		body: ".body",
 		name: ".name",
 
 		edit: ".controls .edit",
