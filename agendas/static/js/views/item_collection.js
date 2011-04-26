@@ -72,20 +72,27 @@ window.ItemCollectionView = Backbone.View.extend
 		this.element('item_add').unbind("click").click(function() {
 			var this_item = $(this).parents(".item").data('view').model;
 			var new_item;
+			var start_restriction_type = null;
+			var start_restriction_time = null;
 			
 			if (this_item.get('start_restriction_type') &&
 				new Time({timeString: this_item.get('start_restriction_time')}).isValid()) {
 				start_restriction_type = "range";
 				start_restriction_time = new Time({timeString: this_item.view.options.start_time}).format24Hour();
-				
-				new_item = self.collection.create({
-					start_restriction_type: start_restriction_type,
-					start_restriction_time: start_restriction_time
-				});
 			}
-			else {
-				new_item = self.collection.create();
-			}
+		
+			new_item = self.collection.create(
+			{
+				start_restriction_type: start_restriction_type,
+				start_restriction_time: start_restriction_time
+			},
+			{
+				success: function(model, response) {
+					$(new_item.view.el).insertAfter($(this_item.view.el));
+					self.refresh();
+					self.saveOrder();
+				}
+			});
 		});
 	},
 	
