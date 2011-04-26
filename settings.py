@@ -174,6 +174,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 )
 
+# Caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_USE_TLS = True
