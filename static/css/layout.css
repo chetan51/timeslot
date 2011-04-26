@@ -140,7 +140,9 @@ body {
 	top: 10px;
 }
 
-/* Fixed Positioned AddThis Toolbox */            
+/* AddThis
+-------------------------------------------------------------- */
+
 .addthis_toolbox.atfixed {
     border: 1px solid #eee;
     padding: 5px 5px 1px;
@@ -166,8 +168,9 @@ body {
 	opacity: 0.75;
 }
 
+/* GetSatisfaction Feedback
+-------------------------------------------------------------- */
 
-/* GetSatisfaction Feedback tab */            
 a#fdbk_tab {
     position: absolute !important;
     top: 80px !important;
@@ -175,6 +178,9 @@ a#fdbk_tab {
 	left: auto !important;
 }
 
+
+/* General Stuff
+-------------------------------------------------------------- */
 
 .clear {
     clear: both;
