@@ -127,12 +127,41 @@ body {
     display: inline;
 }
 
-#share-buttons {
-    float: right;
-}
-
 #disqus_thread{
     margin-top: 25px;
+}
+
+
+#share-buttons {
+	position: absolute;
+	right: 190px;
+	top: 10px;
+}
+
+/* Fixed Positioned AddThis Toolbox */            
+.addthis_toolbox.atfixed {
+    border: 1px solid #eee;
+    padding: 5px 5px 1px;
+    width: 32px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+.addthis_toolbox .custom_images a {
+    width: 32px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+.addthis_toolbox .custom_images a img {
+	border: 0;
+	margin: 0;
+	opacity: 1.0;
+}
+.addthis_toolbox .custom_images a:hover img {
+	margin: 0;
+	opacity: 0.75;
 }
 
 
