@@ -31,12 +31,19 @@ button, .button, input[type="submit"] {
 	user-select: none;
 }
 
-.button-big {
-	width:170px;
+.button-big, .button-important {
 	height:40px;
 	line-height:40px;
 	font-size:1.8em;
 	border: 1px solid #000;
+}
+
+.button-big {
+	width:170px;
+}
+
+.button-important {
+	
 }
 
 .button-small {

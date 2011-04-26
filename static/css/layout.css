@@ -136,12 +136,26 @@ body {
 /* Home / landing page
 -------------------------------------------------------------- */
 
-#headline, #description {
+#headline {
 	text-align: center;
+	margin-top: 20px;
 }
 
-#headline {
-	margin-top: 20px;
+#description, #call-to-action {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#description {
+	text-align: left;
+	width: 490px;
+	margin-left: 20px;
+	margin-right: 30px;
+}
+
+#call-to-action {
+	text-align: right;
+	width: 170px;
 }
 
 .feature .text,
