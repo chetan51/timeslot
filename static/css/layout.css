@@ -13,6 +13,7 @@ body {
 }
 
 #container {
+    position: relative;
     margin: 0 auto;
     width: 750px;
     background: white;
@@ -134,7 +135,7 @@ body {
 
 #share-buttons {
 	position: absolute;
-	right: 190px;
+	right: -50px;
 	top: 10px;
 }
 
@@ -162,6 +163,15 @@ body {
 .addthis_toolbox .custom_images a:hover img {
 	margin: 0;
 	opacity: 0.75;
+}
+
+
+/* GetSatisfaction Feedback tab */            
+a#fdbk_tab {
+    position: absolute !important;
+    top: 80px !important;
+	right: -42px !important;
+	left: auto !important;
 }
 
 

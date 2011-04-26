@@ -56,22 +56,22 @@
 			{% block content %}
 			{% endblock content %}
 		</div>
+
+		<div id="share-buttons">
+			<div class="addthis_toolbox atfixed addthis_pill_combo"
+					addthis:url="http://timeslot.me"
+					addthis:title="timeslot: plan your day"
+					addthis:description="An easy way to plan your day."></a>
+			    <div class="custom_images">
+				    <a class="addthis_button_tweet" tw:count="horizontal"></a>
+				    <a class="addthis_button_facebook_like"></a>
+			    </div>
+			</div>
+		</div>
 	</div>
 
 	<div id="footer">
 		&copy; <a href="http://chetansurpur.com/">Chetan Surpur</a>, 2011.
-	</div>
-
-	<div id="share-buttons">
-		<div class="addthis_toolbox atfixed addthis_pill_combo"
-				addthis:url="http://timeslot.me"
-				addthis:title="timeslot: plan your day"
-				addthis:description="An easy way to plan your day."></a>
-		    <div class="custom_images">
-			    <a class="addthis_button_tweet" tw:count="horizontal"></a>
-			    <a class="addthis_button_facebook_like"></a>
-		    </div>
-		</div>
 	</div>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
@@ -118,11 +118,12 @@
 
 	  feedback_widget_options.display = "overlay";  
 	  feedback_widget_options.company = "timeslot";
-	  feedback_widget_options.placement = "right";
+	  feedback_widget_options.placement = "left";
 	  feedback_widget_options.color = "#222";
 	  feedback_widget_options.style = "problem";
 
 	  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+	  $("#fdbk_tab").appendTo($("#container"));
 	</script>
 
 	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4db60c1b02b6be95"></script>
