@@ -94,6 +94,10 @@
 #agenda > .items > .item-B {
 }
 
+#agenda > .items > .fixed {
+	border: 2px solid #999;
+}
+
 #agenda > .items > .conflict {
     background-color: #F08080;
 }

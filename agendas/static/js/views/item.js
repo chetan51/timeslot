@@ -82,6 +82,17 @@ window.ItemView = Backbone.View.extend
 		this.refreshTimeRestrictions("start");
 		this.refreshTimeRestrictions("end");
 		
+		var height = 70 + (this.model.get('duration') / 15) * 5;
+		$(this.el).css("height", height + "px");
+		
+		if (this.model.get('start_restriction_type') == "fixed" &&
+			new Time({timeString: this.model.get('start_restriction_time'), military: true}).isValid()) {
+			$(this.el).addClass("fixed");
+		}
+		else {
+			$(this.el).removeClass("fixed");
+		}
+		
 		this.makeInteractive();
 	},
 	

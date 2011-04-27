@@ -309,16 +309,18 @@ window.ItemCollectionView = Backbone.View.extend
 		var item = this.element('items').first().data('view');
 		
 		while (item) {
-			if (counter % 2 === 0) {
-				$(item.el).addClass("item-A");
-				$(item.el).removeClass("item-B");
-			}
-			else {
-				$(item.el).removeClass("item-A");
-				$(item.el).addClass("item-B");
+			if (item.className != "free-time") {
+				if (counter % 2 === 0) {
+					$(item.el).addClass("item-A");
+					$(item.el).removeClass("item-B");
+				}
+				else {
+					$(item.el).removeClass("item-A");
+					$(item.el).addClass("item-B");
+				}
 			}
 			
-			item = $(item.el).nextAll(".item:first").data('view');
+			item = $(item.el).next().data('view');
 			counter++;
 		}
 	}
