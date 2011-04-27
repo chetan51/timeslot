@@ -184,10 +184,13 @@ CACHES = {
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'team@timeslot.me'
-EMAIL_HOST_PASSWORD = 'timeslot90'
-EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'team@timeslot.me'
+#EMAIL_HOST_PASSWORD = 'timeslot90'
+#EMAIL_PORT = 587
+EMAIL_BACKEND = 'django_ses.SESBackend'
 DEFAULT_FROM_EMAIL = 'team@timeslot.me'
+AWS_ACCESS_KEY_ID = 'AKIAJHADPMLUZVO4Q5GA'
+AWS_SECRET_ACCESS_KEY = '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'
 LOGIN_REDIRECT_URL = '/'
