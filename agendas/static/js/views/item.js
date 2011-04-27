@@ -76,8 +76,8 @@ window.ItemView = Backbone.View.extend
 			$(this.el).removeClass("conflict");
 		}
 		
-		this.element('start_display_time').html(this.options.start_time);
-		this.element('end_display_time').html(this.options.end_time);
+		this.element('start_display_time').html(new Time({timeString: this.options.start_time, military: true}).format());
+		this.element('end_display_time').html(new Time({timeString: this.options.end_time, military: true}).format());
 		
 		this.refreshTimeRestrictions("start");
 		this.refreshTimeRestrictions("end");
@@ -105,7 +105,7 @@ window.ItemView = Backbone.View.extend
 			}
 			
 			if (!restriction_time_element.data('editable.editing')) {
-				restriction_time_element.html(new Time({timeString: restriction_time}).format());
+				restriction_time_element.html(new Time({timeString: restriction_time, military: true}).format());
 			}
 		}
 		else {
@@ -116,7 +116,7 @@ window.ItemView = Backbone.View.extend
 			
 			if (!restriction_time_element.data('editable.editing')) {
 				if (this.options[type + '_time']) {
-					restriction_time_element.html(new Time({timeString: this.options[type + '_time']}).format());
+					restriction_time_element.html(new Time({timeString: this.options[type + '_time'], military: true}).format());
 				}
 				else {
 					restriction_time_element.html("whenever");

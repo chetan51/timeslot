@@ -11,17 +11,32 @@ var Time = Class.extend(
 	init: function(options)
 	{
 		this.options = $.extend({}, options);
-		if (this.options.timeString) {
-			var t = new Date();
-			var time = this.options.timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i);
+		var t = new Date();
+		var time, hours;
+		if (this.options.timeString && !this.options.military) {
+			time = this.options.timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i);
 			if (time && time[1]) {
-				var hours = parseInt(time[1],10);    
+				hours = parseInt(time[1],10);    
 				if (hours == 12 && !time[4]) {
 					hours = 0;
 				}
 				else {
 					hours += (hours < 12 && time[4])? 12 : 0;
 				}   
+				t.setHours(hours);
+				t.setMinutes(parseInt(time[3],10) || 0);
+				t.setSeconds(0, 0);  
+			}
+			else {
+				t = null;
+			}
+			
+			this.options.time = t;
+		}
+		else if (this.options.timeString && this.options.military) {
+			time = this.options.timeString.match(/(\d+)(:(\d\d))?/i);
+			if (time && time[1]) {
+				hours = parseInt(time[1],10);    
 				t.setHours(hours);
 				t.setMinutes(parseInt(time[3],10) || 0);
 				t.setSeconds(0, 0);  
