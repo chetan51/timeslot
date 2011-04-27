@@ -223,7 +223,14 @@ window.ItemCollectionView = Backbone.View.extend
 							  current_item.model.get('end_restriction_time') &&
 							  (new Time({timeString: current_item.options.end_time, military: true}).plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.model.get('end_restriction_time'), military: true})))))) {
 								$(item.el).insertBefore($(current_item.el));
-								start_time = new Time({timeString: current_item.options.start_time, military: true});
+								if (start_restriction_type != "range" ||
+									!start_restriction_time.isValid() ||
+									new Time({timeString: current_item.options.start_time, military: true}).isGreaterOrEqual(start_restriction_time)) {
+									start_time = new Time({timeString: current_item.options.start_time, military: true});
+								}
+								else {
+									start_time = start_restriction_time;
+								}
 								placed_item = true;
 							}
 							else {
