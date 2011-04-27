@@ -82,7 +82,7 @@ window.ItemView = Backbone.View.extend
 		this.refreshTimeRestrictions("start");
 		this.refreshTimeRestrictions("end");
 		
-		var height = 70 + (this.model.get('duration') / 15) * 5;
+		var height = 75 + (this.model.get('duration') / 15) * 5;
 		$(this.el).css("height", height + "px");
 		
 		if (this.model.get('start_restriction_type') == "fixed" &&
