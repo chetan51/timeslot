@@ -166,6 +166,7 @@ window.ItemView = Backbone.View.extend
 		
 		this.element('duration_length').editable({
 			type: 'select',
+			submitBy: 'change',
 			options: duration_options,
 			onSubmit: _.bind(function(content) {
 				if (content.current != content.previous) {
