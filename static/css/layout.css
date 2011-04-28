@@ -52,6 +52,14 @@ body {
 
 #sitename h3 {
     margin: 0;
+    display: inline;
+}
+
+#sitename h6 {
+    display: inline;
+    font-weight: normal;
+    font-size: .9em;
+    color: #999;
 }
 
 #sitename a {
