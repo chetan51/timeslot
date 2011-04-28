@@ -37,6 +37,7 @@
     min-height: 48px;
     font-size: 3em;
     margin-bottom: 5px;
+    cursor: pointer;
 }
 
 #agenda > .header > .date .hasDatepicker {
@@ -59,6 +60,7 @@
 #agenda > .header > .start-time > .display-time {
     color: #555;
     font-size: .9em;
+	cursor: pointer;
 }
 
 #agenda > .header > .start-time > .display-time > input {
@@ -154,6 +156,10 @@
     width: 110px;
 }
 
+#agenda > .items > .item > .info > .time > .restriction > .restriction-time {
+    cursor: pointer;
+}
+
 #agenda > .items > .item > .info > .time > .restriction > .restriction-time > input {
     width: 65px;
 }
@@ -177,6 +183,7 @@
 #agenda > .items > .item > .info > .duration {
     display: none;
     top: 30px;
+    cursor: pointer;
 }
 
 #agenda > .items > .free-time > .info > .duration {
@@ -209,6 +216,10 @@
     min-height: 1.2em;
     vertical-align: top;
     font-size: 1.2em;
+}
+
+#agenda > .items > .item .name {
+    cursor: pointer;
 }
 
 #agenda > .items > .free-time .name {
