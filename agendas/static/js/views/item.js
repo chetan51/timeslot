@@ -185,6 +185,9 @@ window.ItemView = Backbone.View.extend
 		
 		this.makeInteractiveRestrictionTime("end");
 		this.makeInteractiveRestrictionType("end", "range");
+		
+		this.makeInteractiveDisplayTime("start");
+		this.makeInteractiveDisplayTime("end");
 	},
 	
 	makeInteractiveRestrictionTime: function(time_type)
@@ -196,15 +199,22 @@ window.ItemView = Backbone.View.extend
 				}
 			}, this),
 			onSubmit: _.bind(function(content) {
-				var attribute = {};
+				var time_attribute = {};
 				var time = new Time({timeString: content.current});
 				if (time.isValid()) {
-					attribute[time_type + '_restriction_time'] = time.format24Hour();
+					time_attribute[time_type + '_restriction_time'] = time.format24Hour();
+				
+					if (!this.model.get(time_type + '_restriction_type')) {
+						var type_attribute = {};
+						type_attribute[time_type + '_restriction_type'] = "range";
+						this.model.save(type_attribute);
+					}
 				}
 				else {
-					attribute[time_type + '_restriction_time'] = null;
+					time_attribute[time_type + '_restriction_time'] = null;
 				}
-				this.model.save(attribute);
+				this.model.save(time_attribute);
+				
 				this.refresh();
 			}, this)
 		});
@@ -230,6 +240,14 @@ window.ItemView = Backbone.View.extend
 			self.model.save(attribute);
 			self.refresh();
 		});
+	},
+	
+	makeInteractiveDisplayTime: function(time_type)
+	{
+		this.element(time_type + '_display_time').click(_.bind(function() {
+			this.edit();
+			this.element(time_type + '_restriction_time').click();
+		}, this));
 	},
 
 	hoverIn: function()

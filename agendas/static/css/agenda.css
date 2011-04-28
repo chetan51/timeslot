@@ -136,6 +136,10 @@
     display: inline-block;
 }
 
+#agenda > .items > .item > .info > .time > .display-time {
+	cursor: pointer;
+}
+
 #agenda > .items > .item > .info > .time > .restriction {
     display: none;
 }
