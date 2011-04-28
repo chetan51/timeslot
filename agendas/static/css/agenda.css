@@ -14,14 +14,6 @@
     margin: auto;
 }
 
-#agenda .label {
-    display: none;
-    position: absolute;
-    left: -120px;
-    width: 100px;
-    text-align: right;
-}
-
 #agenda > .items {
     font-size: 1.2em;
 }
@@ -142,7 +134,23 @@
 
 #agenda > .items > .item > .info > .time > .restriction {
     display: none;
+    position: relative;
+    background: #fff;
+    padding: 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    -o-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
 }
+
+#agenda .label {
+    display: none;
+    position: absolute;
+    left: -60px;
+    width: 100px;
+    text-align: right;
+}
+
 
 #agenda > .items > .item > .info > .end-time > .display-time {
     color: #888;   
@@ -150,14 +158,14 @@
 
 #agenda > .items > .item > .info > .time > .restriction > .type {
     font-size: .8em;
-    width: 60px;
+    width: 50px;
     text-align: left;
 }
 
 #agenda > .items > .item > .info > .time > .restriction > .restriction-time,
 #agenda > .items > .item > .info > .time > .display-time {
     vertical-align: top;   
-    width: 110px;
+    width: 70px;
 }
 
 #agenda > .items > .item > .info > .time > .restriction > .restriction-time {
@@ -186,7 +194,7 @@
 
 #agenda > .items > .item > .info > .duration {
     display: none;
-    top: 30px;
+    bottom: 30px;
     cursor: pointer;
 }
 

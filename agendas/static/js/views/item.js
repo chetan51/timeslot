@@ -28,12 +28,19 @@ window.ItemView = Backbone.View.extend
 		time_restriction: ".time .restriction",
 		display_time: ".time .display-time",
 		
+		start_time: ".start-time",
+		start_time_label: ".start-time .label",
+		end_time: ".end-time",
+		end_time_label: ".end-time .label",
+		
 		start_display_time: ".start-time .display-time",
 		end_display_time: ".end-time .display-time",
 		
+		start_restriction: ".start-time .restriction",
 		start_restriction_fixed: ".start-time .restriction .fixed input",
 		start_restriction_range: ".start-time .restriction .range input",
 		start_restriction_time: ".start-time .restriction .restriction-time",
+		end_restriction: ".end-time .restriction",
 		end_restriction_range: ".end-time .restriction .range input",
 		end_restriction_time: ".end-time .restriction .restriction-time",
 	},
@@ -244,9 +251,14 @@ window.ItemView = Backbone.View.extend
 	
 	makeInteractiveDisplayTime: function(time_type)
 	{
-		this.element(time_type + '_display_time').click(_.bind(function() {
-			this.edit();
-			this.element(time_type + '_restriction_time').click();
+		this.element(time_type + '_time').hover(_.bind(function() {
+			this.element(time_type + '_restriction').show();
+			this.element(time_type + '_display_time').hide();
+			this.element(time_type + '_time_label').show();
+		}, this), _.bind(function() {
+			this.element(time_type + '_restriction').hide();
+			this.element(time_type + '_display_time').show();
+			this.element(time_type + '_time_label').hide();
 		}, this));
 	},
 
