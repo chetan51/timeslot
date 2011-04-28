@@ -143,7 +143,9 @@ window.ItemView = Backbone.View.extend
 		
 		this.element('name').editable({
 			onSubmit: _.bind(function(content) {
-				this.model.save({name: content.current});
+				if (content.current != content.previous) {
+					this.model.save({name: content.current});
+				}
 			}, this)
 		});
 		
@@ -171,7 +173,9 @@ window.ItemView = Backbone.View.extend
 			type: 'select',
 			options: duration_options,
 			onSubmit: _.bind(function(content) {
-				this.model.save({duration: durationFromText(content.current)});    
+				if (content.current != content.previous) {
+					this.model.save({duration: durationFromText(content.current)});    
+				}
 			},this)
 		});
 		

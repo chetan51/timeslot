@@ -90,6 +90,7 @@ window.ItemCollectionView = Backbone.View.extend
 			{
 				success: function(model, response) {
 					$(new_item.view.el).insertAfter($(this_item.view.el));
+					new_item.view.editName();
 					self.refresh();
 					self.saveOrder();
 				}
