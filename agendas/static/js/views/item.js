@@ -8,8 +8,6 @@ window.ItemView = Backbone.View.extend
 		"mouseenter": "hoverIn",
 		"mouseleave": "hoverOut",
 
-		"click .controls .edit": "edit",
-		"click .controls .edit-done": "editDone",
 		"click .controls .delete": "destroy",
 	},
 
@@ -21,9 +19,6 @@ window.ItemView = Backbone.View.extend
 		body: ".body",
 		name: ".name",
 
-		edit: ".controls .edit",
-		edit_done: ".controls .edit-done",
-		
 		time_label: ".time .label",
 		time_restriction: ".time .restriction",
 		display_time: ".time .display-time",
@@ -54,7 +49,7 @@ window.ItemView = Backbone.View.extend
 	{
 		this.model.view = this;
 		
-		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut', 'edit', 'editDone', 'destroy');
+		_.bindAll(this, 'render', 'refresh', 'hoverIn', 'hoverOut', 'destroy');
 		
 		this.model.bind('change', this.refresh);
 	},
@@ -63,8 +58,6 @@ window.ItemView = Backbone.View.extend
 	{
 		$(this.el).html(this.template(this.model.toJSON()));
 		$(this.el).data('view', this);
-		
-		this.element('edit_done').hide();
 		
 		this.refresh();
 		this.makeInteractive();
@@ -264,45 +257,14 @@ window.ItemView = Backbone.View.extend
 
 	hoverIn: function()
 	{
-		if (!this.options.being_edited) {
-			this.element('controls').show();
-			this.element('duration').show();
-		}
+		this.element('controls').show();
+		this.element('duration').show();
 	},
 	
 	hoverOut: function()
 	{
-		if (!this.options.being_edited) {
-			this.element('controls').hide();
-			this.element('duration').hide();
-		}
-	},
-
-	edit: function()
-	{
-		this.options.being_edited = true;
-		this.element('controls').show();
-		this.element('edit').hide();
-		this.element('edit_done').show();
-		
-		this.element('duration').show();
-		
-		this.element('time_label').show();
-		this.element('display_time').hide();
-		this.element('time_restriction').show();
-	},
-
-	editDone: function()
-	{
-		this.options.being_edited = false;
-		this.element('edit').show();
-		this.element('edit_done').hide();
-		
-		this.element('time_label').hide();
-		this.element('display_time').show();
-		this.element('time_restriction').hide();
-		
-		$(this.el).find("input").blur();
+		this.element('controls').hide();
+		this.element('duration').hide();
 	},
 
 	editName: function()
