@@ -326,7 +326,7 @@ window.ItemCollectionView = Backbone.View.extend
 				}
 			}
 			
-			item = $(item.el).next().data('view');
+			item = $(item.el).nextAll(".item:first").data('view');
 			counter++;
 		}
 	}
