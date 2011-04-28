@@ -23,9 +23,9 @@ var Time = Class.extend(
 				else {
 					hours += (hours < 12 && time[4])? 12 : 0;
 				}   
+				t.setTime(0);
 				t.setHours(hours);
 				t.setMinutes(parseInt(time[3],10) || 0);
-				t.setSeconds(0, 0);  
 			}
 			else {
 				t = null;
@@ -37,9 +37,9 @@ var Time = Class.extend(
 			time = this.options.timeString.match(/(\d+)(:(\d\d))?/i);
 			if (time && time[1]) {
 				hours = parseInt(time[1],10);    
+				t.setTime(0);
 				t.setHours(hours);
 				t.setMinutes(parseInt(time[3],10) || 0);
-				t.setSeconds(0, 0);  
 			}
 			else {
 				t = null;
@@ -116,33 +116,66 @@ var Time = Class.extend(
 	{
 		var new_time = new Time();
 		new_time.options.time = new Date(this.options.time.getTime() + parseInt(minutes) * 60 * 1000);
-		new_time.options.time.setSeconds(0);
-		new_time.options.time.setMilliseconds(0);
 		return new_time;
 	},
 	
-	minus: function(time)
+	minus: function(time, relative_to)
 	{
-		return (this.options.time.getTime() - time.options.time.getTime()) / (60 * 1000);
+		if (!relative_to) {
+			return (this.options.time.getTime() - time.options.time.getTime()) / (60 * 1000);
+		}
+		else {
+			return (this.convertRelative(relative_to).options.time.getTime() - time.convertRelative(relative_to).options.time.getTime()) / (60 * 1000);
+		}
 	},
 
-	isLessOrEqual: function(time) // less than or equal to
+	isLessOrEqual: function(time, relative_to) // less than or equal to
 	{
-		return this.options.time <= time.options.time;
+		if (!relative_to) {
+			return this.options.time <= time.options.time;
+		}
+		else {
+			return this.convertRelative(relative_to).options.time <= time.convertRelative(relative_to).options.time;
+		}
 	},
 
-	isLess: function(time) // less than
+	isLess: function(time, relative_to) // less than
 	{
-		return this.options.time < time.options.time;
+		if (!relative_to) {
+			return this.options.time < time.options.time;
+		}
+		else {
+			return this.convertRelative(relative_to).options.time < time.convertRelative(relative_to).options.time;
+		}
 	},
 
-	isGreaterOrEqual: function(time) // greater than or equal to
+	isGreaterOrEqual: function(time, relative_to) // greater than or equal to
 	{
-		return this.options.time >= time.options.time;
+		if (!relative_to) {
+			return this.options.time >= time.options.time;
+		}
+		else {
+			return this.convertRelative(relative_to).options.time >= time.convertRelative(relative_to).options.time;
+		}
 	},
 
-	isGreater: function(time) // greater than
+	isGreater: function(time, relative_to) // greater than
 	{
-		return this.options.time > time.options.time;
+		if (!relative_to) {
+			return this.options.time > time.options.time;
+		}
+		else {
+			return this.convertRelative(relative_to).options.time > time.convertRelative(relative_to).options.time;
+		}
+	},
+
+	convertRelative: function(time)
+	{
+		var new_time = new Time();
+		new_time.options.time = this.options.time;
+		if (new_time.options.time < time.options.time) {
+			new_time.options.time = new Date(new_time.options.time.getTime() + (24 * 60 * 60 * 1000));
+		}
+		return new_time;
 	}
 });

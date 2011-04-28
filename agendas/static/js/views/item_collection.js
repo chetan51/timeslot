@@ -121,26 +121,26 @@ window.ItemCollectionView = Backbone.View.extend
 			// Sanity check on the item's restrictions
 			if (start_restriction_type == "fixed" &&
 				start_restriction_time.isValid() &&
-				start_restriction_time.isLess(collection_start_time)) {
+				start_restriction_time.isLess(collection_start_time, collection_start_time)) {
 				conflict = true;
 			}
 			if (end_restriction_type == "range" &&
 				end_restriction_time.isValid() &&
-				end_restriction_time.isLess(collection_start_time.plusMinutes(item.model.get('duration')))) {
+				end_restriction_time.isLess(collection_start_time.plusMinutes(item.model.get('duration')), collection_start_time)) {
 				conflict = true;
 			}
 			if (start_restriction_type &&
 				start_restriction_time.isValid() &&
 				end_restriction_type &&
 				end_restriction_time.isValid() &&
-				start_restriction_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time)) {
+				start_restriction_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time, collection_start_time)) {
 				conflict = true;
 			}
 			
 			// Scan from the beginning, find an empty timeslot for the item
 			if (start_restriction_type == "fixed" &&
 				start_restriction_time.isValid()) {
-				if (start_restriction_time.isLess(collection_start_time)) {
+				if (start_restriction_time.isLess(collection_start_time, collection_start_time)) {
 					conflict = true;
 				}
 				else {
@@ -149,7 +149,7 @@ window.ItemCollectionView = Backbone.View.extend
 			}
 			if (start_restriction_type == "range" &&
 				start_restriction_time.isValid()) {
-				if (start_restriction_time.isGreater(collection_start_time)) {
+				if (start_restriction_time.isGreater(collection_start_time, collection_start_time)) {
 					start_time = start_restriction_time;
 				}
 				else {
@@ -158,7 +158,7 @@ window.ItemCollectionView = Backbone.View.extend
 			}
 			if (end_restriction_type == "range" &&
 				end_restriction_time.isValid()) {
-				if (collection_start_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time)) {
+				if (collection_start_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time, collection_start_time)) {
 					conflict = true;
 				}
 			}
@@ -172,10 +172,10 @@ window.ItemCollectionView = Backbone.View.extend
 				if (start_restriction_type == "fixed" &&
 					start_restriction_time.isValid()) {
 					if (!current_item.options.conflict &&
-						(start_restriction_time.isLess(new Time({timeString: current_item.options.end_time, military: true})))) {
+						(start_restriction_time.isLess(new Time({timeString: current_item.options.end_time, military: true}), collection_start_time))) {
 						if (current_item.model.get('start_restriction_type') != "fixed" ||
 							!current_item.model.get('start_restriction_time') ||
-							start_restriction_time.plusMinutes(item.model.get('duration')).isLess(new Time({timeString: current_item.options.end_time, military: true}))) {
+							start_restriction_time.plusMinutes(item.model.get('duration')).isLess(new Time({timeString: current_item.options.end_time, military: true}), collection_start_time)) {
 							$(item.el).insertBefore($(current_item.el));
 							placed_item = true;
 						}
@@ -192,7 +192,7 @@ window.ItemCollectionView = Backbone.View.extend
 					if (!current_item.options.conflict) {
 						if (current_item.model.get('start_restriction_type') == "fixed" ||
 						current_item.model.get('start_restriction_type') == "range") {
-							if (start_time.plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.options.start_time, military: true}))) {
+							if (start_time.plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.options.start_time, military: true}), collection_start_time)) {
 								$(item.el).insertBefore($(current_item.el));
 								placed_item = true;
 							}
@@ -201,7 +201,7 @@ window.ItemCollectionView = Backbone.View.extend
 						if (!placed_item) {
 							if (start_restriction_type != "range" ||
 							(start_restriction_type == "range" &&
-							start_restriction_time.isLessOrEqual(new Time({timeString: current_item.options.end_time, military: true})))) {
+							start_restriction_time.isLessOrEqual(new Time({timeString: current_item.options.end_time, military: true}), collection_start_time))) {
 								start_time = new Time({timeString: current_item.options.end_time, military: true});
 							}
 						}
@@ -210,7 +210,7 @@ window.ItemCollectionView = Backbone.View.extend
 				
 				if (end_restriction_type == "range" &&
 					end_restriction_time.isValid()) {
-					if (start_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time)) {
+					if (start_time.plusMinutes(item.model.get('duration')).isGreater(end_restriction_time, collection_start_time)) {
 						if (placed_item) {
 							conflict = true;
 						}
@@ -221,11 +221,11 @@ window.ItemCollectionView = Backbone.View.extend
 							  !current_item.model.get('end_restriction_time')) ||
 							 (current_item.model.get('end_restriction_type') == "range" &&
 							  current_item.model.get('end_restriction_time') &&
-							  (new Time({timeString: current_item.options.end_time, military: true}).plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.model.get('end_restriction_time'), military: true})))))) {
+							  (new Time({timeString: current_item.options.end_time, military: true}).plusMinutes(item.model.get('duration')).isLessOrEqual(new Time({timeString: current_item.model.get('end_restriction_time'), military: true}), collection_start_time))))) {
 								$(item.el).insertBefore($(current_item.el));
 								if (start_restriction_type != "range" ||
 									!start_restriction_time.isValid() ||
-									new Time({timeString: current_item.options.start_time, military: true}).isGreaterOrEqual(start_restriction_time)) {
+									new Time({timeString: current_item.options.start_time, military: true}).isGreaterOrEqual(start_restriction_time, collection_start_time)) {
 									start_time = new Time({timeString: current_item.options.start_time, military: true});
 								}
 								else {
@@ -261,10 +261,10 @@ window.ItemCollectionView = Backbone.View.extend
 			
 			if (!item.options.conflict) {
 				if (prev_item) {
-					free_time_duration = new Time({timeString: item.options.start_time, military: true}).minus(new Time({timeString: prev_item.options.end_time, military: true}));
+					free_time_duration = new Time({timeString: item.options.start_time, military: true}).minus(new Time({timeString: prev_item.options.end_time, military: true}), collection_start_time);
 				}
 				else {
-					free_time_duration = new Time({timeString: item.options.start_time, military: true}).minus(collection_start_time);
+					free_time_duration = new Time({timeString: item.options.start_time, military: true}).minus(collection_start_time, collection_start_time);
 				}
 			}
 			
