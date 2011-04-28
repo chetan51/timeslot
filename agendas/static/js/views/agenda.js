@@ -74,12 +74,16 @@ window.AgendaView = Backbone.View.extend
 		});
 		
 		this.element('date').editable({
-			submit: "Load",
 			alsoSubmitBy: null,
 			onEdit: _.bind(function() {
 				var input = this.element('date').find("input");
 				input.datepicker({
-					dateFormat: "MM d, yy"
+					dateFormat: "MM d, yy",
+					onClose: _.bind(function(dateText, inst) {
+						var date = this.element('date');
+						var editable_options = date.data('editable.options');
+						editable_options.toNonEditable(date, true);
+					}, this)
 				});
 				input.datepicker("show");
 			}, this),
