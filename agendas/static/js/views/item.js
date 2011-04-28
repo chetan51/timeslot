@@ -206,7 +206,7 @@ window.ItemView = Backbone.View.extend
 				
 					if (!this.model.get(time_type + '_restriction_type')) {
 						var type_attribute = {};
-						type_attribute[time_type + '_restriction_type'] = "range";
+						type_attribute[time_type + '_restriction_type'] = "fixed";
 						this.model.save(type_attribute);
 					}
 				}
