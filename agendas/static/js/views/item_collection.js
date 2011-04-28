@@ -204,7 +204,9 @@ window.ItemCollectionView = Backbone.View.extend
 						
 						if (!placed_item) {
 							if (start_restriction_type != "range" ||
+							!start_restriction_time.isValid() || 
 							(start_restriction_type == "range" &&
+							start_restriction_time.isValid() &&
 							start_restriction_time.isLessOrEqual(new Time({timeString: current_item.options.end_time, military: true}), collection_start_time))) {
 								start_time = new Time({timeString: current_item.options.end_time, military: true});
 							}
