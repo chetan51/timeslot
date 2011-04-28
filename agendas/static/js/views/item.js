@@ -60,12 +60,15 @@ window.ItemView = Backbone.View.extend
 		this.element('edit_done').hide();
 		
 		this.refresh();
+		this.makeInteractive();
 		return this;
 	},
 	
 	refresh: function()
 	{
-		this.element('name').html(this.model.get('name'));
+		if (!this.element('name').data('editable.editing')) {
+			this.element('name').html(this.model.get('name'));
+		}
 		
 		if (this.options.conflict) {
 			$(this.el).addClass("conflict");
@@ -92,8 +95,6 @@ window.ItemView = Backbone.View.extend
 		else {
 			$(this.el).removeClass("fixed");
 		}
-		
-		this.makeInteractive();
 	},
 	
 	refreshTimeRestrictions: function(type)
@@ -268,6 +269,11 @@ window.ItemView = Backbone.View.extend
 		this.element('time_restriction').hide();
 		
 		$(this.el).find("input").blur();
+	},
+
+	editName: function()
+	{
+		this.element('name').click();
 	},
 
 	destroy: function()

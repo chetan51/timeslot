@@ -32,6 +32,12 @@ window.AgendaView = Backbone.View.extend
 			this.items.refresh();
 		}, this));
 		
+		this.render();
+	},
+	
+	render: function()
+	{
+		this.makeInteractive();
 		this.refresh();
 	},
 
@@ -54,8 +60,6 @@ window.AgendaView = Backbone.View.extend
 		
 		this.element('date').html(date);
 		this.element('start_time').html(new Time({timeString: this.model.get('start_time')}).format());
-		
-		this.makeInteractive();
 	},
 	
 	makeInteractive: function()

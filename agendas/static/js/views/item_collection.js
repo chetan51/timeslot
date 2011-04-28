@@ -39,6 +39,7 @@ window.ItemCollectionView = Backbone.View.extend
 	addNew: function(item)
 	{
 		this.add(item);
+		item.view.editName();
 		this.saveOrder();
 	},
 	
