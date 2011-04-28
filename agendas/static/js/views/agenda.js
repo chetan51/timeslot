@@ -75,6 +75,7 @@ window.AgendaView = Backbone.View.extend
 		
 		this.element('date').editable({
 			submit: "Load",
+			alsoSubmitBy: null,
 			onEdit: _.bind(function() {
 				var input = this.element('date').find("input");
 				input.datepicker({
