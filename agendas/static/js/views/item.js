@@ -127,12 +127,7 @@ window.ItemView = Backbone.View.extend
 			}
 			
 			if (!restriction_time_element.data('editable.editing')) {
-				if (this.options[type + '_time']) {
-					restriction_time_element.html(new Time({timeString: this.options[type + '_time'], military: true}).format());
-				}
-				else {
-					restriction_time_element.html("whenever");
-				}
+				restriction_time_element.html("");
 			}
 		}
 	},
