@@ -18,7 +18,8 @@ $.fn.editable = function(options){
 		submit: null,
 		cancel: null,
 		type: 'text', //text, textarea or select
-		submitBy: 'focusout', //focusout,blur,change,dblclick,click
+		submitBy: 'keypress', //focusout,blur,change,dblclick,click,keypress (for Enter key)
+		alsoSubmitBy: 'focusout', //focusout,blur,change,dblclick,click,keypress (for Enter key)
 		editBy: 'click',
 		options: null
 	}
@@ -57,9 +58,21 @@ $.fn.editable = function(options){
 						.html(opts.submit)
 						.one('mouseup',function(){opts.toNonEditable($(this).parent(),true)});
 		}else
-			$this.one(opts.submitBy,function(){opts.toNonEditable($(this),true)})
-				 .children()
-				 	.one(opts.submitBy,function(){opts.toNonEditable($(this).parent(),true)});
+			var handler = $.proxy(function(e){
+				if (opts.submitBy == "keypress") {
+					if (e.which == 13) {
+						opts.toNonEditable($(this),true);
+						e.preventDefault();
+					}
+				}
+				else {
+					opts.toNonEditable($(this),true);
+				}
+			}, this);
+			$this.children().unbind(opts.submitBy, handler).bind(opts.submitBy, handler);
+			$this.children().one(opts.alsoSubmitBy, $.proxy(function() {
+				opts.toNonEditable($(this), true);
+			}, this));
 		// Cancel Event
 		if(opts.cancel)
 			$('<button/>').appendTo($this)

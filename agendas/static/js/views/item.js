@@ -244,9 +244,11 @@ window.ItemView = Backbone.View.extend
 			this.element(time_type + '_display_time').hide();
 			this.element(time_type + '_time_label').show();
 		}, this), _.bind(function() {
-			this.element(time_type + '_restriction').hide();
-			this.element(time_type + '_display_time').show();
-			this.element(time_type + '_time_label').hide();
+			if (!this.element(time_type + '_restriction_time').data('editable.editing')) {
+				this.element(time_type + '_restriction').hide();
+				this.element(time_type + '_display_time').show();
+				this.element(time_type + '_time_label').hide();
+			}
 		}, this));
 	},
 
