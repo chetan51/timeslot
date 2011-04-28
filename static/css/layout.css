@@ -190,6 +190,7 @@ body {
 
 .feature .text {
 	width: 200px;
+	margin-right: 7px;
 }
 
 .feature-A .text {
@@ -308,7 +309,6 @@ body {
 	display:block;
 	background:url(/static/img/divider.png) no-repeat right;
 	height:35px;
-	padding-top:10px;
 }
 
 #gallery a img{
