@@ -102,7 +102,9 @@ window.ItemCollectionView = Backbone.View.extend
 	{
 		this.element('items').each(function(seq, item_div) {
 			var item = $(item_div).data('view');
-			item.model.save({seq: seq});
+			if (item.model.get('seq') != seq) {
+				item.model.save({seq: seq});
+			}
 		});
 	},
 	
