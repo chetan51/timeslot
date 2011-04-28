@@ -52,10 +52,10 @@ window.AgendaView = Backbone.View.extend
 		"April", "May", "June", "July", "August", "September", 
 		"October", "November", "December");
 
-		var d = new Date(this.model.get('date'));
-		var curr_date = d.getDate();
-		var curr_month = d.getMonth();
-		var curr_year = d.getFullYear();
+		var m = /(\d+)-(\d+)-(\d+)/.exec(this.model.get('date'));
+		var curr_date = m[3];
+		var curr_month = parseInt(m[2]) - 1;
+		var curr_year = m[1];
 		var date = (m_names[curr_month] + " " + curr_date + ", " + curr_year);
 		
 		this.element('date').html(date);
