@@ -29,7 +29,7 @@ class Item(models.Model):
     agenda = models.ForeignKey(Agenda)
     duration = models.PositiveIntegerField('duration in minutes')
     name = models.CharField(max_length=255, blank=True, null=True)
-    seq = models.IntegerField(blank=True, null=True)
+    seq = models.FloatField(blank=True, null=True)
     start_restriction_type = models.CharField(max_length=5, choices=START_RESTRICTON_TYPE_CHOICES, blank=True, null=True)
     end_restriction_type = models.CharField(max_length=5, choices=END_RESTRICTON_TYPE_CHOICES, blank=True, null=True)
     start_restriction_time = models.TimeField('start time', blank=True, null=True)
