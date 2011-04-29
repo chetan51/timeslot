@@ -149,9 +149,21 @@ body {
 	margin-top: 20px;
 }
 
-#description, #call-to-action {
+#description {
 	display: inline-block;
 	vertical-align: top;
+}
+
+#call-to-action {
+	position: relative;
+}
+
+#call-to-action .subtext {
+	position: absolute;
+	top: 45px;
+	right: 40px;
+	color: #444;
+	font-size: 1.2em;
 }
 
 #description {
