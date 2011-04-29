@@ -35,4 +35,4 @@ class Item(models.Model):
     start_restriction_time = models.TimeField('start time', blank=True, null=True)
     end_restriction_time = models.TimeField('end time', blank=True, null=True)
     def __unicode__(self):
-        return self.name
+        return self.agenda.date.isoformat()
