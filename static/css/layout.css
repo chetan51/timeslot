@@ -414,10 +414,16 @@ form  input[type="text"],
 @media only screen and (max-device-width: 480px) {
 	#container {
 		width: 100%;
+		margin: 0;
+		padding: 0;
 	}
 	
 	.feature .feature-image {
 		width: 440px;
+	}
+	
+	#share-buttons
+		display: none;
 	}
 	
 	#gallery{
