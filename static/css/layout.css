@@ -418,8 +418,10 @@ form  input[type="text"],
 		padding: 0;
 	}
 	
-	.feature .feature-image {
+	#features .feature-image {
 		width: 440px;
+		margin: 0;
+		padding: 0;
 	}
 	
 	#share-buttons {
@@ -428,5 +430,11 @@ form  input[type="text"],
 	
 	#gallery{
 		width: 480px;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#fdbk_tab {
+		display: none;
 	}
 }
