@@ -409,3 +409,9 @@ form  input[type="text"],
 	margin: 0;
 	margin-left: -9em;
 }
+
+@media only screen and (max-device-width: 480px) {
+	#container {
+		width: 480px;
+	}
+}
