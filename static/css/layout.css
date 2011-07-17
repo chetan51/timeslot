@@ -9,6 +9,7 @@
 -------------------------------------------------------------- */
 
 body {
+    width: 100%;
     background: #eee;
 }
 
@@ -411,19 +412,15 @@ form  input[type="text"],
 }
 
 @media only screen and (max-device-width: 480px) {
-	body {
-		max-width: 480px;
-	}
-	
 	#container {
-		max-width: 480px;
+		width: 100%;
 	}
 	
 	.feature .feature-image {
-		max-width: 440px;
+		width: 440px;
 	}
 	
 	#gallery{
-		max-width: 480px;
+		width: 480px;
 	}
 }
