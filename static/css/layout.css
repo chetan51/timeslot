@@ -419,7 +419,7 @@ form  input[type="text"],
 	}
 	
 	#features .feature-image {
-		width: 440px;
+		width: 100%;
 		margin: 0;
 		padding: 0;
 	}
@@ -429,12 +429,25 @@ form  input[type="text"],
 	}
 	
 	#gallery{
-		width: 480px;
+		width: 100%;
 		margin: 0;
 		padding: 0;
 	}
 	
 	#fdbk_tab {
 		display: none;
+	}
+	
+	form label {
+		width: 100%;
+		margin: 0;
+	}
+
+	form  input[type="text"],
+		input[type="text"]:focus,
+		input[type="password"],
+		input[type="password"]:focus {
+		width: 100%;
+		margin: 0;
 	}
 }
