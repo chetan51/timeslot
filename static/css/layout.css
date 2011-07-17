@@ -419,6 +419,7 @@ form  input[type="text"],
 	}
 	
 	#features .feature-image,
+	#features .text,
 	#features img {
 		width: 100%;
 		margin: 0;
@@ -429,7 +430,8 @@ form  input[type="text"],
 		display: none;
 	}
 	
-	#slides, #gallery {
+	#slides, #gallery,
+	#slides img {
 		display: block;
 		width: 100%;
 		margin: 0;
