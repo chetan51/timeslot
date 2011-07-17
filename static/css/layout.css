@@ -422,7 +422,7 @@ form  input[type="text"],
 		width: 440px;
 	}
 	
-	#share-buttons
+	#share-buttons {
 		display: none;
 	}
 	
