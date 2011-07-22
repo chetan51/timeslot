@@ -411,7 +411,7 @@ form  input[type="text"],
 	margin-left: -9em;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 480px), (max-device-width: 854px) {
 	#container {
 		width: 100%;
 		margin: 0;
