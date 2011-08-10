@@ -115,7 +115,7 @@ var Time = Class.extend(
 	plusMinutes: function(minutes)
 	{
 		var new_time = new Time();
-		new_time.options.time = new Date(this.options.time.getTime() + parseInt(minutes) * 60 * 1000);
+		new_time.options.time = new Date(this.options.time.getTime() + parseInt(minutes, 10) * 60 * 1000);
 		return new_time;
 	},
 	

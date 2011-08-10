@@ -54,7 +54,7 @@ window.AgendaView = Backbone.View.extend
 
 		var m = /(\d+)-(\d+)-(\d+)/.exec(this.model.get('date'));
 		var curr_date = m[3];
-		var curr_month = parseInt(m[2]) - 1;
+		var curr_month = parseInt(m[2], 10) - 1;
 		var curr_year = m[1];
 		var date = (m_names[curr_month] + " " + curr_date + ", " + curr_year);
 		
